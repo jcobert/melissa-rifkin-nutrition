@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import React from 'react'
 
+// import { getProducts } from '@/lib/shopify/request'
+
 import PageLayout from '@/components/common/layout/page-layout'
 
 export const metadata: Metadata = {
@@ -8,6 +10,9 @@ export const metadata: Metadata = {
 }
 
 const HomePage = async () => {
+  // const data = await getProducts()
+  // console.log(data.products.edges)
+
   return (
     <PageLayout>
       <div className=''></div>

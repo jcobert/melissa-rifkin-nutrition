@@ -1,0 +1,17 @@
+{
+  "css.validate": false,
+  "editor.formatOnSave": false,
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never"
+  },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "classNames",
+    "containerClassName"
+  ],
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "editor.indentSize": "tabSize"
+}

@@ -1,17 +1,9 @@
-// import shopifyApi from '@shopify/shopify-api'
 import { GraphQLClient, gql } from 'graphql-request'
 
-import { shopifyConfig } from '@/lib/shopify/config'
-import { SHOPIFY_STOREFRONT_ENDPOINT } from '@/lib/shopify/utils'
-
-// const shopify = shopifyApi.shopifyApi({
-//   ...shopifyConfig,
-// })
-
-// const storefront = new shopify.clients.Storefront({
-//   apiVersion: shopifyConfig.apiVersion,
-//   session: {}
-// })
+import {
+  SHOPIFY_STOREFRONT_ENDPOINT,
+  shopifyConfig,
+} from '@/lib/shopify/config'
 
 const graphQLClient = new GraphQLClient(SHOPIFY_STOREFRONT_ENDPOINT, {
   headers: {
@@ -19,7 +11,7 @@ const graphQLClient = new GraphQLClient(SHOPIFY_STOREFRONT_ENDPOINT, {
   },
 })
 
-export async function getProducts() {
+export const getProducts = async () => {
   const getAllProductsQuery = gql`
     {
       products(first: 50) {

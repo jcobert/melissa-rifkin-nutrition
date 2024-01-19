@@ -3,7 +3,7 @@ import { GraphQLClient, gql } from 'graphql-request'
 import {
   SHOPIFY_STOREFRONT_ENDPOINT,
   shopifyConfig,
-} from '@/lib/shopify/config'
+} from '@/lib/shopify/alt/config'
 
 const graphQLClient = new GraphQLClient(SHOPIFY_STOREFRONT_ENDPOINT, {
   headers: {

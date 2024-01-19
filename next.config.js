@@ -15,6 +15,9 @@ const nextConfig = {
       {
         hostname: '**.graphassets.com',
       },
+      {
+        hostname: '**.shopify.com',
+      },
     ],
     minimumCacheTTL: 31536000,
   },

@@ -19,6 +19,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-inferrable-types': 'off',
     'react/no-unescaped-entities': 'off',
     'no-duplicate-imports': 'error',
     'react/display-name': 'off',

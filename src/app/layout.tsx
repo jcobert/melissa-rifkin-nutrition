@@ -1,4 +1,12 @@
 import { Metadata } from 'next'
+import {
+  Jost,
+  Karla,
+  Manrope,
+  Quicksand,
+  Raleway,
+  Vazirmatn,
+} from 'next/font/google'
 import { ReactNode } from 'react'
 
 import NextUIProvider from '@/providers/next-ui-provider'
@@ -41,9 +49,24 @@ export const metadata: Metadata = {
   },
 }
 
+const jost = Jost({ subsets: ['latin'], variable: '--font-jost' })
+const karla = Karla({ subsets: ['latin'], variable: '--font-karla' })
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  variable: '--font-quicksand',
+})
+const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' })
+const vazirmatn = Vazirmatn({
+  subsets: ['latin'],
+  variable: '--font-vazirmatn',
+})
+
+const fontVars = `${jost.variable} ${karla.variable} ${manrope.variable} ${quicksand.variable} ${raleway.variable} ${vazirmatn.variable}`
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html>
+    <html lang='en' className={fontVars}>
       <body>
         <QueryProvider>
           <NextUIProvider>

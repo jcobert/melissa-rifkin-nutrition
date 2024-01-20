@@ -11,11 +11,19 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Inter', ...defaultTheme.fontFamily.sans],
+        jost: ['var(--font-jost)'],
+        karla: ['var(--font-karla)'],
+        manrope: ['var(--font-manrope)'],
+        quicksand: ['var(--font-quicksand)'],
+        raleway: ['var(--font-raleway)'],
+        vazirmatn: ['var(--font-vazirmatn)'],
       },
       colors: {
         primary: '#000000',
-        'primary-dark': '#000000',
+        brand: 'rgb(228,97,105)',
+        'brand-gray-dark': 'rgb(69,73,87)',
+        'brand-gray-medium': 'rgb(130,135,151)',
+        'brand-gray-light': 'rgb(240,243,253)',
         background: '#fafafa',
         dark: '#222222',
       },

@@ -11,12 +11,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        jost: ['var(--font-jost)'],
-        karla: ['var(--font-karla)'],
-        manrope: ['var(--font-manrope)'],
-        quicksand: ['var(--font-quicksand)'],
-        raleway: ['var(--font-raleway)'],
-        vazirmatn: ['var(--font-vazirmatn)'],
+        jost: ['var(--font-jost)', ...defaultTheme.fontFamily.sans],
+        karla: ['var(--font-karla)', ...defaultTheme.fontFamily.sans],
+        manrope: ['var(--font-manrope)', ...defaultTheme.fontFamily.sans],
+        quicksand: ['var(--font-quicksand)', ...defaultTheme.fontFamily.sans],
+        raleway: ['var(--font-raleway)', ...defaultTheme.fontFamily.sans],
+        vazirmatn: ['var(--font-vazirmatn)', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: '#000000',

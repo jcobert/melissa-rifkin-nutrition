@@ -24,34 +24,34 @@ const NavBar: FC = () => {
                 </NavLink>
               ) : (
                 <>
-                  <NavigationMenu.Trigger
-                    // asChild
-                    className='text-brand-gray-dark hover:border-y-brand/10 group flex select-none items-center justify-between gap-[2px] rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none'
-                  >
-                    {/* <NavLink href={item?.url}>{item?.name}</NavLink> */}
+                  <NavigationMenu.Trigger className='text-brand-gray-dark hover:border-y-brand/10 group flex select-none items-center justify-between gap-[2px] rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none'>
                     {item?.name}
                   </NavigationMenu.Trigger>
-                  {/* <NavigationMenu.Content className='absolute top-0 left-0 w-auto'> */}
                   <div className='perspective-[2000px] absolute top-full flex justify-center w-[var(--radix-navigation-menu-viewport-width)]'>
                     <NavigationMenu.Content className='relative mt-4 data-[state=open]:animate-scaleIn shadow-xl data-[state=closed]:animate-scaleOut h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-auto rounded-[6px] bg-white transition-[width,_height] duration-300 w-[var(--radix-navigation-menu-viewport-width)] max-h-[70dvh]'>
                       {/* Menu title */}
-                      <p
-                        className='text-xl -mb-1 px-[22px] mt-[10px] text-brand-gray-medium'
-                        // role='none'
-                      >
+                      <p className='text-xl -mb-1 px-[22px] mt-[10px] text-brand-gray-medium'>
                         {item?.name}
                       </p>
                       {/* Links */}
                       <ul className='m-0 grid list-none gap-x-[10px] gap-y-2 pt-4 p-[22px] pl-1_ grid-cols-[0.75fr_1fr]'>
                         {!!item?.menu?.img?.src && (
-                          // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
-                          <img
+                          <NavLink
+                            href={item?.url}
                             className={cn([
-                              'object-cover object-center h-full rounded min-[900px]:min-w-48',
+                              'object-cover object-center h-full rounded min-[840px]:min-w-48',
                               getRowSpan(item?.menu),
                             ])}
-                            {...item?.menu?.img}
-                          />
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+                            <img
+                              className={cn([
+                                'object-cover object-center h-full rounded',
+                                getRowSpan(item?.menu),
+                              ])}
+                              {...item?.menu?.img}
+                            />
+                          </NavLink>
                         )}
                         {item?.menu?.links?.map((subItem) => (
                           <NavigationMenu.Item
@@ -66,13 +66,13 @@ const NavBar: FC = () => {
                                   className={cn([
                                     'text-nowrap font-semibold',
                                     !subItem?.description &&
-                                      'min-[900px]:min-w-48',
+                                      'min-[840px]:min-w-48',
                                   ])}
                                 >
                                   {subItem?.name}
                                 </span>
                                 {!!subItem?.description && (
-                                  <p className='font-normal text-brand-gray-medium text-pretty min-[900px]:min-w-72'>
+                                  <p className='font-normal text-brand-gray-medium text-pretty min-[840px]:min-w-72'>
                                     {subItem?.description}
                                   </p>
                                 )}
@@ -90,13 +90,9 @@ const NavBar: FC = () => {
         })}
 
         <NavigationMenu.Indicator className='data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]'>
-          <div className='relative top-[50%]_ h-[2px] w-10 rounded bg-brand/20' />
+          <div className='relative h-[2px] w-10 rounded bg-brand/20' />
         </NavigationMenu.Indicator>
       </NavigationMenu.List>
-
-      {/* <div className='perspective-[2000px] absolute top-full left-0_ right-[20%] flex w-full justify-center'>
-        <NavigationMenu.Viewport className='data-[state=open]:animate-scaleIn shadow-xl data-[state=closed]:animate-scaleOut relative mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 w-[var(--radix-navigation-menu-viewport-width)]' />
-      </div> */}
     </NavigationMenu.Root>
   )
 }

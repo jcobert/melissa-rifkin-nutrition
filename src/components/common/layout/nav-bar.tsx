@@ -5,7 +5,7 @@ import { cn } from '@/utils/style'
 
 import NavLink from '@/components/common/layout/nav-link'
 
-import { getRowSpan, navItems } from '@/configuration/nav'
+import { navItems } from '@/configuration/nav'
 
 const NavBar: FC = () => {
   return (
@@ -41,7 +41,12 @@ const NavBar: FC = () => {
                             href={item?.url}
                             className={cn([
                               'object-cover object-center rounded min-[840px]:min-w-48',
-                              getRowSpan(item?.menu),
+                              item?.menu?.links?.length <= 3 && 'row-span-3',
+                              item?.menu?.links?.length === 4 && 'row-span-4',
+                              item?.menu?.links?.length === 5 && 'row-span-5',
+                              item?.menu?.links?.length === 6 && 'row-span-6',
+                              item?.menu?.links?.length === 7 && 'row-span-7',
+                              item?.menu?.links?.length >= 8 && 'row-span-8',
                             ])}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}

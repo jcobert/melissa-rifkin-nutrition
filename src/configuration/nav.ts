@@ -1,4 +1,3 @@
-import { ImageProps } from 'next/image'
 import { HTMLProps } from 'react'
 
 export type NavLink = {

@@ -34,20 +34,20 @@ const NavBar: FC = () => {
                         {item?.name}
                       </p>
                       {/* Links */}
-                      <ul className='m-0 grid list-none gap-x-[10px] gap-y-2 pt-4 p-[22px] pl-1_ grid-cols-[0.75fr_1fr]'>
+                      <ul className='m-0 grid list-none gap-x-[10px] gap-y-2 pt-4 p-[22px] grid-cols-[0.75fr_1fr]'>
+                        {/* Menu Image */}
                         {!!item?.menu?.img?.src && (
                           <NavLink
                             href={item?.url}
                             className={cn([
-                              'object-cover object-center h-full rounded min-[840px]:min-w-48',
+                              'object-cover object-center rounded min-[840px]:min-w-48',
                               getRowSpan(item?.menu),
                             ])}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
                             <img
                               className={cn([
-                                'object-cover object-center h-full rounded',
-                                getRowSpan(item?.menu),
+                                'object-cover object-center h-full w-full min-w-36 rounded',
                               ])}
                               {...item?.menu?.img}
                             />
@@ -64,7 +64,7 @@ const NavBar: FC = () => {
                               <div className='flex flex-col gap-2'>
                                 <span
                                   className={cn([
-                                    'text-nowrap font-semibold',
+                                    'text-nowrap whitespace-nowrap font-semibold',
                                     !subItem?.description &&
                                       'min-[840px]:min-w-48',
                                   ])}

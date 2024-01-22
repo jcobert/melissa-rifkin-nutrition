@@ -3,7 +3,6 @@
 import {
   Navbar,
   NavbarContent,
-  NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
@@ -13,8 +12,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { FC, useState } from 'react'
-
-import { cn } from '@/utils/style'
 
 import DesktopNavbar from '@/components/common/layout/nav-bar'
 

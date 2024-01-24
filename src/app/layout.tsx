@@ -1,8 +1,10 @@
 import { Metadata } from 'next'
 import {
+  Bellota,
   Jost,
   Karla,
   Manrope,
+  Prata,
   Quicksand,
   Raleway,
   Vazirmatn,
@@ -49,6 +51,7 @@ export const metadata: Metadata = {
   },
 }
 
+// Sans-serif
 const jost = Jost({ subsets: ['latin'], variable: '--font-jost' })
 const karla = Karla({ subsets: ['latin'], variable: '--font-karla' })
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })
@@ -61,8 +64,19 @@ const vazirmatn = Vazirmatn({
   subsets: ['latin'],
   variable: '--font-vazirmatn',
 })
+// Serif
+const prata = Prata({
+  subsets: ['latin'],
+  variable: '--font-prata',
+  weight: '400',
+})
+const bellota = Bellota({
+  subsets: ['latin'],
+  variable: '--font-bellota',
+  weight: ['300', '400', '700'],
+})
 
-const fontVars = `${jost.variable} ${karla.variable} ${manrope.variable} ${quicksand.variable} ${raleway.variable} ${vazirmatn.variable}`
+const fontVars = `${jost.variable} ${karla.variable} ${manrope.variable} ${quicksand.variable} ${raleway.variable} ${vazirmatn.variable} ${prata.variable} ${bellota.variable}`
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

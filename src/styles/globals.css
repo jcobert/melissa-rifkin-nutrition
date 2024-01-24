@@ -6,7 +6,7 @@
   body {
     /* @apply bg-[#fdfdfd]; */
     /* @apply bg-[rgb(230,235,251)]; */
-    @apply bg-brand-gray-light;
+    @apply bg-background;
   }
 
   body,

@@ -28,7 +28,7 @@ const Header: FC = () => {
        * ******** DESKTOP ********
        * *************************
        */}
-      <div className='hidden sm:block w-full border-b-2 py-2 sticky top-0 background-saturate-150 backdrop-blur-lg bg-background/70'>
+      <div className='hidden z-50 sm:block w-full border-b-2 py-2 sticky top-0 background-saturate-150 backdrop-blur-lg bg-background/80'>
         <div className='sm:flex items-center gap-6 w-11/12 max-w-[68.75rem] px-2 sm:px-0 mx-auto'>
           {/* Logo */}
           <Link href='/' className='w-fit'>
@@ -55,7 +55,7 @@ const Header: FC = () => {
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
         isBordered
-        className='sm:hidden'
+        className='sm:hidden bg-background/80'
         classNames={{ wrapper: 'w-11/12 max-w-[68.75rem] px-2 sm:px-0' }}
       >
         <NavbarContent className='sm:hidden w-full flex items-center'>

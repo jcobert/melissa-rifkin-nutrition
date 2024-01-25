@@ -11,7 +11,7 @@
 
   body,
   .p {
-    @apply font-karla text-sm md:text-base text-gray-950;
+    @apply font-karla text-almost-black;
   }
 
   a {

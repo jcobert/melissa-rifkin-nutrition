@@ -4,6 +4,7 @@ import React from 'react'
 
 import Button from '@/components/common/buttons/Button'
 import PageLayout from '@/components/common/layout/page-layout'
+import Testimonials from '@/components/testimonials'
 
 import { pageTitle } from '@/configuration/site'
 
@@ -11,9 +12,27 @@ export const metadata: Metadata = {
   title: pageTitle('Home'),
 }
 
+const testimonialData = [
+  {
+    body: 'I had struggled with weight and body image my entire life and was worried that would never change. It’s hard to put into words what an amazing experience I’ve had with Melissa over the past two years.',
+    author: { name: 'Tara', location: 'Chicago' },
+  },
+  {
+    body: 'I honestly can’t thank you enough for how you’ve helped me. You’ve helped me more on the inside, and to me that’s what matters most. My entire mind set regarding food has changed. I now eat because I want to fuel my body and be a strong woman.',
+    author: { name: 'Jeanette' },
+  },
+  {
+    body: 'Eight weeks ago, I started my first meal plan, and I haven’t looked back since. The plans are easy to follow, the meals do not need a vast list of complicated ingredients. She has factored in your cheat meal during the week, which is amazing because you don’t have the guilt of ‘cheating’ the next day. You just carry on.',
+    author: { name: 'Martha', location: 'Nigeria' },
+  },
+]
+
 const HomePage = async () => {
   return (
-    <PageLayout defaultLayout={false} className='flex flex-col gap-12'>
+    <PageLayout
+      defaultLayout={false}
+      className='flex flex-col gap-16 md:gap-12'
+    >
       {/* Hero */}
       <section
         className='w-full h-[30rem] sm:h-[36rem] bg-center bg-cover bg-no-repeat bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem] sm:before:h-[36rem] before:bg-[#0000004e]'
@@ -26,12 +45,14 @@ const HomePage = async () => {
           <p className='text-almost-white text-xl'>
             Meal plans and resources to transform your life.
           </p>
-          <Button className='w-fit'>Schedule a Consultation</Button>
+          <Button className='w-fit !py-4 text-lg'>
+            Schedule a Consultation
+          </Button>
         </div>
       </section>
 
       {/* Meal Plans */}
-      <section className='sm:layout bg-brand-gray-light'>
+      <section className='sm:layout bg-brand-gray-light max-sm:py-4'>
         <div className='flex gap-x-8'>
           <Image
             src='/images/dinner-plates.png'
@@ -42,7 +63,7 @@ const HomePage = async () => {
             className='mx-auto h-72 md:h-96 lg:h-[28rem] object-center object-cover max-sm:hidden'
           />
           <div className='p-4 flex flex-col gap-4 items-center w-full sm:items-start justify-center'>
-            <h2 className='text-2xl font-prata text-brand text-pretty'>
+            <h2 className='text-2xl max-sm:self-start font-bold font-prata text-brand text-pretty'>
               Meal Plans Just For You
             </h2>
             <Image
@@ -63,10 +84,10 @@ const HomePage = async () => {
       </section>
 
       {/* Recipes */}
-      <section className='sm:layout bg-brand-accent'>
+      <section className='sm:layout bg-brand-accent max-sm:py-4'>
         <div className='flex gap-x-8'>
           <div className='p-4 flex flex-col gap-4 items-center w-full sm:items-start justify-center md:ml-8 lg:ml-16 xl:ml-24 2xl:ml-28'>
-            <h2 className='text-2xl font-prata text-brand text-pretty'>
+            <h2 className='text-2xl max-sm:self-start font-bold font-prata text-brand text-pretty'>
               Healthy and Delicious Recipes
             </h2>
             <Image
@@ -92,6 +113,14 @@ const HomePage = async () => {
             className='mx-auto h-72 md:h-96 lg:h-[28rem] object-center object-cover max-sm:hidden'
           />
         </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className='sm:layout max-sm:px-4 flex flex-col items-center gap-6'>
+        <h2 className='text-2xl font-bold font-prata text-brand-gray-dark text-pretty'>
+          Hear What Our Clients Are Saying
+        </h2>
+        <Testimonials data={testimonialData} />
       </section>
     </PageLayout>
   )

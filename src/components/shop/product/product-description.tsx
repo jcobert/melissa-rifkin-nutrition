@@ -2,9 +2,9 @@ import { VariantSelector } from './variant-selector'
 
 import { Product } from '@/lib/shopify/types'
 
-import { AddToCart } from '@/components/cart/add-to-cart'
-import Price from '@/components/price'
-import Prose from '@/components/prose'
+import { AddToCart } from '@/components/shop/cart/add-to-cart'
+import Price from '@/components/shop/price'
+import Prose from '@/components/shop/prose'
 
 export function ProductDescription({ product }: { product: Product }) {
   return (

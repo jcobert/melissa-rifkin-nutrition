@@ -7,7 +7,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 import { createUrl } from '@/lib/utils'
 
-import { GridTileImage } from '@/components/grid/tile'
+import { GridTileImage } from '@/components/shop/grid/tile'
 
 export function Gallery({
   images,

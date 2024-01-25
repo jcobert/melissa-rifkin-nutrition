@@ -58,24 +58,23 @@ const Header: FC = () => {
         className='sm:hidden bg-background/80'
         classNames={{ wrapper: 'w-11/12 max-w-[68.75rem] px-2 sm:px-0' }}
       >
-        <NavbarContent className='sm:hidden w-full flex items-center'>
+        <NavbarContent className='sm:hidden w-full grid grid-rows-1 grid-cols-12 items-center'>
           {/* Logo */}
           <Link
             href='/'
-            className='flex-auto'
+            className='col-span-8'
             onClick={() => setIsMenuOpen(false)}
           >
             <Image
-              src='/images/logo.png'
+              src='/images/logo-expanded.png'
               alt=''
-              width={42}
-              height={42}
+              width={172}
+              height={64}
               priority
-              className=''
             />
           </Link>
           {/* Hamburger */}
-          <NavbarMenuToggle />
+          <NavbarMenuToggle className='col-start-12' />
         </NavbarContent>
 
         {/* Menu */}

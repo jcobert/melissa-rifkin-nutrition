@@ -14,14 +14,6 @@ export const metadata: Metadata = {
 const HomePage = async () => {
   return (
     <PageLayout defaultLayout={false} className='flex flex-col gap-12'>
-      <Image
-        src='/images/logo-expanded.png'
-        alt='Melissa Rifkin Nutrition logo'
-        width={300}
-        height={92}
-        priority
-        className='mx-auto sm:hidden mt-6 -mb-4 h-20 w-auto'
-      />
       {/* Hero */}
       <section
         className='w-full h-[30rem] sm:h-[36rem] bg-center bg-cover bg-no-repeat bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem] sm:before:h-[36rem] before:bg-[#0000004e]'
@@ -32,9 +24,9 @@ const HomePage = async () => {
             Your Healthy Life Starts Here.
           </h1>
           <p className='text-almost-white text-xl'>
-            Transform your life one meal at a time.
+            Meal plans and resources to transform your life.
           </p>
-          <Button className='w-fit'>Get Started</Button>
+          <Button className='w-fit'>Schedule a Consultation</Button>
         </div>
       </section>
 

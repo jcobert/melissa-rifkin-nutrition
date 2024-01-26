@@ -15,7 +15,7 @@ import NextUIProvider from '@/providers/next-ui-provider'
 import QueryProvider from '@/providers/query-provider'
 
 import Footer from '@/components/common/layout/footer'
-import Header from '@/components/common/layout/header'
+import MainHeader from '@/components/common/layout/main-header'
 
 import { siteConfig } from '@/configuration/site'
 import '@/styles/globals.css'
@@ -85,8 +85,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <QueryProvider>
           <NextUIProvider>
             <div className='flex-grow'>
-              <Header />
-              <div className='flex flex-col min-h-screen'>{children}</div>
+              <MainHeader />
+              <div className='flex flex-col min-h-screen mt-16'>{children}</div>
               <Footer />
             </div>
           </NextUIProvider>

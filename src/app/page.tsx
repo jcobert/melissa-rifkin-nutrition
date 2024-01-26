@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: pageTitle('Home'),
 }
 
+/** @todo replace with CMS data. */
 const testimonialData = [
   {
     body: 'I had struggled with weight and body image my entire life and was worried that would never change. It’s hard to put into words what an amazing experience I’ve had with Melissa over the past two years.',
@@ -42,8 +43,9 @@ const HomePage = async () => {
           <h1 className='text-5xl md:w-2/3 lg:w-1/2 text-white font-prata text-pretty leading-normal'>
             Your Healthy Life Starts Here.
           </h1>
-          <p className='text-almost-white text-xl'>
-            Meal plans and resources to transform your life.
+          <p className='text-almost-white text-xl text-balance'>
+            Get started with meal plans and resources that can transform your
+            life.
           </p>
           <Button className='w-fit !py-4 text-lg'>
             Schedule a Consultation

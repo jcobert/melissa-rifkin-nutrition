@@ -4,25 +4,37 @@ import React, { FC } from 'react'
 
 import Carousel from '@/components/carousel'
 
-type Props = {
-  data: { body: string; author?: { name?: string; location?: string } }[]
+type Testimonial = {
+  body: string
+  author?: { name?: string; location?: string }
 }
+
+type Props = {
+  data: Testimonial[]
+}
+
+const TestimonialCard: FC<{ t: Testimonial }> = ({ t }) => (
+  <div className='rounded border p-4 flex flex-col gap-5 justify-between bg-brand-gray-light h-full'>
+    <p>{`"${t?.body}"`}</p>
+    <p>{`- ${t?.author?.name}${t?.author?.location ? `, ${t?.author?.location}` : ''}`}</p>
+  </div>
+)
 
 const Testimonials: FC<Props> = ({ data }) => {
   return (
-    <div className='md:w-3/4 xl:w-2/3 2xl:w-1/2'>
-      <Carousel>
-        {data?.map((t, i) => (
-          <div
-            key={i}
-            className='rounded border p-4 flex flex-col gap-5 justify-between bg-brand-gray-light h-full'
-          >
-            <p>{`"${t?.body}"`}</p>
-            <p>{`- ${t?.author?.name}${t?.author?.location ? `, ${t?.author?.location}` : ''}`}</p>
-          </div>
-        ))}
-      </Carousel>
-    </div>
+    <>
+      {/* Carousel up until large breakpoint. */}
+      <div className='lg:hidden md:w-3/4'>
+        <Carousel>
+          {data?.map((t, i) => <TestimonialCard key={i} t={t} />)}
+        </Carousel>
+      </div>
+
+      {/* Card grid at large breakpoint. */}
+      <div className='grid grid-cols-3 gap-6 max-lg:hidden'>
+        {data?.map((t, i) => <TestimonialCard key={i} t={t} />)}
+      </div>
+    </>
   )
 }
 

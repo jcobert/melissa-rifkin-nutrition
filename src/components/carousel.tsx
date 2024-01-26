@@ -89,7 +89,7 @@ const Carousel: FC<{ children: ReactNode }> = (props) => {
         </div>
       </div>
 
-      <div className='flex justify-center gap-12 sm:gap-6 pb-3'>
+      <div className='flex justify-center gap-12 sm:gap-6'>
         <button
           type='button'
           className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'

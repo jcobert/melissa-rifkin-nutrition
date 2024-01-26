@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import React from 'react'
 
+import BrandBanner from '@/components/brand-banner'
 import Button from '@/components/common/buttons/Button'
 import PageLayout from '@/components/common/layout/page-layout'
 import Testimonials from '@/components/testimonials'
@@ -27,12 +28,36 @@ const testimonialData = [
     author: { name: 'Martha', location: 'Nigeria' },
   },
 ]
+/** @todo replace with CMS data. */
+const blogPostsData = [
+  {
+    id: 1,
+    title: 'A Registered Dietitian Shares Her Top Health Products As a Mom',
+    author: 'Melissa Rifkin',
+  },
+  {
+    id: 2,
+    title:
+      '5 Nutrients Missing from the Standard American Diet According to A Dietician',
+    author: 'Melissa Rifkin',
+  },
+  {
+    id: 3,
+    title: '5 Steps for Building the Perfect Smoothie According to a Dietician',
+    author: 'Kelsey Hampton',
+  },
+  {
+    id: 4,
+    title: '7 Easy Ways to Help Reduce Stress',
+    author: 'Melissa Rifkin',
+  },
+]
 
 const HomePage = async () => {
   return (
     <PageLayout
       defaultLayout={false}
-      className='flex flex-col gap-16 md:gap-12'
+      className='flex flex-col gap-16 md:gap-16'
     >
       {/* Hero */}
       <section
@@ -117,12 +142,44 @@ const HomePage = async () => {
         </div>
       </section>
 
+      {/* Brand Banner */}
+      <div className='layout flex flex-col gap-4'>
+        {/* <h2 className='text-2xl font-bold font-prata text-brand-gray-dark text-pretty'>
+          Featured By...
+        </h2> */}
+        <BrandBanner />
+      </div>
+
       {/* Testimonials */}
       <section className='sm:layout max-sm:px-4 flex flex-col items-center gap-6'>
         <h2 className='text-2xl font-bold font-prata text-brand-gray-dark text-pretty'>
           Hear What Our Clients Are Saying
         </h2>
         <Testimonials data={testimonialData} />
+      </section>
+
+      {/* Recent Blog Posts */}
+      <section className='sm:layout bg-brand-light max-sm:py-4 py-6'>
+        <div className='p-4 flex flex-col gap-6 items-center w-full justify-center'>
+          <h2 className='text-2xl font-bold font-prata text-brand text-pretty'>
+            Recent Posts
+          </h2>
+          <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            {blogPostsData?.map((post) => (
+              <div
+                key={post?.id}
+                className='flex flex-col items-center gap-4 bg-almost-white p-4 py-6 border rounded'
+              >
+                <div className='h-32 w-3/4 bg-brand-gray-light' />
+                <p className='flex-auto text-balance text-center font-medium'>
+                  {post?.title}
+                </p>
+                <p className=''>By {post?.author}</p>
+              </div>
+            ))}
+          </div>
+          <Button className='w-fit'>See All Posts</Button>
+        </div>
       </section>
     </PageLayout>
   )

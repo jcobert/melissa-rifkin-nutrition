@@ -14,9 +14,9 @@ type Props = {
 }
 
 const TestimonialCard: FC<{ t: Testimonial }> = ({ t }) => (
-  <div className='rounded border p-4 flex flex-col gap-5 justify-between bg-brand-gray-light h-full'>
+  <div className='rounded border p-4 flex flex-col gap-5 justify-between bg-brand-gray-light h-full text-almost-black'>
     <p>{`"${t?.body}"`}</p>
-    <p>{`- ${t?.author?.name}${t?.author?.location ? `, ${t?.author?.location}` : ''}`}</p>
+    <p className='font-medium'>{`- ${t?.author?.name}${t?.author?.location ? `, ${t?.author?.location}` : ''}`}</p>
   </div>
 )
 

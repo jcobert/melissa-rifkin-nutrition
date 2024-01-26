@@ -7,8 +7,8 @@ import { useFormState, useFormStatus } from 'react-dom'
 
 import { ProductVariant } from '@/lib/shopify/types'
 
-import { addItem } from '@/components/cart/actions'
-import LoadingDots from '@/components/loading-dots'
+import { addItem } from '@/components/shop/cart/actions'
+import LoadingDots from '@/components/shop/loading-dots'
 
 function SubmitButton({
   availableForSale,
@@ -81,7 +81,8 @@ export function AddToCart({
   const defaultVariantId = variants?.length === 1 ? variants[0]?.id : undefined
   const variant = variants?.find((variant: ProductVariant) =>
     variant?.selectedOptions?.every(
-      (option) => option?.value === searchParams?.get(option?.name?.toLowerCase()),
+      (option) =>
+        option?.value === searchParams?.get(option?.name?.toLowerCase()),
     ),
   )
   const selectedVariantId = variant?.id || defaultVariantId

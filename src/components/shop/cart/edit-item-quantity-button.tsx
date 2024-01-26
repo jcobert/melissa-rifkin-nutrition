@@ -6,8 +6,8 @@ import { useFormState, useFormStatus } from 'react-dom'
 
 import type { CartItem } from '@/lib/shopify/types'
 
-import { updateItemQuantity } from '@/components/cart/actions'
-import LoadingDots from '@/components/loading-dots'
+import { updateItemQuantity } from '@/components/shop/cart/actions'
+import LoadingDots from '@/components/shop/loading-dots'
 
 function SubmitButton({ type }: { type: 'plus' | 'minus' }) {
   const { pending } = useFormStatus()

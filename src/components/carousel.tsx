@@ -1,47 +1,135 @@
-import { GridTileImage } from './grid/tile'
-import Link from 'next/link'
+import React, { Children, FC, ReactNode, useReducer } from 'react'
+import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
+import { useSwipeable } from 'react-swipeable'
 
-import { getCollectionProducts } from '@/lib/shopify'
+import { cn } from '@/utils/style'
 
-export async function Carousel() {
-  // Collections that start with `hidden-*` are hidden from the search page.
-  const products = await getCollectionProducts({
-    collection: 'hidden-homepage-carousel',
+type Direction = 'PREV' | 'NEXT'
+
+interface CarouselState {
+  pos: number
+  sliding: boolean
+  dir: Direction
+}
+
+type CarouselAction =
+  | { type: Direction; numItems: number }
+  | { type: 'stopSliding' }
+
+const getOrder = (index: number, pos: number, numItems: number) => {
+  return index - pos < 0 ? numItems - Math.abs(index - pos) : index - pos
+}
+
+const getInitialState = (numItems: number): CarouselState => ({
+  pos: numItems - 1,
+  sliding: false,
+  dir: 'NEXT',
+})
+
+const Carousel: FC<{ children: ReactNode }> = (props) => {
+  const numItems = Children.count(props.children)
+  const [state, dispatch] = useReducer(reducer, getInitialState(numItems))
+
+  const slide = (dir: Direction) => {
+    dispatch({ type: dir, numItems })
+    setTimeout(() => {
+      dispatch({ type: 'stopSliding' })
+    }, 50)
+  }
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => slide('NEXT'),
+    onSwipedRight: () => slide('PREV'),
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+    trackMouse: true,
   })
 
-  if (!products?.length) return null
+  const getTransformStyle = () => {
+    let transformStyle = ''
+    if (state?.sliding) {
+      if (state?.dir === 'NEXT') transformStyle = 'translateX(calc(80%))'
+      if (state?.dir === 'PREV') transformStyle = 'translateX(calc(-80%))'
+    } else transformStyle = 'translateX(0)'
+    return transformStyle
+  }
 
-  // Purposefully duplicating products to make the carousel loop and not run out of products on wide screens.
-  const carouselProducts = [...products, ...products, ...products]
+  const isActiveSlide = (index: number) => {
+    if (state?.pos === numItems - 1) {
+      if (index === 0) return true
+      return false
+    } else return index === state?.pos + 1
+  }
 
   return (
-    <div className=' w-full overflow-x-auto pb-6 pt-1'>
-      <ul className='flex animate-carousel gap-4'>
-        {carouselProducts?.map((product, i) => (
-          <li
-            key={`${product?.handle}${i}`}
-            className='relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3'
-          >
-            <Link
-              href={`/product/${product?.handle}`}
-              className='relative h-full w-full'
+    <div {...handlers} className='flex flex-col gap-4'>
+      <div className='w-full overflow-hidden'>
+        <div
+          className='flex justify-center gap-4'
+          style={{
+            transform: getTransformStyle(),
+            transition: state.sliding ? 'none' : 'transform 500ms ease',
+          }}
+        >
+          {Children.map(props.children, (child, index) => (
+            <div
+              className={cn([
+                'rounded',
+                isActiveSlide(index) && !state?.sliding && 'shadow-xl',
+              ])}
+              style={{
+                flex: '1 0 100%',
+                flexBasis: '80%',
+                order: getOrder(index, state.pos, numItems),
+              }}
             >
-              <GridTileImage
-                alt={product?.title}
-                label={{
-                  title: product?.title,
-                  amount: product?.priceRange?.maxVariantPrice?.amount,
-                  currencyCode:
-                    product?.priceRange?.maxVariantPrice?.currencyCode,
-                }}
-                src={product?.featuredImage?.url}
-                fill
-                sizes='(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw'
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
+              {child}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className='flex justify-center gap-12 sm:gap-6'>
+        <button
+          type='button'
+          className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'
+          onClick={() => slide('PREV')}
+        >
+          <SlArrowLeft />
+        </button>
+        <button
+          type='button'
+          className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'
+          onClick={() => slide('NEXT')}
+        >
+          <SlArrowRight />
+        </button>
+      </div>
     </div>
   )
 }
+
+function reducer(state: CarouselState, action: CarouselAction): CarouselState {
+  switch (action.type) {
+    case 'PREV':
+      return {
+        ...state,
+        dir: 'PREV',
+        sliding: true,
+        pos: state.pos === 0 ? action.numItems - 1 : state.pos - 1,
+      }
+    case 'NEXT':
+      return {
+        ...state,
+        dir: 'NEXT',
+        sliding: true,
+        pos: state.pos === action.numItems - 1 ? 0 : state.pos + 1,
+      }
+    case 'stopSliding':
+      return { ...state, sliding: false }
+    default:
+      return state
+  }
+}
+
+export default Carousel

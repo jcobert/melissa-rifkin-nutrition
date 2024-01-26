@@ -6,8 +6,8 @@ import { useFormState, useFormStatus } from 'react-dom'
 
 import type { CartItem } from '@/lib/shopify/types'
 
-import { removeItem } from '@/components/cart/actions'
-import LoadingDots from '@/components/loading-dots'
+import { removeItem } from '@/components/shop/cart/actions'
+import LoadingDots from '@/components/shop/loading-dots'
 
 function SubmitButton() {
   const { pending } = useFormStatus()

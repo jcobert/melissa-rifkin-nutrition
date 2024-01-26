@@ -14,7 +14,7 @@ import { DEFAULT_OPTION } from '@/lib/constants'
 import type { Cart } from '@/lib/shopify/types'
 import { createUrl } from '@/lib/utils'
 
-import Price from '@/components/price'
+import Price from '@/components/shop/price'
 
 type MerchandiseSearchParams = {
   [key: string]: string

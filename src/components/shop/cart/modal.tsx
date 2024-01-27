@@ -41,9 +41,15 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
 
   return (
     <>
-      <button aria-label='Open cart' onClick={openCart}>
-        <OpenCart quantity={cart?.totalQuantity} />
-      </button>
+      {!!cart?.lines?.length && (
+        <button
+          aria-label='Open cart'
+          onClick={openCart}
+          className='max-sm:mr-16'
+        >
+          <OpenCart quantity={cart?.totalQuantity} />
+        </button>
+      )}
       <Transition show={isOpen}>
         <Dialog onClose={closeCart} className='relative z-50'>
           <Transition.Child
@@ -79,7 +85,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                 <div className='mt-20 flex w-full flex-col items-center justify-center overflow-hidden'>
                   <ShoppingCartIcon className='h-16' />
                   <p className='mt-6 text-center text-2xl font-bold'>
-                    Your cart is empty?.
+                    Your cart is empty.
                   </p>
                 </div>
               ) : (
@@ -197,7 +203,7 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                   </div>
                   <a
                     href={cart?.checkoutUrl}
-                    className='block w-full rounded-full bg-blue-600 p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100'
+                    className='block w-full rounded-full bg-brand p-3 text-center text-sm font-medium text-white opacity-90 hover:opacity-100'
                   >
                     Proceed to Checkout
                   </a>

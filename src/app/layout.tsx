@@ -86,7 +86,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <NextUIProvider>
             <div className='flex-grow'>
               <Header />
-              <div className='flex flex-col min-h-screen'>{children}</div>
+              {/* Top margin added to offset the Cart element contained in the header. */}
+              <div className='flex flex-col min-h-screen mt-16'>{children}</div>
               <Footer />
             </div>
           </NextUIProvider>

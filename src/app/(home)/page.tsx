@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 import BrandBanner from '@/components/brand-banner'
@@ -105,7 +106,9 @@ const HomePage = async () => {
               We create plans to match your goals, food preferences and energy
               needs individually.
             </p>
-            <Button className='w-fit'>Learn More</Button>
+            <Link href='/resources/meal-plans' className='w-fit btn'>
+              Learn More
+            </Link>
           </div>
         </div>
       </section>

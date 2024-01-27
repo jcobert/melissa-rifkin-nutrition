@@ -11,12 +11,12 @@ type Props = {
 const MealPlanCard: FC<Props> = ({ data }) => {
   const image = data?.featuredImage || {}
   return (
-    <div className='rounded p-6 border w-fit__ text-center flex flex-col gap-6 items-center bg-almost-white shadow-sm'>
+    <div className='rounded p-6 border w-fit text-center flex flex-col gap-6 items-center bg-almost-white shadow-sm'>
       <div className='flex flex-col gap-6 items-center flex-auto'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image?.url} alt={image?.altText} className='w-64 h-auto' />
         <h3 className='font-medium'>{data?.title}</h3>
-        <p className='flex-auto'>{data?.description}</p>
+        {/* <p className='flex-auto'>{data?.description}</p> */}
         <p>${data?.priceRange?.minVariantPrice?.amount}</p>
       </div>
       <AddToCart availableForSale variants={data?.variants} />

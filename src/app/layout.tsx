@@ -15,7 +15,7 @@ import NextUIProvider from '@/providers/next-ui-provider'
 import QueryProvider from '@/providers/query-provider'
 
 import Footer from '@/components/common/layout/footer'
-import MainHeader from '@/components/common/layout/main-header'
+import Header from '@/components/common/layout/header'
 
 import { siteConfig } from '@/configuration/site'
 import '@/styles/globals.css'
@@ -85,7 +85,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <QueryProvider>
           <NextUIProvider>
             <div className='flex-grow'>
-              <MainHeader />
+              <Header />
+              {/* Top margin added to offset the Cart element contained in the header. */}
               <div className='flex flex-col min-h-screen mt-16'>{children}</div>
               <Footer />
             </div>

@@ -17,7 +17,7 @@ const ContactPage: FC<Props> = () => {
           We'd love to learn about you and your wellness goals! Schedule a quick
           call with us, so we can identify the right path forward for you.
         </p>
-        <div className='w-full sm:w-10/12 md:w-3/4 lg:w-1/2'>
+        <div className='w-full sm:w-10/12 md:w-3/4 lg:w-1/2 border rounded'>
           <Calendly />
         </div>
       </div>

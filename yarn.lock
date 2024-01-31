@@ -4462,6 +4462,13 @@
   dependencies:
     "@sanity/uuid" "3.0.2"
 
+"@sanity/preview-url-secret@^1.5.5":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@sanity/preview-url-secret/-/preview-url-secret-1.5.5.tgz#2b44c67cb9ae10196228ce4bfc1cf6f85efbad34"
+  integrity sha512-NZVRAVt4tS427SLa702Cw7H0mOb/oE73xcTA1+UQ/0pJ9V4GAqCZICKDn0wIN7vhkadl1j5pCSo7y6V7yi1d0A==
+  dependencies:
+    "@sanity/uuid" "3.0.2"
+
 "@sanity/react-loader@^1.8.1":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@sanity/react-loader/-/react-loader-1.8.1.tgz#389e500c915a1ccc52831b8ea668bb976bacf54d"

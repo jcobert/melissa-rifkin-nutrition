@@ -1,3 +1,5 @@
+'use client'
+
 import React, { Children, FC, ReactNode, useReducer } from 'react'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 import { useSwipeable } from 'react-swipeable'
@@ -61,11 +63,16 @@ const Carousel: FC<{ children: ReactNode }> = (props) => {
     } else return index === state?.pos + 1
   }
 
+  const count = Children?.count(props?.children)
+
   return (
     <div {...handlers} className='flex flex-col gap-4'>
       <div className='w-full overflow-hidden'>
         <div
-          className='flex justify-center gap-4'
+          className={cn([
+            'flex justify-start__ gap-4',
+            count % 2 === 1 && 'justify-center',
+          ])}
           style={{
             transform: getTransformStyle(),
             transition: state.sliding ? 'none' : 'transform 500ms ease',

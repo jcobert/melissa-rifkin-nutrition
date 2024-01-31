@@ -4346,12 +4346,12 @@
   resolved "https://registry.yarnpkg.com/@sanity/generate-help-url/-/generate-help-url-3.0.0.tgz#60e9cba61b82103ea3761730a53cd9310b98892d"
   integrity sha512-wtMYcV5GIDIhVyF/jjmdwq1GdlK07dRL40XMns73VbrFI7FteRltxv48bhYVZPcLkRXb0SHjpDS/icj9/yzbVA==
 
-"@sanity/icons@^2.7.0", "@sanity/icons@^2.8", "@sanity/icons@^2.8.0":
+"@sanity/icons@^2.10.0", "@sanity/icons@^2.7.0", "@sanity/icons@^2.8.0":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@sanity/icons/-/icons-2.10.0.tgz#d9f4be9a165976f8d6cbfdc8b58f3abb9d036aaa"
   integrity sha512-aroxPAPxjuIViRqd7ZVy6Trr8iEV+N9S+dw94HwEWVBk+F8XTaWUcDifDEPvUQr0LhwZqylzzEW9kVIJJpNngg==
 
-"@sanity/image-url@1", "@sanity/image-url@^1.0.2":
+"@sanity/image-url@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@sanity/image-url/-/image-url-1.0.2.tgz#1ff7259e9bad6bfca4169f21c53a4123f6ac78c3"
   integrity sha512-C4+jb2ny3ZbMgEkLd7Z3C75DsxcTEoE+axXQJsQ75ou0AKWGdVsP351hqK6mJUUxn5HCSlu3vznoh7Yljye4cQ==
@@ -4494,7 +4494,7 @@
     rxjs "^7.8.1"
     typeid-js "^0.3.0"
 
-"@sanity/types@3.26.1", "@sanity/types@^3.25":
+"@sanity/types@3.26.1":
   version "3.26.1"
   resolved "https://registry.yarnpkg.com/@sanity/types/-/types-3.26.1.tgz#3cc1e5059c98033108b31063a97f75d50d3cb142"
   integrity sha512-aNeaXS82JAJyZKc33QiL+z0vIHCOL6VpEVf5SixhHaCkoGCzt+gRupoi8dWP7Fk4JbvRQoHuoXnNXGLXVN6eOg==
@@ -4502,7 +4502,15 @@
     "@sanity/client" "^6.11.1"
     "@types/react" "^18.0.25"
 
-"@sanity/ui@^2.0", "@sanity/ui@^2.0.0":
+"@sanity/types@^3.27.0":
+  version "3.27.0"
+  resolved "https://registry.yarnpkg.com/@sanity/types/-/types-3.27.0.tgz#489b2678200d4243c02fc5272ed8cff55327e309"
+  integrity sha512-Y8rqvPbX0i8xM+TkfvDJKSdAsN0oHTGs8e/n4fBqYwMsnYavVCyaG5GQKetsirI7H5sOJzJnjWPLCXCwz2QiTA==
+  dependencies:
+    "@sanity/client" "^6.12.3"
+    "@types/react" "^18.0.25"
+
+"@sanity/ui@^2.0.0", "@sanity/ui@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@sanity/ui/-/ui-2.0.1.tgz#98b2298d8ed32cb211b4df444ee033651bfed07f"
   integrity sha512-jrdLQmU+fRLTx54uuxqfe+m/lLJTcRMk46X45UMJgOosSgvz27r0DM0uJ+hSxu/mJg0OlMNfWFZlK0e6LhDoUA==
@@ -4531,10 +4539,10 @@
     "@types/uuid" "^8.0.0"
     uuid "^8.0.0"
 
-"@sanity/vision@3":
-  version "3.26.1"
-  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-3.26.1.tgz#2967e6e7df757a6fdf20df1471cb101095f2d151"
-  integrity sha512-ZZcuUwKjsskXjyp4phC5dLvmqU41wYxoISvkfnCmwDyZkziXJxRV1r/r1a6FuygRM3f1jeInln9eMgmx2WShzA==
+"@sanity/vision@^3.27.0":
+  version "3.27.0"
+  resolved "https://registry.yarnpkg.com/@sanity/vision/-/vision-3.27.0.tgz#11e1c5938a4be9336f550ebd03d2ae110a5755c5"
+  integrity sha512-WGEDTIYipBK80vO8swdYog2Bf2mKMCOU7k9UB5Trx4bZMfrcltVUnSVHB0KN1/h9aP9xK3JhTG8I2WprwwxG4g==
   dependencies:
     "@codemirror/autocomplete" "^6.1.0"
     "@codemirror/commands" "^6.0.1"
@@ -4548,7 +4556,7 @@
     "@rexxars/react-split-pane" "^0.1.93"
     "@sanity/color" "^3.0.0"
     "@sanity/icons" "^2.8.0"
-    "@sanity/ui" "^2.0.0"
+    "@sanity/ui" "^2.0.1"
     "@uiw/react-codemirror" "^4.11.4"
     hashlru "^2.3.0"
     is-hotkey "^0.1.6"
@@ -10029,7 +10037,7 @@ next-router-mock@^0.7.5:
   resolved "https://registry.yarnpkg.com/next-router-mock/-/next-router-mock-0.7.5.tgz#199073ad6d77ddf4fc8bdb847254e5412b8e9e04"
   integrity sha512-Seglw0lCHfNyZzPIr6KBt5hp/xIIDP/49oD6D7S21j4MGKCXCu95d9zErVrn+XybK3bGz6U+RhK1R+yxyfLMrw==
 
-next-sanity@7.0.17:
+next-sanity@^7.0.17:
   version "7.0.17"
   resolved "https://registry.yarnpkg.com/next-sanity/-/next-sanity-7.0.17.tgz#a102dc77c319d3cc89769dfc62b94b6822edac3b"
   integrity sha512-hMsJarL8Oe+nRS3petmd5vPKu/BiS02g6/zXL/WJjwL0iS0z9VDDDPDgR/hq5Mb+YW6v3q9tqt5Figyr53W9RQ==

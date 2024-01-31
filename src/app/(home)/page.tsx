@@ -1,4 +1,8 @@
+import { TESTIMONIALS_QUERY } from 'cms/lib/queries'
+import { loadQuery } from 'cms/lib/store'
 import { Metadata } from 'next'
+import { SanityDocument } from 'next-sanity'
+import { draftMode } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -6,7 +10,9 @@ import React from 'react'
 import BrandBanner from '@/components/brand-banner'
 import Button from '@/components/common/buttons/Button'
 import PageLayout from '@/components/common/layout/page-layout'
-import Testimonials from '@/components/testimonials'
+import { Testimonial } from '@/components/testimonials/testimonial-card'
+import Testimonials from '@/components/testimonials/testimonials'
+import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
 import { pageTitle } from '@/configuration/site'
 
@@ -14,21 +20,6 @@ export const metadata: Metadata = {
   title: pageTitle('Home'),
 }
 
-/** @todo replace with CMS data. */
-const testimonialData = [
-  {
-    body: 'I had struggled with weight and body image my entire life and was worried that would never change. It’s hard to put into words what an amazing experience I’ve had with Melissa over the past two years.',
-    author: { name: 'Tara', location: 'Chicago' },
-  },
-  {
-    body: 'I honestly can’t thank you enough for how you’ve helped me. You’ve helped me more on the inside, and to me that’s what matters most. My entire mind set regarding food has changed. I now eat because I want to fuel my body and be a strong woman.',
-    author: { name: 'Jeanette' },
-  },
-  {
-    body: 'Eight weeks ago, I started my first meal plan, and I haven’t looked back since. The plans are easy to follow, the meals do not need a vast list of complicated ingredients. She has factored in your cheat meal during the week, which is amazing because you don’t have the guilt of ‘cheating’ the next day. You just carry on.',
-    author: { name: 'Martha', location: 'Nigeria' },
-  },
-]
 /** @todo replace with CMS data. */
 const blogPostsData = [
   {
@@ -55,7 +46,13 @@ const blogPostsData = [
 ]
 
 const HomePage = async () => {
-  // const blogPosts = await loadQuery<SanityDocument[]>(POSTS_QUERY)
+  const testimonials = await loadQuery<SanityDocument<Testimonial>[]>(
+    TESTIMONIALS_QUERY,
+    {},
+    {
+      perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    },
+  )
 
   return (
     <PageLayout
@@ -160,7 +157,11 @@ const HomePage = async () => {
         <h2 className='text-2xl font-bold font-prata text-brand-gray-dark text-pretty'>
           Hear What Our Clients Are Saying
         </h2>
-        <Testimonials data={testimonialData} />
+        {draftMode()?.isEnabled ? (
+          <TestimonialsPreview data={testimonials} />
+        ) : (
+          <Testimonials data={testimonials?.data} />
+        )}
       </section>
 
       {/* Recent Blog Posts */}

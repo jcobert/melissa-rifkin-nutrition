@@ -55,6 +55,8 @@ const blogPostsData = [
 ]
 
 const HomePage = async () => {
+  // const blogPosts = await loadQuery<SanityDocument[]>(POSTS_QUERY)
+
   return (
     <PageLayout
       defaultLayout={false}

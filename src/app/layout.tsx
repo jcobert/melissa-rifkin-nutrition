@@ -9,6 +9,7 @@ import {
   Raleway,
   Vazirmatn,
 } from 'next/font/google'
+import { draftMode } from 'next/headers'
 import { ReactNode } from 'react'
 
 import NextUIProvider from '@/providers/next-ui-provider'
@@ -16,6 +17,7 @@ import QueryProvider from '@/providers/query-provider'
 
 import Footer from '@/components/common/layout/footer'
 import Header from '@/components/common/layout/header'
+import VisualEditing from '@/components/sanity/visual-editing'
 
 import { siteConfig } from '@/configuration/site'
 import '@/styles/globals.css'
@@ -87,7 +89,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <div className='flex-grow'>
               <Header />
               {/* Top margin added to offset the Cart element contained in the header. */}
-              <div className='flex flex-col min-h-screen mt-16'>{children}</div>
+              <div className='flex flex-col min-h-screen mt-16'>
+                {children}
+                {draftMode().isEnabled && <VisualEditing />}
+              </div>
               <Footer />
             </div>
           </NextUIProvider>

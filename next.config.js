@@ -18,8 +18,15 @@ const nextConfig = {
       {
         hostname: '**.shopify.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
     ],
     minimumCacheTTL: 31536000,
+  },
+  experimental: {
+    taint: true,
   },
   // async headers() {
   //   return [

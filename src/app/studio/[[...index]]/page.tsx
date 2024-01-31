@@ -12,5 +12,9 @@ import config from '../../../../sanity.config'
 import { NextStudio } from 'next-sanity/studio'
 
 export default function StudioPage() {
-  return <NextStudio config={config} />
+  return (
+    <div className='sticky'>
+      <NextStudio config={config} />
+    </div>
+  )
 }

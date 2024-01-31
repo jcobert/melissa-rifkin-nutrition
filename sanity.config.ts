@@ -6,6 +6,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import { schema } from './sanity/schema'
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
+import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
 
 export default defineConfig({
@@ -19,5 +20,12 @@ export default defineConfig({
     // Vision is a tool that lets you query your content with GROQ in the studio
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: '/api/draft',
+        },
+      },
+    }),
   ],
 })

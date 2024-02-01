@@ -1,3 +1,4 @@
+import { Category } from 'cms/schemas/category'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
@@ -70,3 +71,13 @@ export default defineType({
     },
   },
 })
+
+export type Post = {
+  title?: string
+  slug?: string
+  author?: string
+  mainImage?: string
+  categories?: Category[]
+  publishedAt?: string
+  body?: string
+}

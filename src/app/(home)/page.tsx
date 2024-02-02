@@ -1,16 +1,16 @@
-import { TESTIMONIALS_QUERY } from 'cms/lib/queries'
-import { loadQuery } from 'cms/lib/store'
 import { Metadata } from 'next'
 import { SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { TESTIMONIALS_QUERY } from 'sanity-studio/lib/queries'
+import { loadQuery } from 'sanity-studio/lib/store'
+import { Testimonial } from 'sanity-studio/types'
 
 import BrandBanner from '@/components/brand-banner'
 import Button from '@/components/common/buttons/Button'
 import PageLayout from '@/components/common/layout/page-layout'
-import { Testimonial } from '@/components/testimonials/testimonial-card'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
@@ -113,7 +113,7 @@ const HomePage = async () => {
       </section>
 
       {/* Recipes */}
-      <section className='sm:layout bg-brand-accent max-sm:py-4'>
+      <section className='sm:layout bg-brand-green max-sm:py-4'>
         <div className='flex gap-x-8'>
           <div className='p-4 flex flex-col gap-4 items-center w-full sm:items-start justify-center md:ml-8 lg:ml-16 xl:ml-24 2xl:ml-28'>
             <h2 className='text-2xl max-sm:self-start font-bold font-prata text-brand text-pretty'>

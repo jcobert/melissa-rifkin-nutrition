@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
+import { Testimonial } from 'sanity-studio/types'
 
 import Carousel from '@/components/carousel'
-import TestimonialCard, {
-  Testimonial,
-} from '@/components/testimonials/testimonial-card'
+import TestimonialCard from '@/components/testimonials/testimonial-card'
 
 type Props = {
   data: Testimonial[]

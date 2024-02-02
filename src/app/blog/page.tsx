@@ -1,10 +1,10 @@
-import { POSTS_QUERY } from 'cms/lib/queries'
-import { loadQuery } from 'cms/lib/store'
-import { Post } from 'cms/schemas/post'
 import { Metadata } from 'next'
 import { SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
 import React, { FC } from 'react'
+import { POSTS_QUERY } from 'sanity-studio/lib/queries'
+import { loadQuery } from 'sanity-studio/lib/store'
+import { Post } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
 
@@ -24,6 +24,8 @@ const BlogPage: FC = async () => {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
     },
   )
+
+  // console.log(posts?.data?.[0])
 
   return (
     <PageLayout

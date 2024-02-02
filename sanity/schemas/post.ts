@@ -1,5 +1,5 @@
-import { Category } from 'cms/schemas/category'
 import { defineField, defineType } from 'sanity'
+import { Category } from 'sanity-studio/schemas/category'
 
 export default defineType({
   name: 'post',

@@ -1,10 +1,10 @@
 'use client'
 
 import { QueryResponseInitial, useQuery } from '@sanity/react-loader'
-import { POSTS_QUERY } from 'cms/lib/queries'
-import { Post } from 'cms/schemas/post'
 import { SanityDocument } from 'next-sanity'
 import React, { FC } from 'react'
+import { POSTS_QUERY } from 'sanity-studio/lib/queries'
+import { Post } from 'sanity-studio/types'
 
 import Posts from '@/app/blog/posts'
 

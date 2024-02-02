@@ -1,10 +1,5 @@
 import React, { FC } from 'react'
-
-export type Testimonial = {
-  name?: string
-  location?: string
-  testimonial?: string
-}
+import { Testimonial } from 'sanity-studio/types'
 
 type Props = {
   testimonial: Testimonial

@@ -1,14 +1,16 @@
+import { Metadata } from 'next'
 import React, { FC } from 'react'
 
 import Calendly from '@/components/calendly'
 import PageLayout from '@/components/common/layout/page-layout'
 
-type Props = {
-  //
+import { pageTitle } from '@/configuration/site'
+
+export const metadata: Metadata = {
+  title: pageTitle('Contact'),
 }
 
-const ContactPage: FC<Props> = () => {
-  //
+const ContactPage: FC = () => {
   return (
     <PageLayout heading='Contact Us'>
       <div className='flex flex-col items-center gap-8'>

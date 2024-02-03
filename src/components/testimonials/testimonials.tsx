@@ -1,27 +1,30 @@
 import React, { FC } from 'react'
+import { Testimonial } from 'sanity-studio/types'
 
 import Carousel from '@/components/carousel'
-import TestimonialCard, {
-  Testimonial,
-} from '@/components/testimonials/testimonial-card'
+import TestimonialCard from '@/components/testimonials/testimonial-card'
 
 type Props = {
-  data: Testimonial[]
+  testimonials: Testimonial[]
 }
 
-const Testimonials: FC<Props> = ({ data }) => {
+const Testimonials: FC<Props> = ({ testimonials }) => {
   return (
     <>
       {/* Carousel up until large breakpoint. */}
       <div className='lg:hidden md:w-3/4'>
         <Carousel>
-          {data?.map((t, i) => <TestimonialCard key={i} testimonial={t} />)}
+          {testimonials?.map((t, i) => (
+            <TestimonialCard key={i} testimonial={t} />
+          ))}
         </Carousel>
       </div>
 
       {/* Card grid at large breakpoint. */}
       <div className='grid grid-cols-3 gap-6 max-lg:hidden'>
-        {data?.map((t, i) => <TestimonialCard key={i} testimonial={t} />)}
+        {testimonials?.map((t, i) => (
+          <TestimonialCard key={i} testimonial={t} />
+        ))}
       </div>
     </>
   )

@@ -5,6 +5,15 @@ import post from './schemas/post'
 import testimonial from './schemas/testimonial'
 import { type SchemaTypeDefinition } from 'sanity'
 
-export const schema: { types: SchemaTypeDefinition[] } = {
+const schema: { types: SchemaTypeDefinition[] } = {
   types: [post, author, category, blockContent, testimonial],
 }
+// const schema: SchemaTypeDefinition[] = [
+//   post,
+//   author,
+//   category,
+//   blockContent,
+//   testimonial,
+// ]
+
+export default schema

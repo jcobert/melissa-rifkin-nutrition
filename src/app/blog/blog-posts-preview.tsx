@@ -6,24 +6,24 @@ import React, { FC } from 'react'
 import { POSTS_QUERY } from 'sanity-studio/lib/queries'
 import { Post } from 'sanity-studio/types'
 
-import Posts from '@/app/blog/posts'
+import BlogPosts from '@/app/blog/blog-posts'
 
 type Props = {
-  data: QueryResponseInitial<SanityDocument<Post>[]>
+  initial: QueryResponseInitial<SanityDocument<Post>[]>
 }
 
-const PostsPreview: FC<Props> = ({ data }) => {
-  const { data: posts } = useQuery<SanityDocument<Post>[] | null>(
+const BlogPostsPreview: FC<Props> = ({ initial }) => {
+  const { data } = useQuery<SanityDocument<Post>[] | null>(
     POSTS_QUERY,
     {},
-    { initial: data },
+    { initial },
   )
 
   return data ? (
-    <Posts data={posts || []} />
+    <BlogPosts posts={data || []} />
   ) : (
     <div className='bg-red-100'>No posts found</div>
   )
 }
 
-export default PostsPreview
+export default BlogPostsPreview

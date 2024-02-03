@@ -158,9 +158,9 @@ const HomePage = async () => {
           Hear What Our Clients Are Saying
         </h2>
         {draftMode()?.isEnabled ? (
-          <TestimonialsPreview data={testimonials} />
+          <TestimonialsPreview initial={testimonials} />
         ) : (
-          <Testimonials data={testimonials?.data} />
+          <Testimonials testimonials={testimonials?.data} />
         )}
       </section>
 

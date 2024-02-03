@@ -12,7 +12,7 @@ type Props = {
   post: Post
 }
 
-const PostCard: FC<Props> = ({ post }) => {
+const BlogPostCard: FC<Props> = ({ post }) => {
   const { mainImage, slug, title, author, publishedAt } = post
   const image = getImageProps(mainImage)
   return (
@@ -50,4 +50,4 @@ const PostCard: FC<Props> = ({ post }) => {
   )
 }
 
-export default PostCard
+export default BlogPostCard

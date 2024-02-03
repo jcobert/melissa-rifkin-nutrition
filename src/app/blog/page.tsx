@@ -8,8 +8,8 @@ import { Post } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
 
-import Posts from '@/app/blog/posts'
-import PostsPreview from '@/app/blog/posts-preview'
+import BlogPosts from '@/app/blog/blog-posts'
+import BlogPostsPreview from '@/app/blog/blog-posts-preview'
 import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 const BlogPage: FC = async () => {
-  const posts = await loadQuery<SanityDocument<Post>[]>(
+  const initial = await loadQuery<SanityDocument<Post>[]>(
     POSTS_QUERY,
     {},
     {
@@ -35,9 +35,9 @@ const BlogPage: FC = async () => {
       <div className='flex flex-col items-center gap-8'>
         <div>
           {draftMode()?.isEnabled ? (
-            <PostsPreview data={posts} />
+            <BlogPostsPreview initial={initial} />
           ) : (
-            <Posts data={posts?.data} />
+            <BlogPosts posts={initial?.data} />
           )}
         </div>
       </div>

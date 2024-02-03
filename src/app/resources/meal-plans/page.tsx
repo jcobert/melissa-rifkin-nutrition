@@ -5,8 +5,8 @@ import React from 'react'
 import { getProducts } from '@/lib/shopify'
 
 import PageLayout from '@/components/common/layout/page-layout'
+import MealPlanCard from '@/components/features/meal-plan/meal-plan-card'
 
-import MealPlanCard from '@/app/resources/meal-plans/meal-plan-card'
 import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {

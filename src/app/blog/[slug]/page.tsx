@@ -7,8 +7,6 @@ import { POSTS_QUERY, POST_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { Post } from 'sanity-studio/types'
 
-import PageLayout from '@/components/common/layout/page-layout'
-
 import BlogPost from '@/app/blog/[slug]/blog-post'
 import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
 import { pageTitle } from '@/configuration/site'
@@ -19,9 +17,9 @@ export const metadata: Metadata = {
 }
 
 export async function generateStaticParams() {
-  const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY)
+  const posts = await client.fetch<SanityDocument<Post>[]>(POSTS_QUERY)
   return posts?.map((post) => ({
-    slug: post.slug.current,
+    slug: post?.slug?.current,
   }))
 }
 
@@ -30,14 +28,10 @@ const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
   })
 
-  return (
-    <PageLayout className='flex flex-col gap-16 items-center text-almost-black'>
-      {draftMode().isEnabled ? (
-        <BlogPostPreview initial={initial} params={params} />
-      ) : (
-        <BlogPost post={initial?.data} />
-      )}
-    </PageLayout>
+  return draftMode().isEnabled ? (
+    <BlogPostPreview initial={initial} params={params} />
+  ) : (
+    <BlogPost post={initial?.data} />
   )
 }
 

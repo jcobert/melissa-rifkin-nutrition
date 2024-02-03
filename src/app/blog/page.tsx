@@ -32,15 +32,11 @@ const BlogPage: FC = async () => {
       heading='Blog'
       className='flex flex-col gap-16 items-center text-almost-black'
     >
-      <div className='flex flex-col items-center gap-8'>
-        <div>
-          {draftMode()?.isEnabled ? (
-            <BlogPostsPreview initial={initial} />
-          ) : (
-            <BlogPosts posts={initial?.data} />
-          )}
-        </div>
-      </div>
+      {draftMode()?.isEnabled ? (
+        <BlogPostsPreview initial={initial} />
+      ) : (
+        <BlogPosts posts={initial?.data} />
+      )}
     </PageLayout>
   )
 }

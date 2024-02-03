@@ -2,7 +2,7 @@ import { groq } from 'next-sanity'
 
 // POST
 export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)]{ ..., author->, mainImage{ ..., asset-> } }`
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug]{ ..., author-> }[0]`
+export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug]{ ..., author->, mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } } }[0]`
 
 // AUTHOR
 export const AUTHORS_QUERY = groq`*[_type == "author"]`

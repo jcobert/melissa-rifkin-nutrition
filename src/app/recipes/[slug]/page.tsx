@@ -5,8 +5,10 @@ import React, { FC } from 'react'
 import { client } from 'sanity-studio/lib/client'
 import { RECIPES_QUERY, RECIPE_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
-import { Recipe } from 'sanity-studio/types'
+import { type Recipe } from 'sanity-studio/types'
 
+import RecipeFull from '@/app/recipes/[slug]/recipe'
+import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
 import { pageTitle } from '@/configuration/site'
 
 /** @todo set dynamic metadata for page title? */
@@ -31,7 +33,11 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     },
   )
 
-  return <div></div>
+  return draftMode().isEnabled ? (
+    <RecipePreview initial={initial} params={params} />
+  ) : (
+    <RecipeFull recipe={initial?.data} />
+  )
 }
 
 export default RecipePage

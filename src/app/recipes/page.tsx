@@ -8,6 +8,8 @@ import { Recipe } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
 
+import Recipes from '@/app/recipes/recipes'
+import RecipesPreview from '@/app/recipes/recipes-preview'
 import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {
@@ -26,7 +28,11 @@ const RecipesPage: FC = async () => {
 
   return (
     <PageLayout heading='Recipes'>
-      <div></div>
+      {draftMode()?.isEnabled ? (
+        <RecipesPreview initial={initial} />
+      ) : (
+        <Recipes recipes={initial?.data} />
+      )}
     </PageLayout>
   )
 }

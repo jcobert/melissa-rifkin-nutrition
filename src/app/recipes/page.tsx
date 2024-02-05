@@ -4,6 +4,7 @@ import { draftMode } from 'next/headers'
 import React, { FC } from 'react'
 import { RECIPES_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
+import { Recipe } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 
 /** Top-level Recipes route. */
 const RecipesPage: FC = async () => {
-  const initial = await loadQuery<SanityDocument[]>(
+  const initial = await loadQuery<SanityDocument<Recipe>[]>(
     RECIPES_QUERY,
     {},
     {

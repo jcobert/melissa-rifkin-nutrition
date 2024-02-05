@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity'
-import { Category } from 'sanity-studio/schemas/category'
 
 export default defineType({
   name: 'recipe',
@@ -19,12 +18,6 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
-    }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: { type: 'author' },
     }),
     defineField({
       name: 'mainImage',
@@ -62,22 +55,10 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
       media: 'mainImage',
     },
     prepare(selection) {
-      const { author } = selection
-      return { ...selection, subtitle: author && `by ${author}` }
+      return selection
     },
   },
 })
-
-export type Post = {
-  title?: string
-  slug?: string
-  author?: string
-  mainImage?: string
-  categories?: Category[]
-  publishedAt?: string
-  body?: string
-}

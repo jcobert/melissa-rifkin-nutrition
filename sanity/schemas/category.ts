@@ -17,8 +17,3 @@ export default defineType({
     }),
   ],
 })
-
-export type Category = {
-  title?: string
-  description?: string
-}

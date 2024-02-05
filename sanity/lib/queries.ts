@@ -8,5 +8,9 @@ export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug]{ ...,
 export const AUTHORS_QUERY = groq`*[_type == "author"]`
 export const AUTHOR_QUERY = groq`*[_type == "author" && _id == $id][0]`
 
+// RECIPE
+export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug)]`
+export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]`
+
 // TESTIMONIAL
 export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"]`

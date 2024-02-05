@@ -58,7 +58,7 @@ export const navItems: NavItem[] = [
         { id: 'lunch', name: 'Lunch', url: '/recipes/lunch' },
         { id: 'dinner', name: 'Dinner', url: '/recipes/dinner' },
         { id: 'desserts', name: 'Desserts', url: '/recipes/desserts' },
-        { id: 'sideDishes', name: 'Side Dishes', url: '/recipes/sideDishes' },
+        { id: 'sideDishes', name: 'Side Dishes', url: '/recipes/side-dishes' },
         { id: 'snacks', name: 'Snacks', url: '/recipes/snacks' },
       ],
     },

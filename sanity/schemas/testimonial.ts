@@ -1,9 +1,11 @@
+import { BsChatQuoteFill } from 'react-icons/bs'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'testimonial',
   title: 'Testimonial',
   type: 'document',
+  icon: BsChatQuoteFill,
   fields: [
     defineField({
       name: 'name',

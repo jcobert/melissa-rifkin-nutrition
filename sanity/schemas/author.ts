@@ -1,9 +1,11 @@
+import { BsPersonFill } from 'react-icons/bs'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'author',
   title: 'Author',
   type: 'document',
+  icon: BsPersonFill,
   fields: [
     defineField({
       name: 'name',

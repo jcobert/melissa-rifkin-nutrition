@@ -1,9 +1,11 @@
+import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  icon: FaNewspaper,
   fields: [
     defineField({
       name: 'title',

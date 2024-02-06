@@ -1,9 +1,11 @@
+import { FaBook } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'recipe',
   title: 'Recipe',
   type: 'document',
+  icon: FaBook,
   fields: [
     defineField({
       name: 'title',
@@ -45,6 +47,7 @@ export default defineType({
       title: 'Tags',
       type: 'array',
       of: [{ type: 'reference', to: { type: 'recipeTag' } }],
+      options: { layout: 'tags' },
     }),
     defineField({
       name: 'publishedAt',

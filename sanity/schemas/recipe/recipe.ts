@@ -32,7 +32,8 @@ export default defineType({
         {
           name: 'alt',
           type: 'string',
-          title: 'Alternative Text',
+          title: 'Image Description',
+          description: 'Used for people who cannot see the image.',
         },
       ],
     }),
@@ -46,7 +47,8 @@ export default defineType({
       name: 'tags',
       title: 'Tags',
       type: 'array',
-      of: [{ type: 'reference', to: { type: 'recipeTag' } }],
+      of: [{ type: 'string' }],
+      // of: [{ type: 'reference', to: { type: 'recipeTag' } }],
       options: { layout: 'tags' },
     }),
     defineField({
@@ -55,9 +57,30 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: 'prepTime',
+      title: 'Prep Time',
+      type: 'number',
+      description: 'In minutes',
+    }),
+    defineField({
+      name: 'cookTime',
+      title: 'Cook Time',
+      type: 'number',
+      description: 'In minutes',
+    }),
+    defineField({
+      name: 'ingredientGroups',
+      title: 'Ingredient Groups',
+      type: 'array',
+      of: [{ type: 'ingredientGroup' }],
+      options: { modal: { type: 'dialog', width: 'auto' } },
+    }),
+    defineField({
+      name: 'instructions',
+      title: 'Instructions',
+      type: 'array',
+      of: [{ type: 'instruction' }],
+      options: { modal: { type: 'dialog', width: 'auto' } },
     }),
   ],
 

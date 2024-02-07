@@ -1,0 +1,21 @@
+import { defineField, defineType } from 'sanity'
+
+export default defineType({
+  name: 'ingredientGroup',
+  title: 'Ingredient Group',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'ingredients',
+      title: 'Ingredients',
+      type: 'array',
+      of: [{ type: 'ingredientMeasurement' }],
+      // of: [{ type: 'reference', to: { type: 'ingredient' } }],
+    }),
+  ],
+})

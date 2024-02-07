@@ -55,6 +55,7 @@ export default defineType({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
+      hidden: true,
     }),
     defineField({
       name: 'prepTime',

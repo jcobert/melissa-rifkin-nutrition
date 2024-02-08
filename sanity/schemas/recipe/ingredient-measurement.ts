@@ -41,12 +41,12 @@ export default defineType({
       options: {
         list: [
           { value: 'tsp', title: 'tsp' },
-          { value: 'tbsp', title: 'Tbsp' },
-          { value: 'cup', title: 'Cup' },
+          { value: 'tbsp', title: 'tbsp' },
+          { value: 'cup', title: 'cup' },
           { value: 'pound', title: 'lb' },
           { value: 'ounce', title: 'oz' },
-          { value: 'pinch', title: 'Pinch' },
-          { value: 'piece', title: 'Piece' },
+          { value: 'pinch', title: 'pinch' },
+          { value: 'piece', title: 'piece' },
         ],
         layout: 'dropdown',
       },

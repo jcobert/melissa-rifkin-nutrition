@@ -1,4 +1,5 @@
 import { fraction } from 'mathjs'
+import { RecipeUnit } from 'sanity-studio/types'
 
 export const formatFraction = (number?: number) => {
   if (!number) return ''
@@ -15,4 +16,9 @@ export const formatFraction = (number?: number) => {
   }
   if (!rem?.n) remDisplay = ''
   return `${whole > 0 || (whole === 0 && rem?.d === 1) ? `${wholeDisplay} ` : ''}${remDisplay}`
+}
+
+export const formatUnit = (unit?: keyof typeof RecipeUnit) => {
+  if (!unit) return ''
+  return RecipeUnit?.[unit]
 }

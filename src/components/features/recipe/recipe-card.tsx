@@ -13,7 +13,7 @@ type Props = {
 }
 
 const RecipeCard: FC<Props> = ({ recipe }) => {
-  const { mainImage, slug, title, publishedAt, categories } = recipe
+  const { mainImage, slug, title, publishedAt } = recipe
   const image = getImageProps(mainImage)
   const linkToFull = `/recipes/${slug?.current}`
   return (
@@ -38,7 +38,7 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
       </div>
       <div className='px-12 pt-6 pb-12'>
         <span className='absolute inset-0 m-2 md:m-4 border border-brand-gray-light pointer-events-none'></span>
-        <p className='flex-auto text-balance text-center text-lg font-medium text-brand-gray-dark hover:text-brand-blue/hover transition'>
+        <p className='flex-auto text-balance text-center text-lg font-medium text-brand-gray-dark hover:text-brand-gray-dark/hover transition'>
           {title}
         </p>
         {!!publishedAt && (

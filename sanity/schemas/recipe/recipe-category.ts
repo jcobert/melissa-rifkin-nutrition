@@ -2,20 +2,15 @@ import { FaBookmark } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  name: 'category',
-  title: 'Category',
+  name: 'recipeCategory',
+  title: 'Recipe Category',
   type: 'document',
   icon: FaBookmark,
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'name',
+      title: 'Name',
       type: 'string',
-    }),
-    defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
     }),
   ],
 })

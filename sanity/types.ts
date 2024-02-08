@@ -36,131 +36,115 @@ export type {
   SanityImagePaletteSwatch,
 }
 
-/**
- * Post
- */
+/** Post */
 export interface Post extends SanityDocument {
   _type: 'post'
-
-  /**
-   * Title — `string`
-   */
   title?: string
-
-  /**
-   * Slug — `slug`
-   */
   slug?: { _type: 'slug'; current: string }
-
-  /**
-   * Author — `reference`
-   */
   author?: Author
-
-  /**
-   * Main image — `image`
-   */
   mainImage?: {
     _type: 'image'
     asset: SanityImageAsset
     crop?: SanityImageCrop
     hotspot?: SanityImageHotspot
-
-    /**
-     * Alternative Text — `string`
-     */
     alt?: string
   }
-
-  /**
-   * Categories — `array`
-   */
   categories?: Array<SanityKeyedReference<Category>>
-
-  /**
-   * Published at — `datetime`
-   */
   publishedAt?: string
-
-  /**
-   * Body — `blockContent`
-   */
   body?: BlockContent
 }
 
-/**
- * Author
- */
+/** Recipe */
+export interface Recipe extends SanityDocument {
+  _type: 'recipe'
+  title?: string
+  slug?: { _type: 'slug'; current: string }
+  publishedAt?: string
+  mainImage?: {
+    _type: 'image'
+    asset: SanityImageAsset
+    crop?: SanityImageCrop
+    hotspot?: SanityImageHotspot
+    alt?: string
+  }
+  category?: SanityKeyedReference<Category> & Category
+  tags?: Array<string>
+  prepTime?: number
+  cookTime?: number
+  ingredientGroups?: Array<
+    SanityKeyedReference<IngredientGroup> & IngredientGroup
+  >
+  instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
+}
+
+export interface Ingredient {
+  _type: 'ingredient'
+  name?: string
+  alternativeNames?: Array<string>
+}
+
+export type IngredientGroup = {
+  title?: string
+  ingredients?: Array<IngredientMeasurement>
+}
+
+export type IngredientMeasurement = {
+  ingredientName?: Ingredient
+  // ingredientName?: SanityReference<Ingredient> & Ingredient
+  amount?: number
+  unit?: keyof typeof RecipeUnit
+  note?: string
+}
+
+export type Instruction = {
+  title?: string
+  description?: string
+  ingredients?: Array<Ingredient>
+  // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
+}
+
+export interface RecipeCategory {
+  _type: 'recipeCategory'
+  name?: string
+}
+
+export enum RecipeUnit {
+  tsp = 'tsp',
+  tbsp = 'tbsp',
+  cup = 'cup',
+  pound = 'lb',
+  ounce = 'oz',
+  pinch = 'pinch',
+  piece = 'piece',
+}
+
+/** Author */
 export interface Author extends SanityDocument {
   _type: 'author'
-
-  /**
-   * Name — `string`
-   */
   name?: string
-
-  /**
-   * Slug — `slug`
-   */
   slug?: { _type: 'slug'; current: string }
-
-  /**
-   * Image — `image`
-   */
   image?: {
     _type: 'image'
     asset: SanityReference<SanityImageAsset>
     crop?: SanityImageCrop
     hotspot?: SanityImageHotspot
-
-    /**
-     * Alternative Text — `string`
-     */
     alt?: string
   }
-
-  /**
-   * Bio — `array`
-   */
   bio?: Array<SanityKeyed<SanityBlock>>
 }
 
-/**
- * Category
- */
+/** Category */
 export interface Category extends SanityDocument {
   _type: 'category'
-
-  /**
-   * Title — `string`
-   */
   title?: string
-
-  /**
-   * Description — `text`
-   */
   description?: string
 }
 
-/**
- * Testimonial
- */
+/** Testimonial */
 export interface Testimonial extends SanityDocument {
   _type: 'testimonial'
-
-  /**
-   * Name — `string`
-   */
   name?: string
-
-  /**
-   * Location — `string`
-   */
   location?: string
-
-  /**
-   * Testimonial — `text`
-   */
   testimonial?: string
 }
 
@@ -171,12 +155,15 @@ export type BlockContent = Array<
       asset: SanityReference<SanityImageAsset>
       crop?: SanityImageCrop
       hotspot?: SanityImageHotspot
-
-      /**
-       * Alternative Text — `string`
-       */
       alt?: string
     }>
 >
 
-export type Documents = Post | Author | Category | Testimonial
+export type Documents =
+  | Post
+  | Author
+  | Category
+  | Testimonial
+  | Recipe
+  | Ingredient
+  | RecipeCategory

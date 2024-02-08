@@ -25,8 +25,6 @@ const BlogPage: FC = async () => {
     },
   )
 
-  // console.log(posts?.data?.[0])
-
   return (
     <PageLayout
       heading='Blog'

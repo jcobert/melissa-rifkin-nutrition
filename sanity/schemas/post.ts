@@ -1,10 +1,11 @@
+import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
-import { Category } from 'sanity-studio/schemas/category'
 
 export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  icon: FaNewspaper,
   fields: [
     defineField({
       name: 'title',
@@ -37,7 +38,8 @@ export default defineType({
         {
           name: 'alt',
           type: 'string',
-          title: 'Alternative Text',
+          title: 'Image Description',
+          description: 'Used for people who cannot see the image.',
         },
       ],
     }),
@@ -71,13 +73,3 @@ export default defineType({
     },
   },
 })
-
-export type Post = {
-  title?: string
-  slug?: string
-  author?: string
-  mainImage?: string
-  categories?: Category[]
-  publishedAt?: string
-  body?: string
-}

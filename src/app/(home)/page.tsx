@@ -131,7 +131,9 @@ const HomePage = async () => {
               If you enjoy quick meals made with healthy, fresh ingredients,
               these recipes are for you.
             </p>
-            <Button className='w-fit'>Get Cooking</Button>
+            <Link href='/recipes' className='w-fit btn'>
+              Get Cooking
+            </Link>
           </div>
           <Image
             src='/images/meal-plan.jpeg'

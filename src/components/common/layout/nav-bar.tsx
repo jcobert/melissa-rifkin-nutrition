@@ -1,5 +1,6 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import React, { FC } from 'react'
+import { FaAngleUp } from 'react-icons/fa6'
 
 import { cn } from '@/utils/style'
 
@@ -17,15 +18,16 @@ const NavBar: FC = () => {
             <NavigationMenu.Item key={item?.id}>
               {!hasMenu ? (
                 <NavLink
-                  className='text-brand-gray-dark transition hover:bg-brand/10 block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline'
+                  className='text-brand-gray-dark transition hover:bg-brand/10 block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline data-[active]:text-brand'
                   href={item?.url}
                 >
                   {item?.name}
                 </NavLink>
               ) : (
                 <>
-                  <NavigationMenu.Trigger className='text-brand-gray-dark hover:border-y-brand/10 group flex select-none items-center justify-between gap-[2px] rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none'>
-                    {item?.name}
+                  <NavigationMenu.Trigger className='text-brand-gray-dark hover:border-y-brand/10 group flex select-none items-center justify-between gap-1 rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none data-[state=open]:text-brand__ group'>
+                    <span>{item?.name}</span>
+                    <FaAngleUp className='text-xs group-data-[state=open]:rotate-180 transition duration-75' />
                   </NavigationMenu.Trigger>
                   <div className='perspective-[2000px] absolute top-full flex justify-center w-[var(--radix-navigation-menu-viewport-width)]'>
                     <NavigationMenu.Content className='relative mt-4 data-[state=open]:animate-scaleIn shadow-xl data-[state=closed]:animate-scaleOut h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-auto rounded-[6px] bg-white transition-[width,_height] duration-300 w-[var(--radix-navigation-menu-viewport-width)] max-h-[70dvh]'>

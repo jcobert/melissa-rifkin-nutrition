@@ -11,7 +11,7 @@ import BlogPost from '@/app/blog/[slug]/blog-post'
 import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
 import { pageTitle } from '@/configuration/site'
 
-/** @todo set dynamic metadata for page title.  */
+/** @todo set dynamic metadata for page title? */
 export const metadata: Metadata = {
   title: pageTitle('Blog'),
 }

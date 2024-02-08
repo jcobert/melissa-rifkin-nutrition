@@ -9,6 +9,7 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { Testimonial } from 'sanity-studio/types'
 
 import BrandBanner from '@/components/brand-banner'
+import CalendlyPopup from '@/components/calendly-popup'
 import Button from '@/components/common/buttons/Button'
 import PageLayout from '@/components/common/layout/page-layout'
 import Testimonials from '@/components/testimonials/testimonials'
@@ -72,9 +73,8 @@ const HomePage = async () => {
             Get started with meal plans and resources that can transform your
             life.
           </p>
-          <Button className='w-fit !py-4 text-lg'>
-            Schedule a Consultation
-          </Button>
+          {/* Schedule consultation */}
+          <CalendlyPopup />
         </div>
       </section>
 
@@ -186,7 +186,9 @@ const HomePage = async () => {
               </div>
             ))}
           </div>
-          <Button className='w-fit'>See All Posts</Button>
+          <Link href='/blog' className='w-fit btn'>
+            See All Posts
+          </Link>
         </div>
       </section>
     </PageLayout>

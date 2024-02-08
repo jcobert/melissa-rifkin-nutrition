@@ -8,6 +8,7 @@ import { type Recipe } from 'sanity-studio/types'
 import { formatFraction, formatUnit } from '@/utils/string'
 
 import PageLayout from '@/components/common/layout/page-layout'
+import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -29,6 +30,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
+      <Back href='/recipes' text='All Recipes' />
       <div className='my-8 md:my-16 flex flex-col items-center gap-8 w-full'>
         {/* Heading */}
         <section className='flex max-md:flex-col w-full items-center md:items-end gap-y-4 gap-x-6 pb-4 md:self-start md:px-8'>

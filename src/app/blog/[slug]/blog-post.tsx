@@ -7,6 +7,7 @@ import { dataset, projectId } from 'sanity-studio/env'
 import { Post } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
+import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
 import { portableComponents } from '@/components/common/portable/portable-components'
 
@@ -21,6 +22,7 @@ const BlogPost: FC<Props> = ({ post }) => {
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
+      <Back href='/blog' text='All Posts' />
       <div className='my-8 md:my-16 flex flex-col items-center gap-4 w-full'>
         {/* Heading */}
         <section className='flex max-md:flex-col w-full items-center md:items-end gap-y-4 gap-x-6 pb-4 md:self-start md:px-8'>

@@ -1,8 +1,15 @@
 'use client'
 
 import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from '@nextui-org/dropdown'
+import {
   Navbar,
   NavbarContent,
+  NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
@@ -13,6 +20,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { FC, useState } from 'react'
 
+import Button from '@/components/common/buttons/Button'
+import Accordion from '@/components/common/layout/accordion'
 import DesktopNavbar from '@/components/common/layout/nav-bar'
 
 import { isActive, navItems } from '@/configuration/nav'
@@ -78,29 +87,60 @@ const HeaderNav: FC = () => {
         </NavbarContent>
 
         {/* Menu */}
-        <NavbarMenu className='px-8'>
+        <NavbarMenu className='px-8 overflow-y-auto pb-16'>
           <Separator.Root
             className='bg-[rgba(18,18,18,0.15)] h-px -mt-2 animate-fadeIn'
             decorative
             orientation='horizontal'
           />
           {/* Links */}
-          <div className='flex flex-col gap-8 mt-10'>
-            {navItems?.map((link) => (
-              <NavbarMenuItem
-                key={link?.id}
-                className='text-right text-xl'
-                isActive={isActive(link, pathname)}
-              >
-                <Link
-                  className='w-full'
-                  href={link?.url}
-                  onClick={() => setIsMenuOpen(false)}
+          <div className='flex flex-col gap-8 mt-10 pb-safe'>
+            {navItems?.map((item) => {
+              const hasMenu = !!item?.menu?.links?.length
+              return (
+                <NavbarMenuItem
+                  key={item?.id}
+                  className='text-right text-xl'
+                  isActive={isActive(item, pathname)}
                 >
-                  {link?.name}
-                </Link>
-              </NavbarMenuItem>
-            ))}
+                  {!hasMenu ? (
+                    <Link
+                      className='w-full font-semibold text-brand-gray-dark'
+                      href={item?.url}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item?.name}
+                    </Link>
+                  ) : (
+                    <Accordion
+                      collapsible
+                      className='border-none pr-0'
+                      triggerClassName='!justify-end font-semibold text-brand-gray-dark data-[state=open]:text-brand'
+                      itemClassName='p-0'
+                      items={[
+                        {
+                          header: item?.name,
+                          content: (
+                            <div className='flex flex-col gap-8 bg-almost-white/40 p-4 pr-6 rounded border border-brand-gray-light/30'>
+                              {item?.menu?.links?.map((link) => (
+                                <Link
+                                  key={link?.id}
+                                  className='w-full font-medium text-brand-gray-dark'
+                                  href={link?.url}
+                                  onClick={() => setIsMenuOpen(false)}
+                                >
+                                  {link?.name}
+                                </Link>
+                              ))}{' '}
+                            </div>
+                          ),
+                        },
+                      ]}
+                    />
+                  )}
+                </NavbarMenuItem>
+              )
+            })}
           </div>
         </NavbarMenu>
       </Navbar>

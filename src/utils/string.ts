@@ -22,3 +22,13 @@ export const formatUnit = (unit?: keyof typeof RecipeUnit) => {
   if (!unit) return ''
   return RecipeUnit?.[unit]
 }
+
+export const formatCurrency = (amount?: string) => {
+  if (!amount) return ''
+  const currency = new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: 'USD',
+    currencyDisplay: 'narrowSymbol',
+  }).format(parseFloat(amount))
+  return currency
+}

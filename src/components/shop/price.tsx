@@ -16,6 +16,7 @@ const Price = ({
       style: 'currency',
       currency: currencyCode,
       currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: 2,
     }).format(parseFloat(amount))}`}
     <span
       className={clsx('ml-1 inline', currencyCodeClassName)}

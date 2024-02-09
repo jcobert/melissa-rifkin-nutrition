@@ -4,6 +4,7 @@ import React from 'react'
 
 import { getProducts } from '@/lib/shopify'
 
+import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
 import MealPlanCard from '@/components/features/meal-plan/meal-plan-card'
 
@@ -39,8 +40,8 @@ const MealPlansPage = async () => {
       </div>
 
       {/* Customized Meal Plans */}
-      <div className='flex flex-col gap-6 items-center'>
-        <div className='flex flex-col prose'>
+      <div className='flex flex-col gap-6 items-center max-w-3xl'>
+        <div className='flex flex-col prose max-w-none'>
           <h4 className=''>Curating Your Customized Menu</h4>
           <p>
             After you’ve selected your meal plan, we will ask you to fill in a
@@ -49,7 +50,7 @@ const MealPlansPage = async () => {
             following 7 business days.
           </p>
         </div>
-        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3_'>
+        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 w-full justify-items-center'>
           {customizedMealPlans?.map((item) => (
             <MealPlanCard key={item?.id} data={item} />
           ))}
@@ -57,8 +58,8 @@ const MealPlansPage = async () => {
       </div>
 
       {/* Basic Meal Plans */}
-      <div className='flex flex-col gap-6 items-center'>
-        <div className='flex flex-col prose'>
+      <div className='flex flex-col gap-6 items-center max-w-3xl'>
+        <div className='flex flex-col prose max-w-none'>
           <h4 className=''>Basic Menu Options</h4>
           <p>
             Looking for a less customized menu option? The Basic Menu options
@@ -69,7 +70,7 @@ const MealPlansPage = async () => {
             foods.
           </p>
         </div>
-        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3_'>
+        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 w-full justify-items-center'>
           {basicMealPlans?.map((item) => (
             <MealPlanCard key={item?.id} data={item} />
           ))}
@@ -77,11 +78,9 @@ const MealPlansPage = async () => {
       </div>
 
       {/* Schedule CTA */}
-      <div className='flex flex-col gap-3 items-center'>
+      <div className='flex flex-col gap-3 items-center mt-6'>
         <p className='font-medium text-xl'>Not Sure What Plan Works For You?</p>
-        <Link href='/contact/schedule' className='btn w-fit py-3'>
-          Schedule a Consultation
-        </Link>
+        <CalendlyPopup className='py-3' />
       </div>
     </PageLayout>
   )

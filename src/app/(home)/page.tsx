@@ -74,7 +74,7 @@ const HomePage = async () => {
             life.
           </p>
           {/* Schedule consultation */}
-          <CalendlyPopup />
+          <CalendlyPopup className='py-4 text-lg' />
         </div>
       </section>
 

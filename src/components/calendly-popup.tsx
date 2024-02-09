@@ -3,20 +3,26 @@
 import React, { FC } from 'react'
 import { PopupButton } from 'react-calendly'
 
+import { cn } from '@/utils/style'
+
 import { calendlyDiscoveryUrl } from '@/configuration/site'
 
 type Props = {
-  //
+  className?: string
 }
 
-const CalendlyPopup: FC<Props> = () => {
+const CalendlyPopup: FC<Props> = ({ className = '' }) => {
   //
   return (
     <PopupButton
       url={calendlyDiscoveryUrl}
       text='Schedule a Consultation'
-      rootElement={document.body}
-      className='btn w-fit !py-4 text-lg'
+      rootElement={
+        typeof window !== 'undefined'
+          ? document.body
+          : (null as unknown as HTMLElement)
+      }
+      className={cn('btn w-fit', [className])}
     />
   )
 }

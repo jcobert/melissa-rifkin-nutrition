@@ -42,7 +42,7 @@ const NavBar: FC = () => {
                           <NavLink
                             href={item?.url}
                             className={cn([
-                              'object-cover object-center rounded min-[840px]:min-w-48',
+                              'object-cover object-center rounded min-[840px]:min-w-48 group',
                               item?.menu?.links?.length <= 3 && 'row-span-3',
                               item?.menu?.links?.length === 4 && 'row-span-4',
                               item?.menu?.links?.length === 5 && 'row-span-5',
@@ -58,6 +58,10 @@ const NavBar: FC = () => {
                               ])}
                               {...item?.menu?.img}
                             />
+                            <div className='text-brand-gray-light text-center flex flex-col relative -top-full opacity-0 group-hover:opacity-100 h-full rounded transition-opacity bg-almost-black/70 justify-center font-medium'>
+                              <span>View All</span>
+                              <span>{item?.name}</span>
+                            </div>
                           </NavLink>
                         )}
                         {item?.menu?.links?.map((subItem) => (

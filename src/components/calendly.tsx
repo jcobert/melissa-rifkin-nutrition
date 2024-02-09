@@ -3,10 +3,12 @@
 import React, { FC } from 'react'
 import { InlineWidget } from 'react-calendly'
 
+import { calendlyDiscoveryUrl } from '@/configuration/site'
+
 const Calendly: FC = () => {
   return (
     <InlineWidget
-      url='https://calendly.com/josh-sl8/30min'
+      url={calendlyDiscoveryUrl}
       pageSettings={{
         primaryColor: 'E46169',
         // backgroundColor: 'FAFBFF',

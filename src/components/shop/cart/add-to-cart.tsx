@@ -53,8 +53,7 @@ function SubmitButton({
       }}
       aria-label='Add to cart'
       aria-disabled={pending}
-      className={clsx(buttonClasses, 'flex items-center gap-2', {
-        'hover:opacity-90': true,
+      className={clsx('flex items-center gap-2 btn', {
         disabledClasses: pending,
       })}
     >

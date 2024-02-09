@@ -8,3 +8,6 @@ export const siteConfig = {
 /** Appends site name to provided page title. */
 export const pageTitle = (title: string) =>
   !title ? siteConfig?.title : `${title} | ${siteConfig?.title}`
+
+export const calendlyDiscoveryUrl =
+  process.env.NEXT_PUBLIC_CALENDLY_DISCOVERY_URL || ''

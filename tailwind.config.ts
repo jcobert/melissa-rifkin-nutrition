@@ -24,6 +24,7 @@ export default {
       colors: {
         brand: '#E46169',
         'brand-light': '#FEEAEB',
+        'brand-dark': '#CD565E',
         'brand-green': '#E0F0C5',
         'brand-blue': '#659cd7',
         'brand-gray-dark': '#454957',

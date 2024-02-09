@@ -94,7 +94,7 @@ const HeaderNav: FC = () => {
             orientation='horizontal'
           />
           {/* Links */}
-          <div className='flex flex-col gap-8 mt-10 pb-safe'>
+          <div className='flex flex-col gap-8 mt-10 pb-safe mb-24'>
             {navItems?.map((item) => {
               const hasMenu = !!item?.menu?.links?.length
               return (
@@ -121,7 +121,15 @@ const HeaderNav: FC = () => {
                         {
                           header: item?.name,
                           content: (
-                            <div className='flex flex-col gap-8 bg-almost-white/40 p-4 pr-6 rounded border border-brand-gray-light/30'>
+                            <div className='flex flex-col gap-8 bg-almost-white/40__ p-4 pr-6 rounded border__ border-brand-gray-light/30'>
+                              <Link
+                                key={`${item?.id}-menu`}
+                                className='w-full font-medium text-brand-gray-dark'
+                                href={item?.url}
+                                onClick={() => setIsMenuOpen(false)}
+                              >
+                                {`All ${item?.name}`}
+                              </Link>
                               {item?.menu?.links?.map((link) => (
                                 <Link
                                   key={link?.id}
@@ -131,7 +139,7 @@ const HeaderNav: FC = () => {
                                 >
                                   {link?.name}
                                 </Link>
-                              ))}{' '}
+                              ))}
                             </div>
                           ),
                         },

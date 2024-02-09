@@ -8,10 +8,12 @@ import { TESTIMONIALS_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { Testimonial } from 'sanity-studio/types'
 
+import { cn } from '@/utils/style'
+
 import BrandBanner from '@/components/brand-banner'
 import CalendlyPopup from '@/components/calendly-popup'
-import Button from '@/components/common/buttons/Button'
 import PageLayout from '@/components/common/layout/page-layout'
+import Instagram from '@/components/instagram'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
@@ -156,7 +158,7 @@ const HomePage = async () => {
 
       {/* Testimonials */}
       <section className='sm:layout max-sm:px-4 flex flex-col items-center gap-6'>
-        <h2 className='text-2xl font-bold font-prata text-brand-gray-dark text-pretty'>
+        <h2 className='text-2xl font-bold font-prata text-brand-gray-dark text-pretty text-center__'>
           Hear What Our Clients Are Saying
         </h2>
         {draftMode()?.isEnabled ? (
@@ -173,10 +175,13 @@ const HomePage = async () => {
             Recent Posts
           </h2>
           <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {blogPostsData?.map((post) => (
+            {blogPostsData?.map((post, i) => (
               <div
                 key={post?.id}
-                className='flex flex-col items-center gap-4 bg-almost-white p-4 py-6 border rounded'
+                className={cn(
+                  'flex flex-col items-center gap-4 bg-almost-white p-4 py-6 border rounded',
+                  [i >= 2 && 'max-md:hidden', i >= 3 && 'max-lg:hidden'],
+                )}
               >
                 <div className='h-32 w-3/4 bg-brand-gray-light' />
                 <p className='flex-auto text-balance text-center font-medium'>
@@ -189,6 +194,36 @@ const HomePage = async () => {
           <Link href='/blog' className='w-fit btn'>
             See All Posts
           </Link>
+        </div>
+      </section>
+
+      {/* Social Media */}
+      <section className='sm:layout bg-brand-gray-light max-sm:py-4'>
+        <div className='flex gap-x-8'>
+          <Image
+            src='/images/IMG_9738-scaled.jpeg'
+            alt='Dinner plates with food'
+            width={500}
+            height={500}
+            priority
+            className='mx-auto h-[18rem] md:h-[29rem] object-top-left object-cover max-sm:hidden max-lg:self-center'
+          />
+          <div className='p-4 flex flex-col gap-4 items-center w-full sm:items-start justify-center'>
+            <h2 className='text-2xl max-sm:self-start__ font-bold font-prata text-brand-blue text-pretty'>
+              Follow Along!
+            </h2>
+            <Image
+              src='/images/IMG_9738-scaled.jpeg'
+              alt='Dinner plates with food'
+              width={300}
+              height={300}
+              priority
+              className='mx-auto h-72 w-full object-left-top object-cover sm:hidden'
+            />
+            <div className='max-w-xs'>
+              <Instagram />
+            </div>
+          </div>
         </div>
       </section>
     </PageLayout>

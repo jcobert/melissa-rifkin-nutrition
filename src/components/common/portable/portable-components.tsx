@@ -37,8 +37,13 @@ export const PortableImage = ({
   )
 }
 
+export const PortableCode = ({ children }: PortableTextComponentProps<any>) => {
+  return <code className='text-brand'>{children}</code>
+}
+
 export const portableComponents: PortableTextComponents = {
   types: {
     image: PortableImage,
+    // code: PortableCode,
   },
 }

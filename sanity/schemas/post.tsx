@@ -1,5 +1,6 @@
 import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
+import Divider from 'sanity-studio/components/divider'
 
 export default defineType({
   name: 'post',
@@ -57,7 +58,30 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'blockContent',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+              { title: 'Underline', value: 'underline' },
+              { title: 'Strike', value: 'strike-through' },
+              // {
+              //   title: 'Divider',
+              //   value: 'divider',
+              //   component: (props) => (
+              //     <span className='text-red-500 border-b w-full'>
+              //       {props?.children}
+              //     </span>
+              //   ),
+              // },
+            ],
+          },
+        },
+        { type: 'image' },
+      ],
     }),
   ],
 

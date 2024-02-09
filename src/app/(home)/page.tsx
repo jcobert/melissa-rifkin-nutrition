@@ -60,7 +60,7 @@ const HomePage = async () => {
   return (
     <PageLayout
       defaultLayout={false}
-      className='flex flex-col gap-16 md:gap-16'
+      className='flex flex-col gap-16 lg:gap-24'
     >
       {/* Hero */}
       <section
@@ -220,7 +220,7 @@ const HomePage = async () => {
               priority
               className='mx-auto h-72 w-full object-left-top object-cover sm:hidden'
             />
-            <div className='max-w-xs'>
+            <div className='max-w-xs max-sm:mt-4'>
               <Instagram />
             </div>
           </div>

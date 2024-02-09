@@ -12,7 +12,7 @@ const Instagram: FC<Props> = () => {
   return (
     <InstagramEmbed
       url='https://www.instagram.com/confessionofadietitian/?utm_source=ig_embed&amp;utm_campaign=loading'
-      placeholderProps={{ linkText: 'View on Instagram' }}
+      // placeholderProps={{ linkText: 'View on Instagram' }}
       // width={400}
     />
   )

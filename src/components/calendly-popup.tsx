@@ -5,6 +5,8 @@ import { PopupButton } from 'react-calendly'
 
 import { cn } from '@/utils/style'
 
+import { pageSettings } from '@/components/calendly'
+
 import { calendlyDiscoveryUrl } from '@/configuration/site'
 
 type Props = {
@@ -12,10 +14,10 @@ type Props = {
 }
 
 const CalendlyPopup: FC<Props> = ({ className = '' }) => {
-  //
   return (
     <PopupButton
       url={calendlyDiscoveryUrl}
+      pageSettings={pageSettings}
       text='Schedule a Consultation'
       rootElement={
         typeof window !== 'undefined'

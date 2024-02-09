@@ -5,11 +5,13 @@ import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
 
+import { getIngredientDetails } from '@/utils/recipe'
 import { formatFraction, formatUnit } from '@/utils/string'
 
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
+import Measurement from '@/components/features/recipe/measurement'
 
 const builder = imageUrlBuilder({ projectId, dataset })
 
@@ -109,13 +111,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
                       key={`${ing?.ingredientName}-${i}`}
                       className='flex flex-col -mb-3 pt-1 last-of-type:mb-0 text-brand-gray-dark'
                     >
-                      <div className='flex items-center gap-1'>
-                        <p>{formatFraction(ing?.amount)}</p>
-                        <p>{formatUnit(ing?.unit)}</p>
-                        <p className='font-semibold'>
-                          {ing?.ingredientName?.name}
-                        </p>
-                      </div>
+                      <Measurement measurement={ing} />
                       <p className='text-brand-gray-medium text-sm text-balance'>
                         {ing?.note}
                       </p>
@@ -143,11 +139,19 @@ const Recipe: FC<Props> = ({ recipe }) => {
                       {inst?.title}
                     </h3>
                     <div className='flex flex-col'>
-                      {inst?.ingredients?.map((ing, i) => (
-                        <div key={`${ing?.name}-${i}`}>
-                          <p>{ing?.name}</p>
-                        </div>
-                      ))}
+                      {inst?.ingredients?.map((ing) => {
+                        const measurement = getIngredientDetails(
+                          ing,
+                          ingredientGroups,
+                        )
+                        return (
+                          <Measurement
+                            key={ing?._id}
+                            measurement={measurement}
+                            ingredientClassName='font-normal'
+                          />
+                        )
+                      })}
                     </div>
                   </div>
                 ) : null}

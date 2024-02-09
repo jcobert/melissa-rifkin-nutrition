@@ -1,15 +1,8 @@
 'use client'
 
 import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from '@nextui-org/dropdown'
-import {
   Navbar,
   NavbarContent,
-  NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
@@ -20,7 +13,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { FC, useState } from 'react'
 
-import Button from '@/components/common/buttons/Button'
 import Accordion from '@/components/common/layout/accordion'
 import DesktopNavbar from '@/components/common/layout/nav-bar'
 
@@ -87,25 +79,25 @@ const HeaderNav: FC = () => {
         </NavbarContent>
 
         {/* Menu */}
-        <NavbarMenu className='px-8 overflow-y-auto pb-16'>
+        <NavbarMenu className='px-8 overflow-y-auto pb-16 bg bg-background/80'>
           <Separator.Root
             className='bg-[rgba(18,18,18,0.15)] h-px -mt-2 animate-fadeIn'
             decorative
             orientation='horizontal'
           />
           {/* Links */}
-          <div className='flex flex-col gap-8 mt-10 pb-safe'>
+          <div className='flex flex-col gap-6 mt-10 pb-safe mb-24'>
             {navItems?.map((item) => {
               const hasMenu = !!item?.menu?.links?.length
               return (
                 <NavbarMenuItem
                   key={item?.id}
-                  className='text-right text-xl'
+                  className='text-right text-xl border-b border-brand-gray-medium/15 pb-2 flex justify-end'
                   isActive={isActive(item, pathname)}
                 >
                   {!hasMenu ? (
                     <Link
-                      className='w-full font-semibold text-brand-gray-dark'
+                      className='w-full font-semibold text-brand-gray-dark py-2'
                       href={item?.url}
                       onClick={() => setIsMenuOpen(false)}
                     >
@@ -114,24 +106,32 @@ const HeaderNav: FC = () => {
                   ) : (
                     <Accordion
                       collapsible
-                      className='border-none pr-0'
+                      className='border-none pr-0 w-full'
                       triggerClassName='!justify-end font-semibold text-brand-gray-dark data-[state=open]:text-brand'
-                      itemClassName='p-0'
+                      itemClassName='!p-0'
                       items={[
                         {
                           header: item?.name,
                           content: (
-                            <div className='flex flex-col gap-8 bg-almost-white/40 p-4 pr-6 rounded border border-brand-gray-light/30'>
+                            <div className='flex flex-col gap-8 bg-almost-white/40__ py-4 pr-6_ rounded border__ border-brand-gray-light/30'>
+                              <Link
+                                key={`${item?.id}-menu`}
+                                className='w-full font-medium text-brand-gray-dark pr-8'
+                                href={item?.url}
+                                onClick={() => setIsMenuOpen(false)}
+                              >
+                                {`All ${item?.name}`}
+                              </Link>
                               {item?.menu?.links?.map((link) => (
                                 <Link
                                   key={link?.id}
-                                  className='w-full font-medium text-brand-gray-dark'
+                                  className='w-full font-medium text-brand-gray-dark pr-8'
                                   href={link?.url}
                                   onClick={() => setIsMenuOpen(false)}
                                 >
                                   {link?.name}
                                 </Link>
-                              ))}{' '}
+                              ))}
                             </div>
                           ),
                         },

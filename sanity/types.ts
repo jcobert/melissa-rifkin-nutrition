@@ -77,7 +77,7 @@ export interface Recipe extends SanityDocument {
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
 }
 
-export interface Ingredient {
+export interface Ingredient extends SanityDocument {
   _type: 'ingredient'
   name?: string
   alternativeNames?: Array<string>

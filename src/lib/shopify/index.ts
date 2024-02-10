@@ -20,6 +20,7 @@ import {
 import {
   Cart,
   Collection,
+  CollectionHandle,
   Connection,
   Image,
   Menu,
@@ -59,7 +60,7 @@ const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
   : ''
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!
+const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || ''
 
 type ExtractVariables<T> = T extends { variables: object }
   ? T['variables']
@@ -307,7 +308,7 @@ export async function getCollectionProducts({
   reverse,
   sortKey,
 }: {
-  collection: string
+  collection: CollectionHandle
   reverse?: boolean
   sortKey?: string
 }): Promise<Product[]> {

@@ -13,9 +13,11 @@ import LoadingDots from '@/components/shop/loading-dots'
 function SubmitButton({
   availableForSale,
   selectedVariantId,
+  text,
 }: {
   availableForSale: boolean
   selectedVariantId: string | undefined
+  text?: string
 }) {
   const { pending } = useFormStatus()
   const buttonClasses =
@@ -31,20 +33,20 @@ function SubmitButton({
     )
   }
 
-  if (!selectedVariantId) {
-    return (
-      <button
-        aria-label='Please select an option'
-        aria-disabled
-        className={clsx(buttonClasses, disabledClasses)}
-      >
-        <div className='absolute left-0 ml-4'>
-          <PlusIcon className='h-5' />
-        </div>
-        Add To Cart
-      </button>
-    )
-  }
+  // if (!selectedVariantId) {
+  //   return (
+  //     <button
+  //       aria-label='Please select an option'
+  //       aria-disabled
+  //       className={clsx(buttonClasses, disabledClasses)}
+  //     >
+  //       <div className='absolute left-0 ml-4'>
+  //         <PlusIcon className='h-5' />
+  //       </div>
+  //       Add To Cart
+  //     </button>
+  //   )
+  // }
 
   return (
     <button
@@ -64,7 +66,7 @@ function SubmitButton({
           <PlusIcon className='h-5' />
         )}
       </div>
-      Get Started
+      {text || 'Add to Cart'}
     </button>
   )
 }
@@ -72,9 +74,11 @@ function SubmitButton({
 export function AddToCart({
   variants,
   availableForSale,
+  text,
 }: {
   variants: ProductVariant[]
   availableForSale: boolean
+  text?: string
 }) {
   const [message, formAction] = useFormState(addItem, null)
   const searchParams = useSearchParams()
@@ -93,6 +97,7 @@ export function AddToCart({
       <SubmitButton
         availableForSale={availableForSale}
         selectedVariantId={selectedVariantId}
+        text={text}
       />
       <p aria-live='polite' className='sr-only' role='status'>
         {message}

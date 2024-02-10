@@ -269,3 +269,4 @@ export type CollectionHandle =
   | 'meal-plans'
   | 'books'
   | 'consultations'
+  | `hidden-${string}`

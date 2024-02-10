@@ -13,9 +13,12 @@ export const metadata: Metadata = {
 }
 
 const BooksPage = async () => {
+  /**
+   * @todo Remove once production store is in use.
+   */
+  const collection = process.env.NODE_ENV === 'production' ? 'books' : 'books-1'
   const books = await getCollectionProducts({
-    collection: 'books',
-    // sortKey: 'TITLE',
+    collection,
   })
 
   return (

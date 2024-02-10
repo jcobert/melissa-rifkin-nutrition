@@ -9,7 +9,7 @@ import PrintableCard from '@/components/features/printables/printable-card'
 import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {
-  title: pageTitle('Meal Plans'),
+  title: pageTitle('Printables'),
 }
 
 const PrintablesPage = async () => {

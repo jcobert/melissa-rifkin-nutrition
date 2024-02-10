@@ -1,12 +1,39 @@
-import React, { FC } from 'react'
+import { Metadata } from 'next'
+import React from 'react'
 
-type Props = {
-  //
+import { getCollectionProducts } from '@/lib/shopify'
+
+import PageLayout from '@/components/common/layout/page-layout'
+import PrintableCard from '@/components/features/printables/printable-card'
+
+import { pageTitle } from '@/configuration/site'
+
+export const metadata: Metadata = {
+  title: pageTitle('Books'),
 }
 
-const BooksPage: FC<Props> = () => {
-  //
-  return <div></div>
+const BooksPage = async () => {
+  const books = await getCollectionProducts({
+    collection: 'books',
+    // sortKey: 'TITLE',
+  })
+
+  return (
+    <PageLayout
+      heading='Books'
+      className='flex flex-col gap-16 items-center text-almost-black'
+    >
+      <div className='prose self-start'>
+        <p></p>
+      </div>
+
+      <div className='flex flex-col gap-6 items-center max-w-3xl'>
+        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 w-full justify-items-center'>
+          {books?.map((item) => <PrintableCard key={item?.id} data={item} />)}
+        </div>
+      </div>
+    </PageLayout>
+  )
 }
 
 export default BooksPage

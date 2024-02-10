@@ -1,8 +1,8 @@
+import { sortBy } from 'lodash'
 import { Metadata } from 'next'
-import Link from 'next/link'
 import React from 'react'
 
-import { getProducts } from '@/lib/shopify'
+import { getCollectionProducts } from '@/lib/shopify'
 
 import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
@@ -15,16 +15,21 @@ export const metadata: Metadata = {
 }
 
 const MealPlansPage = async () => {
-  const mealPlans = await getProducts({ query: 'tags:meal plan' })
+  const mealPlans = await getCollectionProducts({ collection: 'meal-plans' })
 
-  const basicMealPlans = (mealPlans || [])?.filter((mp) =>
-    mp?.title?.toLowerCase()?.includes('basic'),
+  const basicMealPlans = sortBy(
+    (mealPlans || [])?.filter((mp) =>
+      mp?.title?.toLowerCase()?.includes('basic'),
+    ),
+    (p) => p?.title,
   )
 
-  const customizedMealPlans = (mealPlans || [])?.filter((mp) =>
-    mp?.title?.toLowerCase()?.includes('customized'),
+  const customizedMealPlans = sortBy(
+    (mealPlans || [])?.filter((mp) =>
+      mp?.title?.toLowerCase()?.includes('customized'),
+    ),
+    (p) => p?.title,
   )
-
   return (
     <PageLayout
       heading='A Meal Plan That Fits Your Needs'

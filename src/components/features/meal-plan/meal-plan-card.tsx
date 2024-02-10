@@ -19,11 +19,15 @@ const MealPlanCard: FC<Props> = ({ data }) => {
       <div className='flex flex-col gap-6 items-center flex-auto'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image?.url} alt={image?.altText} className='w-64 h-auto' />
-        <h3 className='font-medium'>{data?.title}</h3>
+        <h3 className='font-medium text-balance'>{data?.title}</h3>
         {/* <p className='flex-auto'>{data?.description}</p> */}
         <p>{price}</p>
       </div>
-      <AddToCart availableForSale variants={data?.variants} />
+      <AddToCart
+        availableForSale
+        variants={data?.variants}
+        text='Get Started'
+      />
     </div>
   )
 }

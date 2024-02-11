@@ -7,6 +7,7 @@ import recipe from './schemas/recipe/recipe'
 // import recipeTag from './schemas/recipe/recipe-tag'
 import testimonial from './schemas/testimonial'
 import { type SchemaTypeDefinition } from 'sanity'
+import general from 'sanity-studio/schemas/general'
 import ingredient from 'sanity-studio/schemas/recipe/ingredient'
 import ingredientGroup from 'sanity-studio/schemas/recipe/ingredient-group'
 import ingredientMeasurement from 'sanity-studio/schemas/recipe/ingredient-measurement'
@@ -25,6 +26,7 @@ const schema: SchemaTypeDefinition[] = [
   ingredientGroup,
   instruction,
   ingredientMeasurement,
+  general,
 ]
 
 export default schema

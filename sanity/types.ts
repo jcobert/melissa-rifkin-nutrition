@@ -148,6 +148,23 @@ export interface Testimonial extends SanityDocument {
   testimonial?: string
 }
 
+/** General Info/Settings */
+export interface General extends SanityDocument {
+  _type: 'general'
+  title?: string
+  socialLinks?: SocialLinks
+}
+
+export enum SocialNetworks {
+  instagram = 'Instagram',
+  facebook = 'Facebook',
+  twitter = 'Twitter',
+  pinterest = 'Pinterest',
+  // iherb = 'iHerb',
+}
+
+export type SocialLinks = { [x in keyof typeof SocialNetworks]?: string }
+
 export type BlockContent = Array<
   | SanityKeyed<SanityBlock>
   | SanityKeyed<{

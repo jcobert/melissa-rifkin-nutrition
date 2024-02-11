@@ -4,15 +4,16 @@ import { draftMode } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { TESTIMONIALS_QUERY } from 'sanity-studio/lib/queries'
+import { POSTS_QUERY, TESTIMONIALS_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
-import { Testimonial } from 'sanity-studio/types'
+import { Post, Testimonial } from 'sanity-studio/types'
 
 import { cn } from '@/utils/style'
 
 import BrandBanner from '@/components/brand-banner'
 import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
+import BlogPostCard from '@/components/features/blog/blog-post-card'
 import Instagram from '@/components/instagram'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
@@ -23,34 +24,17 @@ export const metadata: Metadata = {
   title: pageTitle('Home'),
 }
 
-/** @todo replace with CMS data. */
-const blogPostsData = [
-  {
-    id: 1,
-    title: 'A Registered Dietitian Shares Her Top Health Products As a Mom',
-    author: 'Melissa Rifkin',
-  },
-  {
-    id: 2,
-    title:
-      '5 Nutrients Missing from the Standard American Diet According to A Dietician',
-    author: 'Melissa Rifkin',
-  },
-  {
-    id: 3,
-    title: '5 Steps for Building the Perfect Smoothie According to a Dietician',
-    author: 'Kelsey Hampton',
-  },
-  {
-    id: 4,
-    title: '7 Easy Ways to Help Reduce Stress',
-    author: 'Melissa Rifkin',
-  },
-]
-
 const HomePage = async () => {
   const testimonials = await loadQuery<SanityDocument<Testimonial>[]>(
     TESTIMONIALS_QUERY,
+    {},
+    {
+      perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    },
+  )
+
+  const blogPosts = await loadQuery<SanityDocument<Post>[]>(
+    POSTS_QUERY,
     {},
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
@@ -63,7 +47,7 @@ const HomePage = async () => {
       className='flex flex-col gap-16 lg:gap-24'
     >
       {/* Hero */}
-      <section className='w-full h-[30rem] sm:h-[36rem] bg-bottom bg-cover bg-no-repeat sm:bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem] sm:before:h-[36rem] before:bg-[#00000089] bg-[url("/images/cutting-board.jpeg")]'>
+      <section className='w-full h-[30rem] sm:h-[36rem] bg-bottom bg-cover bg-no-repeat sm:bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem] sm:before:h-[36rem] before:bg-[#0000006c] bg-[url("/images/cutting-board.jpeg")]'>
         <div className='layout py-8 h-full relative flex flex-col justify-center md:justify-end md:bottom-16 gap-6'>
           <h1 className='text-5xl md:w-2/3 lg:w-1/2 text-white font-prata text-pretty leading-normal'>
             Your Healthy Life Starts Here.
@@ -170,26 +154,22 @@ const HomePage = async () => {
       </section>
 
       {/* Recent Blog Posts */}
-      <section className='sm:layout bg-brand-light max-sm:py-4 py-6'>
+      <section className='sm:layout bg-brand-light/70 max-sm:py-4 py-6'>
         <div className='p-4 flex flex-col gap-6 items-center w-full justify-center'>
-          <h2 className='text-2xl font-bold font-prata text-brand text-pretty'>
-            Recent Posts
+          <h2 className='text-2xl font-bold font-prata text-brand text-pretty md:self-start'>
+            Recent Blog Posts
           </h2>
           <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {blogPostsData?.map((post, i) => (
-              <div
-                key={post?.id}
-                className={cn(
-                  'flex flex-col items-center gap-4 bg-almost-white p-4 py-6 border rounded',
-                  [i >= 2 && 'max-md:hidden', i >= 3 && 'max-lg:hidden'],
-                )}
-              >
-                <div className='h-32 w-3/4 bg-brand-gray-light' />
-                <p className='flex-auto text-balance text-center font-medium'>
-                  {post?.title}
-                </p>
-                <p className=''>By {post?.author}</p>
-              </div>
+            {blogPosts?.data?.map((post, i) => (
+              <BlogPostCard
+                key={post?._id}
+                post={post}
+                hideDate
+                className={cn('', [
+                  i >= 2 && 'max-md:hidden',
+                  i >= 3 && 'max-lg:hidden',
+                ])}
+              />
             ))}
           </div>
           <Link href='/blog' className='w-fit btn'>

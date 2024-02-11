@@ -34,7 +34,7 @@ const BlogPostCard: FC<Props> = ({ post }) => {
       </Link>
       <Link
         href={`/blog/${slug?.current}`}
-        className='flex-auto text-balance text-center text-lg font-medium text-brand-gray-dark hover:text-brand-gray-dark/hover transition'
+        className='flex-auto text-balance text-center text-lg font-medium hover:text-almost-black/hover transition'
       >
         {title}
       </Link>

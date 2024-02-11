@@ -4,12 +4,12 @@ import React from 'react'
 import { getCollectionProducts } from '@/lib/shopify'
 
 import PageLayout from '@/components/common/layout/page-layout'
-import PrintableCard from '@/components/features/printables/printable-card'
+import ProductCard from '@/components/product-card'
 
 import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {
-  title: pageTitle('Meal Plans'),
+  title: pageTitle('Printables'),
 }
 
 const PrintablesPage = async () => {
@@ -34,7 +34,11 @@ const PrintablesPage = async () => {
       <div className='flex flex-col gap-6 items-center max-w-3xl'>
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2 w-full justify-items-center'>
           {printables?.map((item) => (
-            <PrintableCard key={item?.id} data={item} />
+            <ProductCard
+              key={item?.id}
+              data={item}
+              path='/resources/printables'
+            />
           ))}
         </div>
       </div>

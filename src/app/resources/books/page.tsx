@@ -26,9 +26,9 @@ const BooksPage = async () => {
       heading='Books'
       className='flex flex-col gap-16 items-center text-almost-black'
     >
-      <div className='prose self-start'>
+      {/* <div className='prose self-start'>
         <p></p>
-      </div>
+      </div> */}
 
       <div className='flex flex-col gap-6 items-center max-w-3xl'>
         <div className='grid gap-8 grid-cols-1 md:grid-cols-2 w-full justify-items-center'>

@@ -30,4 +30,13 @@ export default defineType({
     //   of: [{ type: 'string' }],
     // }),
   ],
+  preview: {
+    select: { name: 'name', description: 'description' },
+    prepare: ({ name, description }) => {
+      return {
+        title: name,
+        subtitle: description,
+      }
+    },
+  },
 })

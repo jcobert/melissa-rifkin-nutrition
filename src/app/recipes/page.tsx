@@ -27,7 +27,10 @@ const RecipesPage: FC = async () => {
   )
 
   return (
-    <PageLayout heading='Recipes'>
+    <PageLayout
+      heading='Recipes'
+      className='flex flex-col gap-16 items-center text-almost-black'
+    >
       {draftMode()?.isEnabled ? (
         <RecipesPreview initial={initial} />
       ) : (

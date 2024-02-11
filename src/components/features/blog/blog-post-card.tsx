@@ -14,6 +14,8 @@ type Props = {
 
 const BlogPostCard: FC<Props> = ({ post }) => {
   const { mainImage, slug, title, author, publishedAt } = post
+
+  /** @todo use sanity image builder. */
   const image = getImageProps(mainImage)
   return (
     <div className='flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border rounded shadow-sm'>

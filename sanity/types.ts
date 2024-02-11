@@ -115,7 +115,6 @@ export enum RecipeUnit {
   pound = 'lb',
   ounce = 'oz',
   pinch = 'pinch',
-  piece = 'piece',
 }
 
 /** Author */

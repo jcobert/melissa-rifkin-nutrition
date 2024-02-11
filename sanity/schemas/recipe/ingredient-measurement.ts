@@ -46,7 +46,6 @@ export default defineType({
           { value: 'pound', title: 'lb' },
           { value: 'ounce', title: 'oz' },
           { value: 'pinch', title: 'pinch' },
-          { value: 'piece', title: 'piece' },
         ],
         layout: 'dropdown',
       },

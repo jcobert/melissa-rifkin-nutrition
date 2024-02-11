@@ -20,15 +20,17 @@ const Measurement: FC<Props> = ({
   //
   return (
     <div className='flex items-center gap-1'>
-      <div
-        className={cn([
-          'flex items-center gap-1 font-mono text-sm text-brand-blue-dark',
-          measurementClassName,
-        ])}
-      >
-        <p>{formatFraction(measurement?.amount)}</p>
-        <p>{formatUnit(measurement?.unit)}</p>
-      </div>
+      {measurement?.amount ? (
+        <div
+          className={cn([
+            'flex items-center gap-1 font-mono text-sm text-brand-blue-dark',
+            measurementClassName,
+          ])}
+        >
+          <p>{formatFraction(measurement?.amount)}</p>
+          <p>{formatUnit(measurement?.unit)}</p>
+        </div>
+      ) : null}
       {!hideIngredient && (
         <p className={cn(['font-semibold', ingredientClassName])}>
           {measurement?.ingredientName?.name}

@@ -1,4 +1,9 @@
-import { Ingredient, IngredientMeasurement, Recipe } from 'sanity-studio/types'
+import {
+  Ingredient,
+  IngredientGroup,
+  IngredientMeasurement,
+  Recipe,
+} from 'sanity-studio/types'
 
 export const getIngredientDetails = (
   ingredient: Ingredient,
@@ -9,5 +14,16 @@ export const getIngredientDetails = (
   )
   return allIngredients?.find(
     (ing) => ing?.ingredientName?._id === ingredient?._id,
+  )
+}
+
+export const ingredientNamesFromGroup = (ingredientGroup: IngredientGroup) => {
+  if (!ingredientGroup?.ingredients?.length) return []
+  return ingredientGroup?.ingredients?.map((ing) => ing?.ingredientName?.name)
+}
+
+export const getRecipeIngredients = (recipe: Recipe) => {
+  return (recipe?.ingredientGroups || [])?.flatMap((group) =>
+    ingredientNamesFromGroup(group),
   )
 }

@@ -6,7 +6,6 @@ import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
 
 import { getIngredientDetails } from '@/utils/recipe'
-import { formatFraction, formatUnit } from '@/utils/string'
 
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
@@ -24,7 +23,6 @@ const Recipe: FC<Props> = ({ recipe }) => {
     title,
     publishedAt,
     mainImage,
-    category,
     ingredientGroups,
     instructions,
     tags,
@@ -79,7 +77,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </div>
 
           {/* Tags */}
-          <div className='flex items-center max-md:justify-around gap-1 flex-wrap mt-3'>
+          <div className='flex items-center max-md:justify-around gap-1 flex-wrap mt-3 md:ml-auto'>
             {(tags || [])?.map((tag, i) => (
               <span
                 key={`${tag}-${i}`}

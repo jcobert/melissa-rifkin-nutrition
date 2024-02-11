@@ -117,12 +117,13 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                             <div className='absolute z-40 -mt-2 ml-[55px]'>
                               <DeleteItemButton item={item} />
                             </div>
-                            <Link
+                            {/* <Link
                               href={merchandiseUrl}
                               onClick={closeCart}
                               className='z-30 flex flex-row space-x-4'
-                            >
-                              <div className='relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800'>
+                            > */}
+                            <div className='z-30 flex flex-row space-x-4'>
+                              <div className='relative h-16 w-16 overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800'>
                                 <Image
                                   className='h-full w-full object-cover'
                                   width={64}
@@ -149,7 +150,8 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                                   </p>
                                 ) : null}
                               </div>
-                            </Link>
+                            </div>
+                            {/* </Link> */}
                             <div className='flex h-16 flex-col justify-between'>
                               <Price
                                 className='flex justify-end space-y-2 text-right text-sm'

@@ -3,6 +3,7 @@ export const siteConfig = {
   description: 'Melissa Rifkin Nutrition',
   /** Without trailing slash. */
   url: 'https://melissarifkinnutrition.com',
+  businessName: 'Melissa Rifkin Nutrition, LLC',
 }
 
 /** Appends site name to provided page title. */

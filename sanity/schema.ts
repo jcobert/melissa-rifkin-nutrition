@@ -1,10 +1,10 @@
-import author from './schemas/author'
 import blockContent from './schemas/blockContent'
-import category from './schemas/category'
-import post from './schemas/post'
+import author from './schemas/blog/author'
+import post from './schemas/blog/post'
+// import category from './schemas/category'
 import recipe from './schemas/recipe/recipe'
-import recipeCategory from './schemas/recipe/recipe-category'
-import recipeTag from './schemas/recipe/recipe-tag'
+// import recipeCategory from './schemas/recipe/recipe-category'
+// import recipeTag from './schemas/recipe/recipe-tag'
 import testimonial from './schemas/testimonial'
 import { type SchemaTypeDefinition } from 'sanity'
 import ingredient from 'sanity-studio/schemas/recipe/ingredient'
@@ -15,11 +15,11 @@ import instruction from 'sanity-studio/schemas/recipe/instruction'
 const schema: SchemaTypeDefinition[] = [
   post,
   author,
-  category,
+  // category,
   blockContent,
   testimonial,
   recipe,
-  recipeCategory,
+  // recipeCategory,
   // recipeTag,
   ingredient,
   ingredientGroup,

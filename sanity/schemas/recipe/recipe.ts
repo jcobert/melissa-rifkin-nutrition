@@ -37,11 +37,29 @@ export default defineType({
         },
       ],
     }),
+    // defineField({
+    //   name: 'category',
+    //   title: 'Category',
+    //   type: 'reference',
+    //   to: { type: 'recipeCategory' },
+    // }),
     defineField({
       name: 'category',
       title: 'Category',
-      type: 'reference',
-      to: { type: 'recipeCategory' },
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { value: 'breakfast', title: 'Breakfast' },
+          { value: 'lunch', title: 'Lunch' },
+          { value: 'dinner', title: 'Dinner' },
+          { value: 'dessert', title: 'Dessert' },
+          { value: 'side', title: 'Side' },
+          { value: 'snack', title: 'Snack' },
+        ],
+        // layout: 'radio',
+        // direction: 'horizontal',
+      },
     }),
     defineField({
       name: 'tags',

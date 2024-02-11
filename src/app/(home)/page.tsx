@@ -47,7 +47,7 @@ const HomePage = async () => {
       className='flex flex-col gap-16 lg:gap-24'
     >
       {/* Hero */}
-      <section className='w-full h-[30rem] sm:h-[36rem] bg-bottom bg-cover bg-no-repeat sm:bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem] sm:before:h-[36rem] before:bg-[#0000006c] bg-[url("/images/cutting-board.jpeg")]'>
+      <section className='w-full h-[30rem] sm:h-[36rem] bg-center bg-cover bg-no-repeat sm:bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem] sm:before:h-[36rem] before:bg-[#0000006c] bg-[url("/images/cutting-board.jpeg")]'>
         <div className='layout py-8 h-full relative flex flex-col justify-center md:justify-end md:bottom-16 gap-6'>
           <h1 className='text-5xl md:w-2/3 lg:w-1/2 text-white font-prata text-pretty leading-normal'>
             Your Healthy Life Starts Here.

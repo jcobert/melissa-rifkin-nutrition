@@ -49,7 +49,8 @@ export interface Post extends SanityDocument {
     hotspot?: SanityImageHotspot
     alt?: string
   }
-  categories?: Array<SanityKeyedReference<Category>>
+  tags?: Array<string>
+  // categories?: Array<SanityKeyedReference<Category>>
   publishedAt?: string
   body?: BlockContent
 }

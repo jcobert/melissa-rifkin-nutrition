@@ -102,7 +102,7 @@ const SelectInput: FC<SelectInputProps> = ({
 export default SelectInput
 
 export type SelectOption<
-  T extends ReactNode = string,
+  T extends ReactNode | any = string,
   U extends ReactNode = ReactNode,
 > = {
   value: T

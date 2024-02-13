@@ -20,6 +20,7 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
   const { mainImage, slug, title, publishedAt } = recipe || {}
   const image = getImageProps(mainImage)
   const linkToFull = `/recipes/${slug?.current}`
+
   return (
     <Link
       href={linkToFull}

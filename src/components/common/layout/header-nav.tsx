@@ -114,14 +114,16 @@ const HeaderNav: FC = () => {
                           header: item?.name,
                           content: (
                             <div className='flex flex-col gap-8 bg-almost-white/40__ py-4 pr-6_ rounded border__ border-brand-gray-light/30'>
-                              <Link
-                                key={`${item?.id}-menu`}
-                                className='w-full font-medium text-brand-gray-dark pr-8'
-                                href={item?.url}
-                                onClick={() => setIsMenuOpen(false)}
-                              >
-                                {`All ${item?.name}`}
-                              </Link>
+                              {!!item?.url && (
+                                <Link
+                                  key={`${item?.id}-menu`}
+                                  className='w-full font-medium text-brand-gray-dark pr-8'
+                                  href={item?.url}
+                                  onClick={() => setIsMenuOpen(false)}
+                                >
+                                  {`All ${item?.name}`}
+                                </Link>
+                              )}
                               {item?.menu?.links?.map((link) => (
                                 <Link
                                   key={link?.id}

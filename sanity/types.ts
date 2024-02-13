@@ -68,7 +68,7 @@ export interface Recipe extends SanityDocument {
     hotspot?: SanityImageHotspot
     alt?: string
   }
-  category?: SanityKeyedReference<Category> & Category
+  category?: Array<string>
   tags?: Array<string>
   prepTime?: number
   cookTime?: number

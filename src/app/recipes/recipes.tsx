@@ -14,9 +14,10 @@ import RecipeCard from '@/components/features/recipe/recipe-card'
 
 type Props = {
   recipes: Recipe[]
+  initialFilters?: { category?: string }
 }
 
-const Recipes: FC<Props> = ({ recipes }) => {
+const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
   const allTags = recipes?.flatMap((rec) => (rec?.tags || [])?.map((t) => t))
   const tagFilterOptions: SelectOption[] = useMemo(
     () =>

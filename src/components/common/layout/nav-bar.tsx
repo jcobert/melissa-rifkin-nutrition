@@ -39,30 +39,66 @@ const NavBar: FC = () => {
                       <ul className='m-0 grid list-none gap-x-[10px] gap-y-2 pt-4 p-[22px] grid-cols-[0.75fr_1fr]'>
                         {/* Menu Image */}
                         {!!item?.menu?.img?.src && (
-                          <NavLink
-                            href={item?.url}
-                            className={cn([
-                              'object-cover object-center rounded min-[840px]:min-w-48 group',
-                              item?.menu?.links?.length <= 3 && 'row-span-3',
-                              item?.menu?.links?.length === 4 && 'row-span-4',
-                              item?.menu?.links?.length === 5 && 'row-span-5',
-                              item?.menu?.links?.length === 6 && 'row-span-6',
-                              item?.menu?.links?.length === 7 && 'row-span-7',
-                              item?.menu?.links?.length >= 8 && 'row-span-8',
-                            ])}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-                            <img
-                              className={cn([
-                                'object-cover object-center h-full w-full min-w-36 rounded',
-                              ])}
-                              {...item?.menu?.img}
-                            />
-                            <div className='text-brand-gray-light text-center flex flex-col relative -top-full opacity-0 group-hover:opacity-100 h-full rounded transition-opacity bg-almost-black/70 justify-center font-medium'>
-                              <span>View All</span>
-                              <span>{item?.name}</span>
-                            </div>
-                          </NavLink>
+                          <>
+                            {item?.url ? (
+                              <NavLink
+                                href={item?.url}
+                                className={cn([
+                                  'object-cover object-center rounded min-[840px]:min-w-48 group',
+                                  item?.menu?.links?.length <= 3 &&
+                                    'row-span-3',
+                                  item?.menu?.links?.length === 4 &&
+                                    'row-span-4',
+                                  item?.menu?.links?.length === 5 &&
+                                    'row-span-5',
+                                  item?.menu?.links?.length === 6 &&
+                                    'row-span-6',
+                                  item?.menu?.links?.length === 7 &&
+                                    'row-span-7',
+                                  item?.menu?.links?.length >= 8 &&
+                                    'row-span-8',
+                                ])}
+                              >
+                                {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+                                <img
+                                  className={cn([
+                                    'object-cover object-center h-full w-full min-w-36 rounded',
+                                  ])}
+                                  {...item?.menu?.img}
+                                />
+                                <div className='text-brand-gray-light text-center flex flex-col relative -top-full opacity-0 group-hover:opacity-100 h-full rounded transition-opacity bg-almost-black/70 justify-center font-medium'>
+                                  <span>View All</span>
+                                  <span>{item?.name}</span>
+                                </div>
+                              </NavLink>
+                            ) : (
+                              <div
+                                className={cn([
+                                  'object-cover object-center rounded min-[840px]:min-w-48 group',
+                                  item?.menu?.links?.length <= 3 &&
+                                    'row-span-3',
+                                  item?.menu?.links?.length === 4 &&
+                                    'row-span-4',
+                                  item?.menu?.links?.length === 5 &&
+                                    'row-span-5',
+                                  item?.menu?.links?.length === 6 &&
+                                    'row-span-6',
+                                  item?.menu?.links?.length === 7 &&
+                                    'row-span-7',
+                                  item?.menu?.links?.length >= 8 &&
+                                    'row-span-8',
+                                ])}
+                              >
+                                {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+                                <img
+                                  className={cn([
+                                    'object-cover object-center h-full w-full min-w-36 rounded',
+                                  ])}
+                                  {...item?.menu?.img}
+                                />
+                              </div>
+                            )}
+                          </>
                         )}
                         {item?.menu?.links?.map((subItem) => (
                           <NavigationMenu.Item

@@ -15,7 +15,7 @@ export const navItems: NavItem[] = [
   {
     id: 'resources',
     name: 'Resources',
-    url: '/resources',
+    url: '',
     menu: {
       img: {
         src: '/images/food-tray-portions.jpeg',

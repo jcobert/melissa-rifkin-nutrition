@@ -25,7 +25,7 @@ export const selectStyles: StylesConfig<any, boolean, GroupBase<any>> = {
 }
 
 export type SelectInputProps = Omit<Props, 'onChange'> & {
-  label?: string
+  label?: ReactNode
   helper?: string
   className?: string
   onChange?: (

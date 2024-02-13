@@ -23,7 +23,7 @@ type Props = {
 }
 
 /** Top-level Recipes route. */
-const RecipesPage: FC<Props> = async ({ searchParams }) => {
+const RecipesPage: FC<Props> = async () => {
   const initial = await loadQuery<SanityDocument<Recipe>[]>(
     RECIPES_QUERY,
     {},
@@ -31,8 +31,6 @@ const RecipesPage: FC<Props> = async ({ searchParams }) => {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
     },
   )
-
-  const category = searchParams?.category
 
   return (
     <PageLayout
@@ -48,7 +46,7 @@ const RecipesPage: FC<Props> = async ({ searchParams }) => {
       {draftMode()?.isEnabled ? (
         <RecipesPreview initial={initial} />
       ) : (
-        <Recipes recipes={initial?.data} initialFilters={{ category }} />
+        <Recipes recipes={initial?.data} />
       )}
     </PageLayout>
   )

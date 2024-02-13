@@ -1,6 +1,9 @@
 'use client'
 
-import React, { FC, useMemo, useState } from 'react'
+import { uniq } from 'lodash'
+import { useSearchParams } from 'next/navigation'
+import React, { FC, useEffect, useMemo, useState } from 'react'
+import { HiOutlineSearch } from 'react-icons/hi'
 import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
 import { Recipe } from 'sanity-studio/types'
 
@@ -10,15 +13,30 @@ import { cn } from '@/utils/style'
 import SelectInput, {
   SelectOption,
 } from '@/components/common/inputs/select-input'
+import NoResults from '@/components/common/no-results'
 import RecipeCard from '@/components/features/recipe/recipe-card'
+
+export enum RecipeCategories {
+  breakfast = 'Breakfast',
+  lunch = 'Lunch',
+  dinner = 'Dinner',
+  dessert = 'Desserts',
+  side = 'Side Dishes',
+  snack = 'Snacks',
+}
 
 type Props = {
   recipes: Recipe[]
-  initialFilters?: { category?: string }
 }
 
-const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
-  const allTags = recipes?.flatMap((rec) => (rec?.tags || [])?.map((t) => t))
+const Recipes: FC<Props> = ({ recipes }) => {
+  const searchParams = useSearchParams()
+
+  const categoryParam = searchParams?.get('category') || ''
+
+  const allTags = uniq(
+    recipes?.flatMap((rec) => (rec?.tags || [])?.map((t) => t)),
+  )
   const tagFilterOptions: SelectOption[] = useMemo(
     () =>
       allTags?.map((tag) => ({
@@ -28,12 +46,19 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
     [JSON.stringify(recipes)],
   )
 
+  const categoryFilterOptions: SelectOption[] = Object.keys(
+    RecipeCategories,
+  )?.map((cat) => ({
+    value: cat,
+    label: RecipeCategories[cat],
+  }))
+
   const recipeSearchOptions: SelectOption<Recipe>[] = useMemo(
     () =>
       recipes?.map((recipe) => ({
         value: recipe,
         label: (
-          <div className='flex flex-col whitespace-pre-wrap gap-1 border-b__ pb-2'>
+          <div className='flex flex-col whitespace-pre-wrap gap-1 text-sm'>
             <span>{recipe?.title}</span>
             <div className='flex items-center text-xs text-brand-gray-dark capitalize gap-1'>
               {recipe?.tags?.map((tag) => (
@@ -55,15 +80,28 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
   )
 
   const [tagFilter, setTagFilter] = useState<string>()
+  const [categoryFilter, setCategoryFilter] = useState<string | undefined>(
+    categoryParam,
+  )
   const [searchFilter, setSearchFilter] = useState<string>()
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>()
 
   const filteredRecipes = useMemo(() => {
-    if (!tagFilter && !searchFilter) return recipes
-    if (tagFilter && !searchFilter) {
+    if (!tagFilter && !searchFilter && !categoryFilter) return recipes
+    if (tagFilter && !searchFilter && !categoryFilter) {
       return recipes?.filter((rec) => rec?.tags?.includes(tagFilter))
     }
-    if (searchFilter && !tagFilter) {
+    if (categoryFilter && !searchFilter && !tagFilter) {
+      return recipes?.filter((rec) => rec?.category?.includes(categoryFilter))
+    }
+    if (categoryFilter && tagFilter && !searchFilter) {
+      return recipes?.filter(
+        (rec) =>
+          rec?.category?.includes(categoryFilter) &&
+          rec?.tags?.includes(tagFilter),
+      )
+    }
+    if (searchFilter) {
       return recipes?.filter((rec) => {
         const ingredients = getRecipeIngredients(rec)
         const criteria = [rec?.title, rec?.tags?.join(), ingredients?.join()]
@@ -73,14 +111,30 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
         return criteria?.includes(searchFilter?.toLowerCase()?.trim())
       })
     }
-  }, [tagFilter, searchFilter, JSON.stringify(recipes)])
+  }, [tagFilter, categoryFilter, searchFilter, JSON.stringify(recipes)])
+
+  const resetAllFilters = () => {
+    setSearchFilter(undefined)
+    setTagFilter(undefined)
+    setCategoryFilter(undefined)
+    setSelectedRecipe(undefined)
+  }
+
+  useEffect(() => {
+    setCategoryFilter(categoryParam)
+  }, [categoryParam])
 
   return (
     <div className='flex flex-col gap-8 w-full items-center max-w-4xl'>
       {/* Filters */}
       <div className='flex max-sm:flex-col sm:justify-end sm:items-end w-full gap-4 '>
         <SelectInput
-          placeholder='Search...'
+          placeholder={
+            <span className='flex items-center gap-2'>
+              <HiOutlineSearch />
+              <span>Search...</span>
+            </span>
+          }
           inputValue={searchFilter}
           onInputChange={(val, { action }) => {
             if (action !== 'input-change') {
@@ -89,6 +143,7 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
             }
             setSearchFilter(val)
             setTagFilter(undefined)
+            setCategoryFilter(undefined)
             setSelectedRecipe(undefined)
           }}
           onBlur={() => {
@@ -112,6 +167,7 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
           }}
           options={recipeSearchOptions}
           className='w-full sm:max-w-64 lg:max-w-64__'
+          labelClassName={cn([!!searchFilter && '!text-brand-blue'])}
           classNames={{
             container: () => 'md:max-w-48__ min-w-24',
             input: () => '[&>*]:!opacity-100',
@@ -120,6 +176,7 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
                 props.isSelected && '!bg-almost-white !text-almost-black',
                 props.isFocused && '!bg-almost-white',
               ]),
+            control: () => cn([!!searchFilter && '!border-brand-blue !border']),
           }}
           filterOption={(option, input) => {
             const recipe = (option as FilterOptionOption<SelectOption<Recipe>>)
@@ -138,12 +195,43 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
         />
 
         <SelectInput
+          options={categoryFilterOptions}
+          isClearable
+          isSearchable={false}
+          menuShouldScrollIntoView
+          className='w-full sm:max-w-48'
+          labelClassName={cn([!!categoryFilter && '!text-brand-blue'])}
+          classNames={{
+            container: () => 'md:max-w-48__ min-w-24',
+            control: () =>
+              cn([!!categoryFilter && '!border-brand-blue !border']),
+          }}
+          formatOptionLabel={(opt, _meta) => (
+            <span className='capitalize'>{(opt as SelectOption)?.label}</span>
+          )}
+          value={
+            categoryFilterOptions?.find(
+              (opt) => opt?.value === categoryFilter,
+            ) || ''
+          }
+          onChange={(opt) => {
+            setCategoryFilter(opt?.value)
+            setSearchFilter('')
+          }}
+          label='Meal'
+        />
+
+        <SelectInput
           options={tagFilterOptions}
           isClearable
           isSearchable={false}
           menuShouldScrollIntoView
           className='w-full sm:max-w-48 lg:max-w-64__'
-          classNames={{ container: () => 'md:max-w-48__ min-w-24' }}
+          labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
+          classNames={{
+            container: () => 'md:max-w-48__ min-w-24',
+            control: () => cn([!!tagFilter && '!border-brand-blue !border']),
+          }}
           formatOptionLabel={(opt, _meta) => (
             <span className='capitalize'>{(opt as SelectOption)?.label}</span>
           )}
@@ -154,15 +242,31 @@ const Recipes: FC<Props> = ({ recipes, initialFilters }) => {
             setTagFilter(opt?.value)
             setSearchFilter('')
           }}
-          label='Filter'
+          label='Filters'
         />
       </div>
 
-      <div className='grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full justify-items-center'>
-        {(filteredRecipes || [])?.map((recipe) => (
-          <RecipeCard key={recipe?._id} recipe={recipe} />
-        ))}
-      </div>
+      {filteredRecipes?.length ? (
+        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full justify-items-center'>
+          {(filteredRecipes || [])?.map((recipe) => (
+            <RecipeCard key={recipe?._id} recipe={recipe} />
+          ))}
+        </div>
+      ) : (
+        <div className='my-8 flex flex-col items-center gap-6'>
+          <NoResults
+            title="We couldn't find any recipes matching those criteria."
+            description="But check back soon, as we're always adding new recipes!"
+          />
+          <button
+            type='button'
+            className='text-brand-blue bg-almost-white font-semibold py-4 sm:py-2 text-lg__ w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
+            onClick={() => resetAllFilters()}
+          >
+            Show all recipes
+          </button>
+        </div>
+      )}
     </div>
   )
 }

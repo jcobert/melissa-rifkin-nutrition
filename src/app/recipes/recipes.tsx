@@ -167,6 +167,7 @@ const Recipes: FC<Props> = ({ recipes }) => {
           }}
           options={recipeSearchOptions}
           className='w-full sm:max-w-64 lg:max-w-64__'
+          labelClassName={cn([!!searchFilter && '!text-brand-blue'])}
           classNames={{
             container: () => 'md:max-w-48__ min-w-24',
             input: () => '[&>*]:!opacity-100',
@@ -175,6 +176,7 @@ const Recipes: FC<Props> = ({ recipes }) => {
                 props.isSelected && '!bg-almost-white !text-almost-black',
                 props.isFocused && '!bg-almost-white',
               ]),
+            control: () => cn([!!searchFilter && '!border-brand-blue !border']),
           }}
           filterOption={(option, input) => {
             const recipe = (option as FilterOptionOption<SelectOption<Recipe>>)
@@ -197,8 +199,13 @@ const Recipes: FC<Props> = ({ recipes }) => {
           isClearable
           isSearchable={false}
           menuShouldScrollIntoView
-          className='w-full sm:max-w-48 lg:max-w-64__'
-          classNames={{ container: () => 'md:max-w-48__ min-w-24' }}
+          className='w-full sm:max-w-48'
+          labelClassName={cn([!!categoryFilter && '!text-brand-blue'])}
+          classNames={{
+            container: () => 'md:max-w-48__ min-w-24',
+            control: () =>
+              cn([!!categoryFilter && '!border-brand-blue !border']),
+          }}
           formatOptionLabel={(opt, _meta) => (
             <span className='capitalize'>{(opt as SelectOption)?.label}</span>
           )}
@@ -220,7 +227,11 @@ const Recipes: FC<Props> = ({ recipes }) => {
           isSearchable={false}
           menuShouldScrollIntoView
           className='w-full sm:max-w-48 lg:max-w-64__'
-          classNames={{ container: () => 'md:max-w-48__ min-w-24' }}
+          labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
+          classNames={{
+            container: () => 'md:max-w-48__ min-w-24',
+            control: () => cn([!!tagFilter && '!border-brand-blue !border']),
+          }}
           formatOptionLabel={(opt, _meta) => (
             <span className='capitalize'>{(opt as SelectOption)?.label}</span>
           )}

@@ -28,6 +28,7 @@ export type SelectInputProps = Omit<Props, 'onChange'> & {
   label?: ReactNode
   helper?: string
   className?: string
+  labelClassName?: string
   onChange?: (
     opt: SelectOption<any, any>,
     actionMeta: ActionMeta<unknown>,
@@ -38,6 +39,7 @@ const SelectInput: FC<SelectInputProps> = ({
   label = '',
   helper = '',
   className = '',
+  labelClassName = '',
   id,
   onChange,
   classNames,
@@ -49,6 +51,7 @@ const SelectInput: FC<SelectInputProps> = ({
         className={clsx('text-sm text-zinc-500 dark:text-zinc-200', {
           "after:content-['*'] after:ml-[0.125rem] after:text-red-400":
             props?.required,
+          [labelClassName]: !!labelClassName,
         })}
       >
         {label}
@@ -89,6 +92,11 @@ const SelectInput: FC<SelectInputProps> = ({
               // backgroundColor: "rgb(200, 200, 200)",
               color: 'rgb(100, 100, 100)',
             },
+          }),
+          clearIndicator: (base) => ({
+            ...base,
+            color: '#659cd7',
+            '&:hover': { color: '#36597f' },
           }),
         }}
         onChange={onChange as Props['onChange']}

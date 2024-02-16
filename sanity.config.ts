@@ -6,6 +6,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import schema from './sanity/schema'
 import { visionTool } from '@sanity/vision'
 import { PluginOptions, defineConfig, isDev } from 'sanity'
+import StudioNavBar from 'sanity-studio/components/studio-navbar'
 import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
 
@@ -39,4 +40,5 @@ export default defineConfig({
   // Add and edit the content schema in the './sanity/schemas' folder
   schema: { types: schema },
   plugins,
+  studio: { components: { navbar: StudioNavBar } },
 })

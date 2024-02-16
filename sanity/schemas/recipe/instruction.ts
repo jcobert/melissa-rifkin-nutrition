@@ -57,9 +57,9 @@ export default defineType({
   preview: {
     select: { title: 'title', description: 'description' },
     prepare: ({ title, description }) => {
-      const desc = ((description as string) || '')?.slice(0, 40)
+      const desc = ((description as string) || '')?.slice(0, 60)
       return {
-        title,
+        title: title || ' ',
         subtitle: `${desc}...`,
       }
     },

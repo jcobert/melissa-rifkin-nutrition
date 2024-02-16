@@ -3,7 +3,7 @@ import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'post',
-  title: 'Post',
+  title: 'Blog Post',
   type: 'document',
   icon: FaNewspaper,
   fields: [
@@ -14,14 +14,14 @@ export default defineType({
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'URL-friendly Name',
       type: 'slug',
       options: {
         source: 'title',
         maxLength: 96,
       },
       description:
-        'Just click "Generate" after entering something in the Title field.',
+        'Just click "Generate" after entering something in the Title field above, to automatically fill this in.',
     }),
     defineField({
       name: 'author',

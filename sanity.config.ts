@@ -5,9 +5,33 @@
 import { apiVersion, dataset, projectId } from './sanity/env'
 import schema from './sanity/schema'
 import { visionTool } from '@sanity/vision'
-import { defineConfig } from 'sanity'
+import { PluginOptions, defineConfig, isDev } from 'sanity'
+import StudioNavBar from 'sanity-studio/components/studio-navbar'
 import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
+
+const plugins: PluginOptions[] = isDev
+  ? [
+      structureTool(),
+      visionTool({ defaultApiVersion: apiVersion }),
+      presentationTool({
+        previewUrl: {
+          draftMode: {
+            enable: '/api/draft',
+          },
+        },
+      }),
+    ]
+  : [
+      structureTool(),
+      presentationTool({
+        previewUrl: {
+          draftMode: {
+            enable: '/api/draft',
+          },
+        },
+      }),
+    ]
 
 export default defineConfig({
   basePath: '/studio',
@@ -15,17 +39,6 @@ export default defineConfig({
   dataset,
   // Add and edit the content schema in the './sanity/schemas' folder
   schema: { types: schema },
-  plugins: [
-    structureTool(),
-    // Vision is a tool that lets you query your content with GROQ in the studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion }),
-    presentationTool({
-      previewUrl: {
-        draftMode: {
-          enable: '/api/draft',
-        },
-      },
-    }),
-  ],
+  plugins,
+  studio: { components: { navbar: StudioNavBar } },
 })

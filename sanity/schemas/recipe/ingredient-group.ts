@@ -9,6 +9,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'E.g. "Sauce"',
     }),
     defineField({
       name: 'ingredients',

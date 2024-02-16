@@ -14,12 +14,14 @@ export default defineType({
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'URL-friendly Name',
       type: 'slug',
       options: {
         source: 'title',
         maxLength: 96,
       },
+      description:
+        'Just click "Generate" after entering something in the Title field above, to automatically fill this in.',
     }),
     defineField({
       name: 'mainImage',
@@ -33,7 +35,8 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Image Description',
-          description: 'Used for people who cannot see the image.',
+          description:
+            'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
         },
       ],
     }),
@@ -68,6 +71,8 @@ export default defineType({
       of: [{ type: 'string' }],
       // of: [{ type: 'reference', to: { type: 'recipeTag' } }],
       options: { layout: 'tags' },
+      description:
+        'Keywords to help someone searching for a recipe. E.g. pasta, soup, instant pot, vegan',
     }),
     defineField({
       name: 'publishedAt',
@@ -93,6 +98,8 @@ export default defineType({
       type: 'array',
       of: [{ type: 'ingredientGroup' }],
       options: { modal: { type: 'dialog', width: 'auto' } },
+      description:
+        'Subsets of ingredients for the recipe. For example, you might have one ingredient group for the pork chop and another for the mango chutney that goes on top.',
     }),
     defineField({
       name: 'instructions',
@@ -100,6 +107,7 @@ export default defineType({
       type: 'array',
       of: [{ type: 'instruction' }],
       options: { modal: { type: 'dialog', width: 'auto' } },
+      description: 'All recipe steps. Drag to reorder. Top is the first step.',
     }),
   ],
 

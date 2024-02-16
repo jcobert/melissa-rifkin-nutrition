@@ -1,6 +1,5 @@
 import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
-import Divider from 'sanity-studio/components/divider'
 
 export default defineType({
   name: 'post',
@@ -21,6 +20,8 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
+      description:
+        'Just click "Generate" after entering something in the Title field.',
     }),
     defineField({
       name: 'author',
@@ -40,7 +41,8 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Image Description',
-          description: 'Used for people who cannot see the image.',
+          description:
+            'Used for people who cannot see the image. E.g. "A woman gardening"',
         },
       ],
     }),
@@ -75,15 +77,17 @@ export default defineType({
               { title: 'Emphasis', value: 'em' },
               { title: 'Underline', value: 'underline' },
               { title: 'Strike', value: 'strike-through' },
-              // {
-              //   title: 'Divider',
-              //   value: 'divider',
-              //   component: (props) => (
-              //     <span className='text-red-500 border-b w-full'>
-              //       {props?.children}
-              //     </span>
-              //   ),
-              // },
+              {
+                title: 'Divider',
+                value: 'divider',
+                component: (props) => (
+                  <span>
+                    {props?.children}
+                    <hr className='h-px w-full border-b' />
+                  </span>
+                ),
+                icon: () => <span>--</span>,
+              },
             ],
           },
         },

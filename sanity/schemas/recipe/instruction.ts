@@ -9,11 +9,13 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'Optional. A brief heading, such as "In a bowl".',
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
+      description: 'The written instruction.',
     }),
     // defineField({
     //   name: 'stepNumber',
@@ -48,6 +50,8 @@ export default defineType({
         },
       ],
       // options: {list: []}
+      description:
+        'Each of the ingredients that are part of this particular step.',
     }),
   ],
   preview: {

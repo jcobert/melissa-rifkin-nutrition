@@ -49,11 +49,14 @@ export default defineType({
         ],
         layout: 'dropdown',
       },
+      description:
+        "Leave blank if a specific unit of measurement doesn't apply.",
     }),
     defineField({
       name: 'note',
       title: 'Note',
       type: 'string',
+      description: 'A comment such as "sliced" or "whole grain works best"',
     }),
   ],
   preview: {

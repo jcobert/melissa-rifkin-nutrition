@@ -13,7 +13,7 @@ import { structureTool } from 'sanity/structure'
 
 const plugins: PluginOptions[] = isDev
   ? [
-      structureTool(),
+      structureTool({ structure: customStructure }),
       visionTool({ defaultApiVersion: apiVersion }),
       presentationTool({
         previewUrl: {

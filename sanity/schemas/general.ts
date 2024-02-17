@@ -8,10 +8,22 @@ export default defineType({
   icon: BsGearFill,
   groups: [{ name: 'contact', title: 'Contact Info' }],
   fields: [
+    // defineField({
+    //   name: 'title',
+    //   title: 'Title',
+    //   type: 'string',
+    // }),
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'email',
+      title: 'Email',
       type: 'string',
+      group: 'contact',
+    }),
+    defineField({
+      name: 'phone',
+      title: 'Phone',
+      type: 'string',
+      group: 'contact',
     }),
     defineField({
       name: 'socialLinks',
@@ -29,13 +41,13 @@ export default defineType({
           type: 'string',
         }),
         defineField({
-          name: 'twitter',
-          title: 'Twitter',
+          name: 'pinterest',
+          title: 'Pinterest',
           type: 'string',
         }),
         defineField({
-          name: 'pinterest',
-          title: 'Pinterest',
+          name: 'twitter',
+          title: 'X (Twitter)',
           type: 'string',
         }),
         // defineField({
@@ -45,18 +57,7 @@ export default defineType({
         // }),
       ],
       group: 'contact',
-    }),
-    defineField({
-      name: 'email',
-      title: 'Email',
-      type: 'string',
-      group: 'contact',
-    }),
-    defineField({
-      name: 'phone',
-      title: 'Phone',
-      type: 'string',
-      group: 'contact',
+      options: { collapsible: true },
     }),
   ],
 })

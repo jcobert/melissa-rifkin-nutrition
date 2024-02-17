@@ -6,6 +6,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import schema from './sanity/schema'
 import { visionTool } from '@sanity/vision'
 import { PluginOptions, defineConfig, isDev } from 'sanity'
+import { customStructure } from 'sanity-structure'
 import StudioNavBar from 'sanity-studio/components/studio-navbar'
 import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
@@ -23,7 +24,7 @@ const plugins: PluginOptions[] = isDev
       }),
     ]
   : [
-      structureTool(),
+      structureTool({ structure: customStructure }),
       presentationTool({
         previewUrl: {
           draftMode: {

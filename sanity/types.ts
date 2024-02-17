@@ -91,6 +91,7 @@ export type IngredientGroup = {
 
 export type IngredientMeasurement = {
   ingredientName?: Ingredient
+  // ingredientName?: SanityReference<Ingredient>
   // ingredientName?: SanityReference<Ingredient> & Ingredient
   amount?: number
   unit?: keyof typeof RecipeUnit

@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { Ingredient, Recipe, SanityReference } from 'sanity-studio/types'
+import { Ingredient, Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'instruction',
@@ -52,30 +52,12 @@ export default defineType({
                 },
               }
             },
+            disableNew: true,
           },
-        }),
-        defineField({
-          type: 'ingredientMeasurement',
-          name: 'ingredientMeasurement',
-          // options: {
-          //   filter: ({ document }) => {
-          //     const { ingredientGroups } = (document as Recipe) || {}
-          //     const ingredientMeasurements = ingredientGroups?.flatMap(
-          //       (group) => group?.ingredients?.map((ing) => ing),
-          //     )
-          //     const ingredientRefs = ingredientMeasurements?.map(
-          //       (im) => im?.ingredientName?._ref,
-          //     )
-          //     return {
-          //       filter: '_id in $ingredients',
-          //       params: {
-          //         ingredients: ingredientRefs,
-          //       },
-          //     }
-          //   },
-          // },
+          // components: { input: IngredientCheckbox },
         }),
       ],
+      // components: { input: IngredientSelector },
       description:
         'Each of the ingredients that are part of this particular step.',
     }),

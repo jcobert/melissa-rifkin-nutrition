@@ -6,7 +6,14 @@ export default defineType({
   title: 'General',
   type: 'document',
   icon: BsGearFill,
-  groups: [{ name: 'contact', title: 'Contact Info' }],
+  groups: [{ name: 'companyInfo', title: 'Company Info' }],
+  fieldsets: [
+    {
+      name: 'contact',
+      title: 'Contact Info',
+      description: 'Primary contact info for the company.',
+    },
+  ],
   fields: [
     // defineField({
     //   name: 'title',
@@ -17,17 +24,20 @@ export default defineType({
       name: 'email',
       title: 'Email',
       type: 'string',
-      group: 'contact',
+      fieldset: 'contact',
+      group: 'companyInfo',
     }),
     defineField({
       name: 'phone',
       title: 'Phone',
       type: 'string',
-      group: 'contact',
+      fieldset: 'contact',
+      group: 'companyInfo',
     }),
     defineField({
       name: 'socialLinks',
       title: 'Social Links',
+      description: 'Links to associated profiles.',
       type: 'object',
       fields: [
         defineField({
@@ -56,7 +66,7 @@ export default defineType({
         //   type: 'string',
         // }),
       ],
-      group: 'contact',
+      group: 'companyInfo',
       options: { collapsible: true },
     }),
   ],

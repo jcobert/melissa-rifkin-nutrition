@@ -9,7 +9,7 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Recipe Name',
       type: 'string',
     }),
     defineField({
@@ -25,7 +25,7 @@ export default defineType({
     }),
     defineField({
       name: 'mainImage',
-      title: 'Main image',
+      title: 'Photo',
       type: 'image',
       options: {
         hotspot: true,

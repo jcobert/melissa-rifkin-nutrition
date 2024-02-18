@@ -36,6 +36,16 @@ export type {
   SanityImagePaletteSwatch,
 }
 
+export type Image = {
+  _type: 'image'
+  asset: SanityImageAsset
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
+  alt?: string
+}
+
+export type Slug = { _type: 'slug'; current: string }
+
 /** Post */
 export interface Post extends SanityDocument {
   _type: 'post'
@@ -161,16 +171,29 @@ export enum SocialNetworks {
 
 export type SocialLinks = { [x in keyof typeof SocialNetworks]?: string }
 
-export type BlockContent = Array<
-  | SanityKeyed<SanityBlock>
-  | SanityKeyed<{
-      _type: 'image'
-      asset: SanityReference<SanityImageAsset>
-      crop?: SanityImageCrop
-      hotspot?: SanityImageHotspot
-      alt?: string
-    }>
->
+export type BlockContent = Array<SanityKeyed<SanityBlock> | SanityKeyed<Image>>
+
+export type ContactInfo = {
+  email?: string
+  phone?: string
+}
+
+/** Bio */
+export interface Bio extends SanityDocument {
+  _type: 'bio'
+  name?: string
+  slug?: Slug
+  photo?: Image
+  background?: BlockContent
+  contactInfo?: ContactInfo
+  socialLinks?: SocialLinks
+}
+
+/** AboutPage */
+export interface AboutPage extends SanityDocument {
+  _type: 'aboutPage'
+  bios?: Array<Bio & { _ref: string; _key: string }>
+}
 
 export type Documents =
   | Post
@@ -179,5 +202,7 @@ export type Documents =
   | Recipe
   | Ingredient
   | General
+  | Bio
+  | AboutPage
 
 export type DocumentType = Documents['_type']

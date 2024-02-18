@@ -4,11 +4,15 @@ import post from './schemas/blog/post'
 import recipe from './schemas/recipe/recipe'
 import testimonial from './schemas/testimonial'
 import { type SchemaTypeDefinition } from 'sanity'
+import aboutPage from 'sanity-studio/schemas/about/aboutPage'
+import bio from 'sanity-studio/schemas/about/bio'
+import contactInfo from 'sanity-studio/schemas/contactInfo'
 import general from 'sanity-studio/schemas/general'
 import ingredient from 'sanity-studio/schemas/recipe/ingredient'
 import ingredientGroup from 'sanity-studio/schemas/recipe/ingredient-group'
 import ingredientMeasurement from 'sanity-studio/schemas/recipe/ingredient-measurement'
 import instruction from 'sanity-studio/schemas/recipe/instruction'
+import socialLinks from 'sanity-studio/schemas/socialLinks'
 
 const schema: SchemaTypeDefinition[] = [
   post,
@@ -21,6 +25,10 @@ const schema: SchemaTypeDefinition[] = [
   instruction,
   ingredientMeasurement,
   general,
+  bio,
+  contactInfo,
+  socialLinks,
+  aboutPage,
 ]
 
 export default schema

@@ -69,7 +69,7 @@ const Footer: FC = async () => {
           ))}
         </div>
         <div className='flex-grow'>
-          <CalendlyPopup className='text-sm md:px-2 border border-brand-gray-light/50' />
+          <CalendlyPopup className='text-sm__ md:px-2 border border-brand-gray-light/50' />
         </div>
         {/* Credit */}
         <div className='flex flex-col items-center md:flex-row gap-y-8 gap-x-8'>

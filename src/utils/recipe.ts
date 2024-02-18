@@ -8,12 +8,14 @@ import {
 export const getIngredientDetails = (
   ingredient: Ingredient,
   ingredientGroups: Recipe['ingredientGroups'],
-): IngredientMeasurement | undefined => {
+): (IngredientMeasurement | undefined)[] => {
   const allIngredients = ingredientGroups?.flatMap(
     (group) => group?.ingredients,
   )
-  return allIngredients?.find(
-    (ing) => ing?.ingredientName?._id === ingredient?._id,
+  return (
+    allIngredients?.filter(
+      (ing) => ing?.ingredientName?._id === ingredient?._id,
+    ) || []
   )
 }
 

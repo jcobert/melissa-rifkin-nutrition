@@ -91,6 +91,7 @@ export type IngredientGroup = {
 
 export type IngredientMeasurement = {
   ingredientName?: Ingredient
+  // ingredientName?: SanityReference<Ingredient>
   // ingredientName?: SanityReference<Ingredient> & Ingredient
   amount?: number
   unit?: keyof typeof RecipeUnit
@@ -102,11 +103,6 @@ export type Instruction = {
   description?: string
   ingredients?: Array<Ingredient>
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
-}
-
-export interface RecipeCategory {
-  _type: 'recipeCategory'
-  name?: string
 }
 
 export enum RecipeUnit {
@@ -134,11 +130,11 @@ export interface Author extends SanityDocument {
 }
 
 /** Category */
-export interface Category extends SanityDocument {
-  _type: 'category'
-  title?: string
-  description?: string
-}
+// export interface Category extends SanityDocument {
+//   _type: 'category'
+//   title?: string
+//   description?: string
+// }
 
 /** Testimonial */
 export interface Testimonial extends SanityDocument {
@@ -179,8 +175,9 @@ export type BlockContent = Array<
 export type Documents =
   | Post
   | Author
-  | Category
   | Testimonial
   | Recipe
   | Ingredient
-  | RecipeCategory
+  | General
+
+export type DocumentType = Documents['_type']

@@ -9,7 +9,8 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'E.g. "Sauce"',
+      description:
+        'E.g. "Sauce". If only one group, title won\'t be shown, so you can leave blank.',
     }),
     defineField({
       name: 'ingredients',

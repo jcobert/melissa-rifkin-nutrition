@@ -7,6 +7,7 @@ import { cn } from '@/utils/style'
 type Props = {
   measurement?: IngredientMeasurement
   hideIngredient?: boolean
+  hideMeasurement?: boolean
   measurementClassName?: string
   ingredientClassName?: string
 }
@@ -14,13 +15,14 @@ type Props = {
 const Measurement: FC<Props> = ({
   measurement,
   hideIngredient = false,
+  hideMeasurement = false,
   measurementClassName = '',
   ingredientClassName = '',
 }) => {
   //
   return (
-    <div className='flex items-center gap-1'>
-      {measurement?.amount ? (
+    <div className='flex items-center gap-1 w-fit'>
+      {!!measurement?.amount && !hideMeasurement ? (
         <div
           className={cn([
             'flex items-center gap-1 font-mono text-sm text-brand-blue-dark',
@@ -28,7 +30,7 @@ const Measurement: FC<Props> = ({
           ])}
         >
           <p>{formatFraction(measurement?.amount)}</p>
-          <p>{formatUnit(measurement?.unit)}</p>
+          {!!measurement?.unit && <p>{formatUnit(measurement?.unit)}</p>}
         </div>
       ) : null}
       {!hideIngredient && (

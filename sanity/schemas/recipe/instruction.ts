@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { Ingredient, Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'instruction',
@@ -28,28 +29,35 @@ export default defineType({
       title: 'Ingredients',
       type: 'array',
       of: [
-        {
+        defineField({
           type: 'reference',
+          name: 'ingredient',
           to: {
             type: 'ingredient',
-            // options: {
-            //   filter: ({ document }) => {
-            //     if (!document.ingredientGroups) {
-            //       return {
-            //         filter: '*',
-            //         params: {},
-            //       }
-            //     }
-            //     return {
-            //       filter: groq`*[defined(ingredients)]{}`,
-            //       params: {},
-            //     }
-            //   },
-            // },
           },
-        },
+          options: {
+            filter: ({ document }) => {
+              const { ingredientGroups } = (document as Recipe) || {}
+              const ingredientMeasurements = ingredientGroups?.flatMap(
+                (group) => group?.ingredients?.map((ing) => ing),
+              )
+              const ingredientRefs = ingredientMeasurements?.map(
+                (im) =>
+                  (im?.ingredientName as Ingredient & { _ref: string })?._ref,
+              )
+              return {
+                filter: '_id in $ingredients',
+                params: {
+                  ingredients: ingredientRefs,
+                },
+              }
+            },
+            disableNew: true,
+          },
+          // components: { input: IngredientCheckbox },
+        }),
       ],
-      // options: {list: []}
+      // components: { input: IngredientSelector },
       description:
         'Each of the ingredients that are part of this particular step.',
     }),

@@ -1,15 +1,18 @@
 import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
+import { intersectionBy, pick, uniqBy } from 'lodash'
 import Image from 'next/image'
 import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
-import { type Recipe } from 'sanity-studio/types'
+import { IngredientMeasurement, type Recipe } from 'sanity-studio/types'
 
 import { getIngredientDetails } from '@/utils/recipe'
 
 import PageLayout from '@/components/common/layout/page-layout'
+import Tooltip from '@/components/common/layout/tooltip'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
+import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -97,9 +100,12 @@ const Recipe: FC<Props> = ({ recipe }) => {
         {/* Ingredients */}
         <section className='flex flex-col gap-4 w-full'>
           <h2 className='text-2xl font-medium'>Ingredients</h2>
-          <div className='grid gap-2 md:divide-x-1 max-md:grid-cols-1 md:grid-flow-col w-fit__'>
+          <div className='grid gap-x-2 gap-y-6 md:divide-x-1__ max-md:grid-cols-1 md:grid-flow-col md:w-fit__ md:min-w-96'>
             {ingredientGroups?.map((group) => (
-              <div key={group?._key} className='px-2 sm:px-4'>
+              <div
+                key={group?._key}
+                className='px-2 sm:px-4 py-1 border rounded'
+              >
                 {ingredientGroups?.length > 1 && (
                   <h3 className='text-xl font-semibold mb-2'>{group?.title}</h3>
                 )}
@@ -133,19 +139,43 @@ const Recipe: FC<Props> = ({ recipe }) => {
                 {/* ingredient group */}
                 {inst?.ingredients?.length ? (
                   <div className='flex flex-col gap-2 border-y py-2'>
-                    <h3 className='font-medium text-brand uppercase'>
-                      {inst?.title}
-                    </h3>
+                    {!!inst?.title && (
+                      <h3 className='font-medium text-brand uppercase'>
+                        {inst?.title}
+                      </h3>
+                    )}
                     <div className='flex flex-col'>
-                      {inst?.ingredients?.map((ing) => {
+                      {inst?.ingredients?.map((ingredient) => {
                         const measurement = getIngredientDetails(
-                          ing,
+                          ingredient,
                           ingredientGroups,
                         )
+                        if (
+                          measurement?.length > 1 &&
+                          uniqBy(measurement, (m) =>
+                            JSON.stringify(
+                              pick(m, [
+                                'ingredientName',
+                                'amount',
+                                'unit',
+                                'note',
+                              ] as (keyof IngredientMeasurement)[]),
+                            )?.toLowerCase(),
+                          )?.length > 1
+                        )
+                          return (
+                            <IngredientTooltip
+                              key={ingredient?._id}
+                              triggerProps={{ className: 'w-fit' }}
+                              ingredient={ingredient}
+                              ingredientGroups={ingredientGroups}
+                              measurement={measurement}
+                            />
+                          )
                         return (
                           <Measurement
-                            key={ing?._id}
-                            measurement={measurement}
+                            key={ingredient?._id}
+                            measurement={measurement?.[0]}
                             ingredientClassName='font-normal'
                           />
                         )

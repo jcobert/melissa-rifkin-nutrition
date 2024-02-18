@@ -10,7 +10,7 @@
     "class",
     "className",
     "classNames",
-    "containerClassName"
+    ".*ClassName*"
   ],
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "editor.indentSize": "tabSize"

@@ -152,6 +152,9 @@ export interface Testimonial extends SanityDocument {
   name?: string
   location?: string
   testimonial?: string
+  relationship?: 'client' | 'partner'
+  company?: string
+  position?: string
 }
 
 /** General Info/Settings */

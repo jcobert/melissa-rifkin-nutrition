@@ -14,6 +14,7 @@ export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ 
 
 // TESTIMONIAL
 export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"]`
+export const TESTIMONIALS_BY_RELATIONSHIP_QUERY = groq`*[_type == "testimonial" && relationship == $relationship]`
 
 // GENERAL
 export const GENERAL_QUERY = groq`*[_type == "general"][0]`

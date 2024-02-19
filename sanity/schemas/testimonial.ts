@@ -6,16 +6,47 @@ export default defineType({
   title: 'Testimonial',
   type: 'document',
   icon: BsChatQuoteFill,
+  fieldsets: [{ name: 'personalInfo', title: 'Personal Info' }],
   fields: [
+    defineField({
+      name: 'relationship',
+      title: 'Relationship',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Client', value: 'client' },
+          { title: 'Partner', value: 'partner' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'client',
+    }),
     defineField({
       name: 'name',
       title: 'Name',
       type: 'string',
+      fieldset: 'personalInfo',
     }),
     defineField({
       name: 'location',
       title: 'Location',
       type: 'string',
+      fieldset: 'personalInfo',
+      hidden: (props) => props.parent.relationship !== 'client',
+    }),
+    defineField({
+      name: 'company',
+      title: 'Company',
+      type: 'string',
+      fieldset: 'personalInfo',
+      hidden: (props) => props.parent.relationship !== 'partner',
+    }),
+    defineField({
+      name: 'position',
+      title: 'Position',
+      type: 'string',
+      fieldset: 'personalInfo',
+      hidden: (props) => props.parent.relationship !== 'partner',
     }),
     defineField({
       name: 'testimonial',
@@ -23,4 +54,21 @@ export default defineType({
       type: 'text',
     }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+      relationship: 'relationship',
+      company: 'company',
+      position: 'position',
+      location: 'location',
+    },
+    prepare({ title, relationship, location, company, position }) {
+      const rel = relationship === 'partner' ? 'Partner' : 'Client'
+      const subtitle =
+        relationship === 'partner'
+          ? `${position ? `${position}, ` : ''}${company}`
+          : `${rel}${location ? ` - ${location}` : ''}`
+      return { title, subtitle }
+    },
+  },
 })

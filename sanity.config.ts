@@ -42,4 +42,11 @@ export default defineConfig({
   schema: { types: schema },
   plugins,
   studio: { components: { navbar: StudioNavBar } },
+  document: {
+    actions: (prev, context) => {
+      return context.schemaType === 'bio'
+        ? prev.filter((action) => action.name !== 'DeleteAction')
+        : prev
+    },
+  },
 })

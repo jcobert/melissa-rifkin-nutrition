@@ -4,7 +4,10 @@ import { draftMode } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { POSTS_QUERY, TESTIMONIALS_QUERY } from 'sanity-studio/lib/queries'
+import {
+  POSTS_QUERY,
+  TESTIMONIALS_BY_RELATIONSHIP_QUERY,
+} from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { Post, Testimonial } from 'sanity-studio/types'
 
@@ -26,8 +29,8 @@ export const metadata: Metadata = {
 
 const HomePage = async () => {
   const testimonials = await loadQuery<SanityDocument<Testimonial>[]>(
-    TESTIMONIALS_QUERY,
-    {},
+    TESTIMONIALS_BY_RELATIONSHIP_QUERY,
+    { relationship: 'client' },
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
     },

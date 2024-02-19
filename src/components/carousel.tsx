@@ -51,7 +51,7 @@ const Carousel: FC<{ children: ReactNode }> = (props) => {
     let transformStyle = ''
     if (state?.sliding) {
       if (state?.dir === 'NEXT') transformStyle = 'translateX(calc(80%))'
-      if (state?.dir === 'PREV') transformStyle = 'translateX(calc(-80%))'
+      else if (state?.dir === 'PREV') transformStyle = 'translateX(calc(-80%))'
     } else transformStyle = 'translateX(0)'
     return transformStyle
   }
@@ -70,7 +70,7 @@ const Carousel: FC<{ children: ReactNode }> = (props) => {
       <div className='w-full overflow-hidden'>
         <div
           className={cn([
-            'flex justify-start__ gap-4',
+            'flex justify-end__ gap-4',
             count % 2 === 1 && 'justify-center',
           ])}
           style={{
@@ -96,22 +96,24 @@ const Carousel: FC<{ children: ReactNode }> = (props) => {
         </div>
       </div>
 
-      <div className='flex justify-center gap-12 sm:gap-6'>
-        <button
-          type='button'
-          className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'
-          onClick={() => slide('PREV')}
-        >
-          <SlArrowLeft />
-        </button>
-        <button
-          type='button'
-          className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'
-          onClick={() => slide('NEXT')}
-        >
-          <SlArrowRight />
-        </button>
-      </div>
+      {count > 1 && (
+        <div className='flex justify-center gap-12 sm:gap-6'>
+          <button
+            type='button'
+            className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'
+            onClick={() => slide('PREV')}
+          >
+            <SlArrowLeft />
+          </button>
+          <button
+            type='button'
+            className='text-almost-black max-sm:text-lg inline-block mt-5 active:relative active:top-0 p-2'
+            onClick={() => slide('NEXT')}
+          >
+            <SlArrowRight />
+          </button>
+        </div>
+      )}
     </div>
   )
 }

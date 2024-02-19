@@ -54,4 +54,21 @@ export default defineType({
       type: 'text',
     }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+      relationship: 'relationship',
+      company: 'company',
+      position: 'position',
+      location: 'location',
+    },
+    prepare({ title, relationship, location, company, position }) {
+      const rel = relationship === 'partner' ? 'Partner' : 'Client'
+      const subtitle =
+        relationship === 'partner'
+          ? `${position ? `${position}, ` : ''}${company}`
+          : `${rel}${location ? ` - ${location}` : ''}`
+      return { title, subtitle }
+    },
+  },
 })

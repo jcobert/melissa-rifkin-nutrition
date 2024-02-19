@@ -10,21 +10,11 @@
  */
 import config from '../../../../sanity.config'
 import { NextStudio } from 'next-sanity/studio'
-import Link from 'next/link'
-import { FaArrowLeft } from 'react-icons/fa6'
 
 export default function StudioPage() {
   return (
     <div className='fixed z-50 -mt-16__ w-screen h-screen top-0'>
-      {/* <div className='relative z-50 -mt-16'> */}
       <NextStudio config={config} />
-      {/* <Link
-        className='w-fit p-4 text-brand flex items-center gap-2 hover:text-brand/hover'
-        href='/'
-      >
-        <FaArrowLeft />
-        <span>Exit Studio</span>
-      </Link> */}
     </div>
   )
 }

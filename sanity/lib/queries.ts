@@ -16,7 +16,7 @@ export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ 
 export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"]`
 
 // GENERAL
-export const GENERAL_QUERY = groq`*[_type == "general"]`
+export const GENERAL_QUERY = groq`*[_type == "general"][0]`
 
 // ABOUT PAGE
 export const ABOUT_PAGE_QUERY = groq`*[_type == "aboutPage"]{ ..., bios[]{ ..., photo{ ..., asset-> }}-> }[0]`

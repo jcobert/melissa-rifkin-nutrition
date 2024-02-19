@@ -32,7 +32,7 @@ const socialIcons: {
 }
 
 const Footer: FC = async () => {
-  const general = await loadQuery<SanityDocument<General>[]>(
+  const general = await loadQuery<SanityDocument<General>>(
     GENERAL_QUERY,
     {},
     {
@@ -40,7 +40,7 @@ const Footer: FC = async () => {
     },
   )
 
-  const socialLinks = general?.data?.[0]?.socialLinks || {}
+  const socialLinks = general?.data?.socialLinks || {}
 
   const currentYear = new Date().getFullYear()
   const links: FooterLink[] = Object.keys(socialLinks)?.map(
@@ -69,7 +69,7 @@ const Footer: FC = async () => {
           ))}
         </div>
         <div className='flex-grow'>
-          <CalendlyPopup className='text-sm__ md:px-2 border border-brand-gray-light/50' />
+          <CalendlyPopup className='md:text-sm md:px-2 border border-brand-gray-light/50' />
         </div>
         {/* Credit */}
         <div className='flex flex-col items-center md:flex-row gap-y-8 gap-x-8'>

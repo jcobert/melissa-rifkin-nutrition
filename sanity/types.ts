@@ -155,11 +155,11 @@ export interface Testimonial extends SanityDocument {
 }
 
 /** General Info/Settings */
-export interface General extends SanityDocument {
+export type General = SanityDocument & {
   _type: 'general'
   title?: string
   socialLinks?: SocialLinks
-}
+} & ContactInfo
 
 export enum SocialNetworks {
   instagram = 'Instagram',

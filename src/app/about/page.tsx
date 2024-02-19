@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
-import React from 'react'
+import React, { FC } from 'react'
 import { ABOUT_PAGE_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { type AboutPage } from 'sanity-studio/types'
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: pageTitle('About'),
 }
 
-const AboutPage = async () => {
+const AboutPage: FC = async () => {
   const content = await loadQuery<SanityDocument<AboutPage>>(
     ABOUT_PAGE_QUERY,
     {},

@@ -9,6 +9,7 @@ import {
   FaTwitter,
 } from 'react-icons/fa6'
 import {
+  ContactInfo,
   type SocialLinks as SanitySocialLinks,
   SocialNetworks,
 } from 'sanity-studio/types'
@@ -56,12 +57,14 @@ export const SocialLink: FC<SocialLinkProps> = ({ link, className = '' }) => {
 
 type SocialLinksProps = {
   socialLinks?: SanitySocialLinks
+  contactInfo?: ContactInfo
   className?: string
   linkClassName?: string
 }
 
 export const SocialLinks: FC<SocialLinksProps> = ({
   socialLinks,
+  contactInfo,
   className = '',
   linkClassName = '',
 }) => {
@@ -99,6 +102,28 @@ export const SocialLinks: FC<SocialLinksProps> = ({
           />
         ) : null,
       )}
+      {contactInfo?.email ? (
+        <SocialLink
+          link={{
+            id: 'email',
+            name: 'Email',
+            url: `mailto:${contactInfo?.email}`,
+            icon: socialIcons?.email,
+          }}
+          className={cn([linkClassName])}
+        />
+      ) : null}
+      {contactInfo?.phone ? (
+        <SocialLink
+          link={{
+            id: 'phone',
+            name: 'Phone',
+            url: `tel:${contactInfo?.phone}`,
+            icon: socialIcons?.phone,
+          }}
+          className={cn([linkClassName])}
+        />
+      ) : null}
     </div>
   )
 }

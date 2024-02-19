@@ -9,8 +9,6 @@ import { GENERAL_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { General } from 'sanity-studio/types'
 
-import { cn } from '@/utils/style'
-
 import BrandBanner from '@/components/brand-banner'
 import PageLayout from '@/components/common/layout/page-layout'
 
@@ -74,10 +72,7 @@ const PartnershipsPage: FC = async () => {
             className='justify-around sm:grid-rows-2'
             imageClassName='object-contain object-center md:size-24'
           />
-          <Link
-            href='#'
-            className='btn bg-background border border-brand text-brand hover:text-almost-white w-fit mx-auto mt-2'
-          >
+          <Link href='#' className='btn-outline w-fit mx-auto mt-2'>
             <span>More Press</span>
             <IoIosArrowForward aria-hidden />
           </Link>

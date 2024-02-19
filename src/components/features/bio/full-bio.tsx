@@ -1,12 +1,15 @@
 import { PortableText } from '@portabletext/react'
 import imageUrlBuilder from '@sanity/image-url'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { FC } from 'react'
+import { IoIosArrowForward } from 'react-icons/io'
 import { dataset, projectId } from 'sanity-studio/env'
 import { Bio } from 'sanity-studio/types'
 
+import CalendlyPopup from '@/components/calendly-popup'
 import { portableComponents } from '@/components/common/portable/portable-components'
-import { SocialLink, SocialLinks, socialIcons } from '@/components/social-links'
+import { SocialLinks } from '@/components/social-links'
 
 const builder = imageUrlBuilder({ projectId, dataset })
 
@@ -15,7 +18,9 @@ type Props = {
 }
 
 const FullBio: FC<Props> = ({ bio }) => {
-  const { name, background, photo, contactInfo, socialLinks } = bio || {}
+  const { name, background, photo, contactInfo, socialLinks, _id } = bio || {}
+
+  const isMelissa = _id === '97e84b85-0b3b-4a7d-bbb8-a53ff7fd3a93'
 
   return (
     <section className='flex flex-col gap-6'>
@@ -42,31 +47,7 @@ const FullBio: FC<Props> = ({ bio }) => {
             {name}
           </h3>
           {socialLinks || contactInfo ? (
-            <div className='flex items-center gap-6 md:gap-4'>
-              {socialLinks ? <SocialLinks socialLinks={socialLinks} /> : null}
-              {contactInfo?.email ? (
-                <SocialLink
-                  link={{
-                    id: 'email',
-                    name: 'Email',
-                    url: `mailto:${contactInfo?.email}`,
-                    icon: socialIcons?.email,
-                  }}
-                  className='w-fit'
-                />
-              ) : null}
-              {contactInfo?.phone ? (
-                <SocialLink
-                  link={{
-                    id: 'phone',
-                    name: 'Phone',
-                    url: `tel:${contactInfo?.phone}`,
-                    icon: socialIcons?.phone,
-                  }}
-                  className='w-fit'
-                />
-              ) : null}
-            </div>
+            <SocialLinks socialLinks={socialLinks} contactInfo={contactInfo} />
           ) : null}
         </div>
       </div>
@@ -76,6 +57,15 @@ const FullBio: FC<Props> = ({ bio }) => {
           <PortableText value={background} components={portableComponents} />
         ) : null}
       </div>
+      {isMelissa && (
+        <div className='flex justify-around sm:items-center max-sm:flex-col gap-x-6 gap-y-8'>
+          <CalendlyPopup className='max-sm:w-full' />
+          <Link href='/about/partnerships' className='btn-outline'>
+            <span>Explore a Partnership</span>
+            <IoIosArrowForward aria-hidden />
+          </Link>
+        </div>
+      )}
     </section>
   )
 }

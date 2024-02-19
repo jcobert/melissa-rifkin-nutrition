@@ -1,4 +1,5 @@
 import { defineArrayMember, defineType } from 'sanity'
+import { Divider, DividerIcon } from 'sanity-studio/components/divider'
 
 /**
  * This is the schema type for block content used in the post document type
@@ -31,28 +32,22 @@ export default defineType({
         { title: 'H4', value: 'h4' },
         { title: 'Quote', value: 'blockquote' },
       ],
-      lists: [{ title: 'Bullet', value: 'bullet' }],
+      lists: [
+        { title: 'Bulletted List', value: 'bullet' },
+        { title: 'Numbered List', value: 'number' },
+      ],
       // Marks let you mark up inline text in the Portable Text Editor
       marks: {
-        // Decorators usually describe a single property – e.g. a typographic
-        // preference or highlighting
         decorators: [
           { title: 'Strong', value: 'strong' },
           { title: 'Emphasis', value: 'em' },
-        ],
-        // Annotations can be any object structure – e.g. a link or a footnote.
-        annotations: [
+          { title: 'Underline', value: 'underline' },
+          { title: 'Strike', value: 'strike-through' },
           {
-            title: 'URL',
-            name: 'link',
-            type: 'object',
-            fields: [
-              {
-                title: 'URL',
-                name: 'href',
-                type: 'url',
-              },
-            ],
+            title: 'Divider',
+            value: 'divider',
+            component: Divider,
+            icon: DividerIcon,
           },
         ],
       },
@@ -67,7 +62,9 @@ export default defineType({
         {
           name: 'alt',
           type: 'string',
-          title: 'Alternative Text',
+          title: 'Image Description',
+          description:
+            'Used for people who cannot see the image. E.g. "A woman gardening"',
         },
       ],
     }),

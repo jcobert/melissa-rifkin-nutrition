@@ -1,12 +1,17 @@
 import React, { FC } from 'react'
+import { BlockDecoratorProps } from 'sanity'
 
-type Props = {
-  //
+export const Divider: FC<BlockDecoratorProps> = (props) => {
+  return (
+    <>
+      <span>
+        {props.renderDefault(props)}
+        <hr className='h-px w-full border-b' />
+      </span>
+    </>
+  )
 }
 
-const Divider: FC<Props> = () => {
-  //
-  return <span className='h-px border-b border-red-500'></span>
+export const DividerIcon: FC = () => {
+  return <span>--</span>
 }
-
-export default Divider

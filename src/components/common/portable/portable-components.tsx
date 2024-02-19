@@ -5,6 +5,7 @@ import {
 import { getImageDimensions } from '@sanity/asset-utils'
 import imageUrlBuilder from '@sanity/image-url'
 import Image from 'next/image'
+import { ImQuotesLeft } from 'react-icons/im'
 import { dataset, projectId } from 'sanity-studio/env'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -41,9 +42,23 @@ export const PortableCode = ({ children }: PortableTextComponentProps<any>) => {
   return <code className='text-brand'>{children}</code>
 }
 
+export const PortableQuote = ({
+  children,
+}: PortableTextComponentProps<any>) => {
+  return (
+    <div className='flex items-start gap-4'>
+      <ImQuotesLeft className='text-brand-gray-medium' />
+      <blockquote className='mb-0'>{children}</blockquote>
+    </div>
+  )
+}
+
 export const portableComponents: PortableTextComponents = {
   types: {
     image: PortableImage,
     // code: PortableCode,
+  },
+  block: {
+    blockquote: PortableQuote,
   },
 }

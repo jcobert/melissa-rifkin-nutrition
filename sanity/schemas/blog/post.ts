@@ -27,7 +27,7 @@ export default defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: { type: 'author' },
+      to: { type: 'bio' },
     }),
     defineField({
       name: 'mainImage',
@@ -67,33 +67,33 @@ export default defineType({
     defineField({
       name: 'body',
       title: 'Body',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          marks: {
-            decorators: [
-              { title: 'Strong', value: 'strong' },
-              { title: 'Emphasis', value: 'em' },
-              { title: 'Underline', value: 'underline' },
-              { title: 'Strike', value: 'strike-through' },
-              {
-                title: 'Divider',
-                value: 'divider',
-                component: (props) => (
-                  <span>
-                    {props?.children}
-                    <hr className='h-px w-full border-b' />
-                  </span>
-                ),
-                icon: () => <span>--</span>,
-              },
-            ],
-          },
-        },
-        { type: 'image' },
-      ],
+      type: 'blockContent',
     }),
+    // defineField({
+    //   name: 'body',
+    //   title: 'Body',
+    //   type: 'array',
+    //   of: [
+    //     {
+    //       type: 'block',
+    //       marks: {
+    //         decorators: [
+    //           { title: 'Strong', value: 'strong' },
+    //           { title: 'Emphasis', value: 'em' },
+    //           { title: 'Underline', value: 'underline' },
+    //           { title: 'Strike', value: 'strike-through' },
+    //           {
+    //             title: 'Divider',
+    //             value: 'divider',
+    //             component: Divider,
+    //             icon: DividerIcon,
+    //           },
+    //         ],
+    //       },
+    //     },
+    //     { type: 'image' },
+    //   ],
+    // }),
   ],
 
   preview: {

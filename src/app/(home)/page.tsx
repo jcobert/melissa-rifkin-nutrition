@@ -21,10 +21,8 @@ import Instagram from '@/components/instagram'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('Home'),
+  title: 'Home',
 }
 
 const HomePage = async () => {

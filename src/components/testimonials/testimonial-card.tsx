@@ -22,7 +22,7 @@ const TestimonialCard: FC<Props> = ({ testimonial, className }) => {
       <div className='flex flex-col font-semibold text-brand-gray-dark text-pretty'>
         <span className=''>{`- ${testimonial?.name}${testimonial?.location ? `, ${testimonial?.location}` : ''}`}</span>
         {isPartner && (
-          <div className='inline-flex gap-1'>
+          <div className='inline-flex gap-1 flex-wrap'>
             {testimonial?.position ? (
               <span className=''>{`${testimonial?.position}, `}</span>
             ) : null}

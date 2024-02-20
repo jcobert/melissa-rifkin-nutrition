@@ -11,10 +11,8 @@ import { cn } from '@/utils/style'
 import PageLayout from '@/components/common/layout/page-layout'
 import FullBio from '@/components/features/bio/full-bio'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('About'),
+  title: 'About',
 }
 
 const AboutPage: FC = async () => {

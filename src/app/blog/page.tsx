@@ -10,10 +10,9 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import BlogPosts from '@/app/blog/blog-posts'
 import BlogPostsPreview from '@/app/blog/blog-posts-preview'
-import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {
-  title: pageTitle('Blog'),
+  title: 'Blog',
 }
 
 const BlogPage: FC = async () => {

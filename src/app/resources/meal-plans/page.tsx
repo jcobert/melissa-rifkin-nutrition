@@ -8,10 +8,8 @@ import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
 import MealPlanCard from '@/components/features/meal-plan/meal-plan-card'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('Meal Plans'),
+  title: 'Meal Plans',
 }
 
 const MealPlansPage = async () => {

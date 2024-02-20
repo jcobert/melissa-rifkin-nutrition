@@ -17,10 +17,8 @@ import PageLayout from '@/components/common/layout/page-layout'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('Partnerships'),
+  title: 'Partnerships',
 }
 
 const PartnershipsPage: FC = async () => {

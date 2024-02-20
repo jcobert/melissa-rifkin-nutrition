@@ -9,11 +9,10 @@ import { type Recipe } from 'sanity-studio/types'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
-import { pageTitle } from '@/configuration/site'
 
 /** @todo set dynamic metadata for page title? */
 export const metadata: Metadata = {
-  title: pageTitle('Recipes'),
+  title: 'Recipes',
 }
 
 export async function generateStaticParams() {

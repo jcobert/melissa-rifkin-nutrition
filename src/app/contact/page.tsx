@@ -4,10 +4,8 @@ import React, { FC } from 'react'
 import Calendly from '@/components/calendly'
 import PageLayout from '@/components/common/layout/page-layout'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('Contact'),
+  title: 'Contact',
 }
 
 const ContactPage: FC = () => {

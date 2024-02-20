@@ -10,10 +10,9 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import Recipes from '@/app/recipes/recipes'
 import RecipesPreview from '@/app/recipes/recipes-preview'
-import { pageTitle } from '@/configuration/site'
 
 export const metadata: Metadata = {
-  title: pageTitle('Recipes'),
+  title: 'Recipes',
 }
 
 type Props = {

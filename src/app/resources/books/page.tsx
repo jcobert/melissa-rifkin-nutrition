@@ -6,10 +6,8 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('Books'),
+  title: 'Books',
 }
 
 const BooksPage = async () => {

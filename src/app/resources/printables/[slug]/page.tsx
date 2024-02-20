@@ -7,10 +7,8 @@ import PageLayout from '@/components/common/layout/page-layout'
 import ProductPage from '@/components/common/layout/product-page'
 import Back from '@/components/common/links/back'
 
-import { pageTitle } from '@/configuration/site'
-
 export const metadata: Metadata = {
-  title: pageTitle('Printables'),
+  title: 'Printables',
 }
 
 const PrintablePage: FC<{ params: { slug: string } }> = async ({ params }) => {

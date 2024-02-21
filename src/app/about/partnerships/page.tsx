@@ -63,13 +63,13 @@ const PartnershipsPage: FC = async () => {
               innovative health foods and trends.
             </p>
           </div>
-          <Link
+          <a
             href={email ? `mailto:${email}` : '/contact'}
             className='btn w-fit mx-auto mt-2'
           >
             <FaEnvelope aria-hidden />
             <span>Connect</span>
-          </Link>
+          </a>
         </section>
 
         <section className='flex flex-col gap-4'>

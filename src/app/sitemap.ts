@@ -6,10 +6,8 @@ import { Post, Recipe } from 'sanity-studio/types'
 
 import { getCollectionProducts } from '@/lib/shopify'
 
-import { siteConfig } from '@/configuration/site'
-
 export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
-  const base = siteConfig?.url
+  const BASE_URL = process.env.SITE_BASE_URL || ''
 
   // Generate Dynamic Blog Post Paths
   const postPaths: string[] = []
@@ -26,7 +24,7 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const dynamicPosts = postPaths?.map(
     (path) =>
       ({
-        url: `${base}/${path}`,
+        url: `${BASE_URL}/${path}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.5,
@@ -48,7 +46,7 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const dynamicRecipes = recipePaths?.map(
     (path) =>
       ({
-        url: `${base}/${path}`,
+        url: `${BASE_URL}/${path}`,
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 0.8,
@@ -71,7 +69,7 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const dynamicBooks = bookPaths?.map(
     (path) =>
       ({
-        url: `${base}/${path}`,
+        url: `${BASE_URL}/${path}`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.6,
@@ -90,7 +88,7 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   const dynamicPrintables = printablePaths?.map(
     (path) =>
       ({
-        url: `${base}/${path}`,
+        url: `${BASE_URL}/${path}`,
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.6,
@@ -99,49 +97,49 @@ export const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
 
   return [
     {
-      url: base,
+      url: BASE_URL,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: `${base}/about`,
+      url: `${BASE_URL}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${base}/about/partnerships`,
+      url: `${BASE_URL}/about/partnerships`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${base}/contact`,
+      url: `${BASE_URL}/contact`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.7,
     },
     {
-      url: `${base}/blog`,
+      url: `${BASE_URL}/blog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.5,
     },
     {
-      url: `${base}/recipes`,
+      url: `${BASE_URL}/recipes`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${base}/resources/printables`,
+      url: `${BASE_URL}/resources/printables`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,
     },
     {
-      url: `${base}/resources/books`,
+      url: `${BASE_URL}/resources/books`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.6,

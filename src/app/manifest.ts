@@ -15,9 +15,10 @@ const manifest = (): MetadataRoute.Manifest => ({
       type: 'image/png',
     },
   ],
-  theme_color: '#e46169',
-  background_color: '#e46169',
-  display: 'standalone',
+  background_color: '#FAFBFF',
+  // theme_color: '#e46169',
+  // display: 'standalone',
+  categories: ['health', 'lifestyle', 'food', 'nutrition'],
 })
 
 export default manifest

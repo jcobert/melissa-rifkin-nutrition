@@ -22,7 +22,7 @@ export const customStructure = (S: StructureBuilder) =>
 
       // Blog
       S.documentTypeListItem('post' as DocumentType).title('Blog Posts'),
-      S.documentTypeListItem('author' as DocumentType).title('Authors'),
+      // S.documentTypeListItem('author' as DocumentType).title('Authors'),
       S.divider(),
 
       // Misc

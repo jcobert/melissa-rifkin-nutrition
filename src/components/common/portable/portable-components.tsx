@@ -1,6 +1,7 @@
 import {
   PortableTextComponentProps,
   PortableTextComponents,
+  PortableTextMarkComponentProps,
 } from '@portabletext/react'
 import { getImageDimensions } from '@sanity/asset-utils'
 import imageUrlBuilder from '@sanity/image-url'
@@ -53,6 +54,17 @@ export const PortableQuote = ({
   )
 }
 
+export const PortableDivider = ({
+  children,
+}: PortableTextMarkComponentProps<any>) => {
+  return (
+    <>
+      <span>{children}</span>
+      <hr className='w-full border-brand-gray-medium/50' />
+    </>
+  )
+}
+
 export const portableComponents: PortableTextComponents = {
   types: {
     image: PortableImage,
@@ -60,5 +72,8 @@ export const portableComponents: PortableTextComponents = {
   },
   block: {
     blockquote: PortableQuote,
+  },
+  marks: {
+    divider: PortableDivider,
   },
 }

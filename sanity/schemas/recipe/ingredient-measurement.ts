@@ -19,7 +19,7 @@ export default defineType({
       title: 'Amount',
       type: 'number',
       components: { input: CustomNumberInput },
-      description: 'Enter as decimal or use the arrows to increment by 1/8',
+      description: 'Enter as decimal or use the arrows to increment.',
     }),
     defineField({
       name: 'unit',

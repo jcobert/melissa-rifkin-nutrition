@@ -14,6 +14,9 @@ export const formatFraction = (number?: number) => {
     wholeDisplay = `${rem?.n}`
     remDisplay = ''
   }
+  if (rem?.n / rem?.d >= 0.3 && rem?.n / rem?.d < 0.4) {
+    remDisplay = '1/3'
+  }
   if (!rem?.n) remDisplay = ''
   return `${whole > 0 || (whole === 0 && rem?.d === 1) ? `${wholeDisplay} ` : ''}${remDisplay}`
 }

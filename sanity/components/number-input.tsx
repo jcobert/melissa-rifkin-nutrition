@@ -24,7 +24,7 @@ export const CustomNumberInput = (props: NumberInputProps) => {
         {...elementProps}
         onChange={handleChange}
         value={value}
-        step={0.125}
+        step={0.025}
         min={0}
       />
       <Text>{display}</Text>

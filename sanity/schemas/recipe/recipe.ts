@@ -21,7 +21,7 @@ export default defineType({
         maxLength: 96,
       },
       description:
-        'Just click "Generate" after entering something in the Title field above, to automatically fill this in.',
+        'Just click "Generate" after entering something in the Recipe Name field above, to automatically fill this in.',
     }),
     defineField({
       name: 'mainImage',

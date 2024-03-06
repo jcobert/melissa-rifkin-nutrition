@@ -18,7 +18,7 @@ export const formatFraction = (number?: number) => {
     remDisplay = '1/3'
   }
   if (!rem?.n) remDisplay = ''
-  return `${whole > 0 || (whole === 0 && rem?.d === 1) ? `${wholeDisplay} ` : ''}${remDisplay}`
+  return `${whole > 0 || (whole === 0 && rem?.d === 1) ? `${wholeDisplay}` : ''}${remDisplay ? ` ${remDisplay}` : ''}`
 }
 
 export const formatUnit = (unit?: keyof typeof RecipeUnit) => {

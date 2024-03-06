@@ -6,13 +6,52 @@ import { client } from 'sanity-studio/lib/client'
 import { RECIPES_QUERY, RECIPE_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { type Recipe } from 'sanity-studio/types'
+import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
+
+import { getRecipeIngredients } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
+import { pageTitle } from '@/configuration/site'
 
-/** @todo set dynamic metadata for page title? */
-export const metadata: Metadata = {
-  title: 'Recipes',
+export type PageProps = {
+  params: { slug: string }
+}
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const slug = params?.slug
+  const recipe = await client.fetch<SanityDocument<Recipe>>(RECIPE_QUERY, {
+    slug,
+  })
+
+  const { title, tags, category, mainImage } = recipe || {}
+
+  return {
+    title,
+    keywords: tags?.join(', '),
+    category: `${category?.join(', ')} recipe`,
+    openGraph: {
+      title: pageTitle(title),
+      images: [
+        {
+          url: mainImage?.asset?.url || '',
+          width: mainImage?.asset?.metadata?.dimensions?.width,
+          height: mainImage?.asset?.metadata?.dimensions?.height,
+        },
+      ],
+    },
+    twitter: {
+      title: pageTitle(title),
+      images: [
+        {
+          url: mainImage?.asset?.url || '',
+          width: mainImage?.asset?.metadata?.dimensions?.width,
+          height: mainImage?.asset?.metadata?.dimensions?.height,
+        },
+      ],
+    },
+  }
 }
 
 export async function generateStaticParams() {
@@ -32,10 +71,54 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     },
   )
 
+  const { title, category, instructions, mainImage } = initial?.data || {}
+
+  const schemaInstructions: RecipeSchema['recipeInstructions'] =
+    instructions?.map((inst, i) => {
+      const stepNum = i + 1
+      const stepText = inst?.description
+      return {
+        '@type': 'HowTo',
+        step: {
+          '@type': 'HowToStep',
+          position: stepNum,
+          itemListElement: [
+            { '@type': 'HowToDirection', position: 1, text: stepText },
+          ],
+        },
+      }
+    })
+
+  const schemaIngredients = getRecipeIngredients(initial?.data)?.map(
+    (ing) => ing || '',
+  )
+
+  const jsonLd: WithContext<RecipeSchema> = {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: title,
+    image: {
+      '@type': 'ImageObject',
+      contentUrl: mainImage?.asset?.url,
+      name: mainImage?.alt,
+    },
+    recipeCategory: category,
+    recipeInstructions: schemaInstructions,
+    recipeIngredient: schemaIngredients,
+    // prepTime,
+    // cookTime,
+  }
+
   return draftMode().isEnabled ? (
     <RecipePreview initial={initial} params={params} />
   ) : (
-    <RecipeFull recipe={initial?.data} />
+    <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <RecipeFull recipe={initial?.data} />
+    </>
   )
 }
 

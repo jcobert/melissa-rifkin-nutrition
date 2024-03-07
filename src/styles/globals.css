@@ -41,7 +41,7 @@
   }
 
   .btn-outline {
-    @apply btn bg-background border border-brand text-brand hover:text-almost-white;
+    @apply btn bg-background hover:bg-brand border border-brand text-brand hover:text-almost-white;
   }
 }
 

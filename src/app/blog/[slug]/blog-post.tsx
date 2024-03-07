@@ -10,6 +10,7 @@ import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
 import { portableComponents } from '@/components/common/portable/portable-components'
+import Tag from '@/components/common/tag'
 
 const builder = imageUrlBuilder({ projectId, dataset })
 
@@ -18,7 +19,7 @@ type Props = {
 }
 
 const BlogPost: FC<Props> = ({ post }) => {
-  const { title, publishedAt, author, mainImage, body } = post || {}
+  const { title, publishedAt, author, mainImage, body, tags } = post || {}
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
@@ -85,6 +86,13 @@ const BlogPost: FC<Props> = ({ post }) => {
           ) : null}
         </section>
       </div>
+      {tags?.length ? (
+        <div className='flex items-center gap-2 flex-wrap'>
+          {tags?.map((tag) => (
+            <Tag key={tag} tag={tag} className='whitespace-nowrap' />
+          ))}
+        </div>
+      ) : null}
     </PageLayout>
   )
 }

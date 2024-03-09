@@ -189,14 +189,9 @@ const Recipe: FC<Props> = ({ recipe }) => {
       {tags?.length ? (
         <div className='p-4 mt-16 w-full border-t flex flex-col gap-4'>
           <h5 className='text-center text-brand-gray-dark'>Categories</h5>
-          <div className='flex items-center gap-4 flex-wrap justify-center'>
+          <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
             {tags?.map((tag) => (
-              <Tag
-                key={tag}
-                tag={tag}
-                href={`/recipes?tag=${tag}`}
-                className='whitespace-nowrap'
-              />
+              <Tag key={tag} tag={tag} href={`/recipes?tag=${tag}`} />
             ))}
           </div>
         </div>

@@ -46,7 +46,7 @@ const PartnershipsPage: FC = async () => {
       // className='flex flex-col items-center gap-12 md:gap-24 mb-8'
       className='flex flex-col gap-16 items-center text-almost-black'
     >
-      <div className='flex flex-col items-center gap-12 md:gap-24 mt-8'>
+      <div className='flex flex-col items-center gap-16 md:gap-24 mt-8'>
         <section className='flex flex-col gap-4'>
           <BrandBanner
             partners

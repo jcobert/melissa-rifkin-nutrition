@@ -29,12 +29,19 @@ const Measurement: FC<Props> = ({
             measurementClassName,
           ])}
         >
-          <p>{formatFraction(measurement?.amount)}</p>
+          <p className='whitespace-nowrap'>
+            {formatFraction(measurement?.amount)}
+          </p>
           {!!measurement?.unit && <p>{formatUnit(measurement?.unit)}</p>}
         </div>
       ) : null}
       {!hideIngredient && (
-        <p className={cn(['font-semibold', ingredientClassName])}>
+        <p
+          className={cn([
+            'font-semibold whitespace-nowrap',
+            ingredientClassName,
+          ])}
+        >
           {measurement?.ingredientName?.name}
         </p>
       )}

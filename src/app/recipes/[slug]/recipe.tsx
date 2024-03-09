@@ -12,6 +12,7 @@ import PageLayout from '@/components/common/layout/page-layout'
 import Tooltip from '@/components/common/layout/tooltip'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
+import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
 
@@ -78,18 +79,6 @@ const Recipe: FC<Props> = ({ recipe }) => {
               </p>
             ) : null}
           </div>
-
-          {/* Tags */}
-          <div className='flex items-center max-md:justify-around gap-1 flex-wrap mt-3 md:ml-auto'>
-            {(tags || [])?.map((tag, i) => (
-              <span
-                key={`${tag}-${i}`}
-                className='rounded-full px-4 py-px border border-gray-300 text-sm bg-gray-200 text-center capitalize font-medium'
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
         </section>
 
         <span
@@ -104,10 +93,12 @@ const Recipe: FC<Props> = ({ recipe }) => {
             {ingredientGroups?.map((group) => (
               <div
                 key={group?._key}
-                className='px-2 sm:px-4 py-1 border rounded'
+                className='px-2 sm:px-4 py-1 border rounded bg-almost-white'
               >
                 {ingredientGroups?.length > 1 && (
-                  <h3 className='text-xl font-semibold mb-2'>{group?.title}</h3>
+                  <h3 className='text-xl font-semibold mb-2 text-brand'>
+                    {group?.title}
+                  </h3>
                 )}
                 <ul className='flex flex-col gap-4 divide-y-1'>
                   {group?.ingredients?.map((ing, i) => (
@@ -194,6 +185,15 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </div>
         </section>
       </div>
+
+      {/* Tags */}
+      {tags?.length ? (
+        <div className='flex items-center gap-2 flex-wrap'>
+          {tags?.map((tag) => (
+            <Tag key={tag} tag={tag} className='whitespace-nowrap' />
+          ))}
+        </div>
+      ) : null}
     </PageLayout>
   )
 }

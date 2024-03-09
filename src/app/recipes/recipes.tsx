@@ -1,7 +1,6 @@
 'use client'
 
 import { uniq } from 'lodash'
-import { useSearchParams } from 'next/navigation'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
@@ -16,6 +15,8 @@ import SelectInput, {
 import NoResults from '@/components/common/no-results'
 import RecipeCard from '@/components/features/recipe/recipe-card'
 
+import { RecipesPageProps } from '@/app/recipes/page'
+
 export enum RecipeCategories {
   breakfast = 'Breakfast',
   lunch = 'Lunch',
@@ -27,12 +28,11 @@ export enum RecipeCategories {
 
 type Props = {
   recipes: Recipe[]
+  params?: RecipesPageProps['searchParams']
 }
 
-const Recipes: FC<Props> = ({ recipes }) => {
-  const searchParams = useSearchParams()
-
-  const categoryParam = searchParams?.get('category') || ''
+const Recipes: FC<Props> = ({ recipes, params }) => {
+  const { category: categoryParam, tag: tagParam } = params || {}
 
   const allTags = uniq(
     recipes?.flatMap((rec) => (rec?.tags || [])?.map((t) => t)),
@@ -79,7 +79,7 @@ const Recipes: FC<Props> = ({ recipes }) => {
     [JSON.stringify(recipes)],
   )
 
-  const [tagFilter, setTagFilter] = useState<string>()
+  const [tagFilter, setTagFilter] = useState<string | undefined>(tagParam)
   const [categoryFilter, setCategoryFilter] = useState<string | undefined>(
     categoryParam,
   )
@@ -120,9 +120,11 @@ const Recipes: FC<Props> = ({ recipes }) => {
     setSelectedRecipe(undefined)
   }
 
+  // Update filter values on url param change.
   useEffect(() => {
     setCategoryFilter(categoryParam)
-  }, [categoryParam])
+    setTagFilter(tagParam)
+  }, [categoryParam, tagParam])
 
   return (
     <div className='flex flex-col gap-8 w-full items-center max-w-4xl'>
@@ -236,7 +238,9 @@ const Recipes: FC<Props> = ({ recipes }) => {
             <span className='capitalize'>{(opt as SelectOption)?.label}</span>
           )}
           value={
-            tagFilterOptions?.find((opt) => opt?.value === tagFilter) || ''
+            tagFilterOptions?.find(
+              (opt) => opt?.value?.toLowerCase() === tagFilter?.toLowerCase(),
+            ) || ''
           }
           onChange={(opt) => {
             setTagFilter(opt?.value)
@@ -255,12 +259,12 @@ const Recipes: FC<Props> = ({ recipes }) => {
       ) : (
         <div className='my-8 flex flex-col items-center gap-6'>
           <NoResults
-            title="We couldn't find any recipes matching those criteria."
+            title={`We couldn't find any${tagFilter ? ` ${tagFilter}` : ''}${categoryFilter ? ` ${categoryFilter}` : ''} recipes.`}
             description="But check back soon, as we're always adding new recipes!"
           />
           <button
             type='button'
-            className='text-brand-blue bg-almost-white font-semibold py-4 sm:py-2 text-lg__ w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
+            className='text-brand-blue bg-almost-white py-4 sm:py-2 w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
             onClick={() => resetAllFilters()}
           >
             Show all recipes

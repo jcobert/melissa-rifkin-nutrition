@@ -15,14 +15,15 @@ export const metadata: Metadata = {
   title: 'Recipes',
 }
 
-type Props = {
+export type RecipesPageProps = {
   searchParams?: {
     category?: string
+    tag?: string
   }
 }
 
 /** Top-level Recipes route. */
-const RecipesPage: FC<Props> = async () => {
+const RecipesPage: FC<RecipesPageProps> = async ({ searchParams }) => {
   const initial = await loadQuery<SanityDocument<Recipe>[]>(
     RECIPES_QUERY,
     {},
@@ -45,7 +46,7 @@ const RecipesPage: FC<Props> = async () => {
       {draftMode()?.isEnabled ? (
         <RecipesPreview initial={initial} />
       ) : (
-        <Recipes recipes={initial?.data} />
+        <Recipes recipes={initial?.data} params={searchParams} />
       )}
     </PageLayout>
   )

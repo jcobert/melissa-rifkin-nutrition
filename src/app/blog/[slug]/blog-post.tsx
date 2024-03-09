@@ -31,7 +31,7 @@ const BlogPost: FC<Props> = ({ post }) => {
   const wideImage = aspectRatio && aspectRatio > 1
 
   return (
-    <PageLayout className='flex flex-col items-center text-almost-black pb-16'>
+    <PageLayout className='flex flex-col items-center text-almost-black'>
       <Back href='/blog' text='All Posts' />
       <div className='my-8 md:my-16 flex flex-col items-center gap-4 w-full'>
         {/* Heading */}
@@ -114,10 +114,11 @@ const BlogPost: FC<Props> = ({ post }) => {
 
       {/* Tags */}
       {tags?.length ? (
-        <div className='flex items-center gap-2 flex-wrap'>
-          {tags?.map((tag) => (
-            <Tag key={tag} tag={tag} className='whitespace-nowrap' />
-          ))}
+        <div className='p-4 mt-16 w-full border-t flex flex-col gap-4'>
+          <h5 className='text-center text-brand-gray-dark'>Categories</h5>
+          <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
+            {tags?.map((tag) => <Tag key={tag} tag={tag} />)}
+          </div>
         </div>
       ) : null}
     </PageLayout>

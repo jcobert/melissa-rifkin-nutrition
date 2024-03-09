@@ -259,12 +259,12 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       ) : (
         <div className='my-8 flex flex-col items-center gap-6'>
           <NoResults
-            title="We couldn't find any recipes matching those criteria."
+            title={`We couldn't find any${tagFilter ? ` ${tagFilter}` : ''}${categoryFilter ? ` ${categoryFilter}` : ''} recipes.`}
             description="But check back soon, as we're always adding new recipes!"
           />
           <button
             type='button'
-            className='text-brand-blue bg-almost-white font-semibold py-4 sm:py-2 text-lg__ w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
+            className='text-brand-blue bg-almost-white py-4 sm:py-2 w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
             onClick={() => resetAllFilters()}
           >
             Show all recipes

@@ -6,6 +6,14 @@ export default defineType({
   title: 'Blog Post',
   type: 'document',
   icon: FaNewspaper,
+  fieldsets: [
+    {
+      name: 'externalPost',
+      title: 'External Post',
+      description:
+        'If the blog post was published on another site like iHerb.com, select this.',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
@@ -46,12 +54,6 @@ export default defineType({
         },
       ],
     }),
-    // defineField({
-    //   name: 'categories',
-    //   title: 'Categories',
-    //   type: 'array',
-    //   of: [{ type: 'reference', to: { type: 'category' } }],
-    // }),
     defineField({
       name: 'tags',
       title: 'Tags',
@@ -65,35 +67,27 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'external',
+      title: 'External?',
+      type: 'boolean',
+      fieldset: 'externalPost',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'externalUrl',
+      title: 'URL',
+      type: 'string',
+      description: 'Copy and paste the link to the post here.',
+      fieldset: 'externalPost',
+      hidden: (props) => !props.parent.external,
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+      description:
+        'If linking to an external post, add a preview here (e.g. the first paragraph of the post). A link will be provided to the reader to continue reading at the URL you provided above.',
     }),
-    // defineField({
-    //   name: 'body',
-    //   title: 'Body',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       type: 'block',
-    //       marks: {
-    //         decorators: [
-    //           { title: 'Strong', value: 'strong' },
-    //           { title: 'Emphasis', value: 'em' },
-    //           { title: 'Underline', value: 'underline' },
-    //           { title: 'Strike', value: 'strike-through' },
-    //           {
-    //             title: 'Divider',
-    //             value: 'divider',
-    //             component: Divider,
-    //             icon: DividerIcon,
-    //           },
-    //         ],
-    //       },
-    //     },
-    //     { type: 'image' },
-    //   ],
-    // }),
   ],
 
   preview: {

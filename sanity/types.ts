@@ -63,6 +63,8 @@ export interface Post extends SanityDocument {
   // categories?: Array<SanityKeyedReference<Category>>
   publishedAt?: string
   body?: BlockContent
+  external?: boolean
+  externalUrl?: string
 }
 
 /** Recipe */

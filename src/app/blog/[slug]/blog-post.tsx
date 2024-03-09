@@ -3,13 +3,17 @@ import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import React, { FC } from 'react'
+import { FiExternalLink } from 'react-icons/fi'
 import { dataset, projectId } from 'sanity-studio/env'
 import { Post } from 'sanity-studio/types'
+
+import { cn } from '@/utils/style'
 
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
 import { portableComponents } from '@/components/common/portable/portable-components'
+import Tag from '@/components/common/tag'
 
 const builder = imageUrlBuilder({ projectId, dataset })
 
@@ -18,29 +22,43 @@ type Props = {
 }
 
 const BlogPost: FC<Props> = ({ post }) => {
-  const { title, publishedAt, author, mainImage, body } = post || {}
+  const { title, publishedAt, author, mainImage, body, tags, externalUrl } =
+    post || {}
+
+  const { width, height, aspectRatio } =
+    mainImage?.asset?.metadata?.dimensions || {}
+
+  const wideImage = aspectRatio && aspectRatio > 1
 
   return (
-    <PageLayout className='flex flex-col items-center text-almost-black'>
+    <PageLayout className='flex flex-col items-center text-almost-black pb-16'>
       <Back href='/blog' text='All Posts' />
       <div className='my-8 md:my-16 flex flex-col items-center gap-4 w-full'>
         {/* Heading */}
-        <section className='flex max-md:flex-col w-full items-center md:items-end gap-y-4 gap-x-6 pb-4 md:self-start md:px-8'>
+        <section
+          className={cn([
+            'flex max-md:flex-col w-full items-center md:items-end gap-y-4 gap-x-6 pb-4 md:self-start md:px-8 lg:px-24',
+            wideImage && 'flex-col !items-center',
+          ])}
+        >
           {/* Image */}
           {mainImage ? (
             <Image
               src={builder
                 .image(mainImage)
-                .width(600)
-                .height(600)
+                .width(width as number)
+                .height(height as number)
                 .fit('crop')
                 .crop('focalpoint')
                 .quality(80)
                 .url()}
               alt={mainImage?.alt || ''}
-              width={600}
-              height={600}
-              className='w-3/4 max-w-64 sm:w-64 object-cover rounded border-2'
+              width={width}
+              height={height}
+              className={cn([
+                'w-3/4 max-w-64 sm:w-64__ object-cover rounded border-2',
+                wideImage && 'max-w-[36rem]',
+              ])}
             />
           ) : (
             <Logo
@@ -85,6 +103,23 @@ const BlogPost: FC<Props> = ({ post }) => {
           ) : null}
         </section>
       </div>
+
+      {/* External Link */}
+      {externalUrl ? (
+        <a href={externalUrl} className='btn-outline flex items-center gap-2'>
+          <span>Keep reading</span>
+          <FiExternalLink />
+        </a>
+      ) : null}
+
+      {/* Tags */}
+      {tags?.length ? (
+        <div className='flex items-center gap-2 flex-wrap'>
+          {tags?.map((tag) => (
+            <Tag key={tag} tag={tag} className='whitespace-nowrap' />
+          ))}
+        </div>
+      ) : null}
     </PageLayout>
   )
 }

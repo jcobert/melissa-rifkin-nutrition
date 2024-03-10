@@ -18,22 +18,18 @@ type Props = {
   className?: string
 }
 
-const BlogPostCard: FC<Props> = ({
-  post,
-  hideDate = false,
-  className = '',
-}) => {
+const BlogPostOverview: FC<Props> = ({ post, className, hideDate = false }) => {
   const { mainImage, slug, title, author, publishedAt } = post
 
   return (
     <Link
       href={`/blog/${slug?.current}`}
       className={cn(
-        'group hover:bg-almost-white/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border rounded shadow-sm',
+        'group transition flex max-sm:flex-col gap-x-8 items-center gap-y-2 bg-almost-white/40 hover:bg-almost-white p-4 sm:border border-gray-100 hover:border-gray-200 rounded hover:shadow-sm__',
         [className],
       )}
     >
-      <div className='w-full'>
+      <div className='max-sm:w-full'>
         {mainImage ? (
           <Image
             src={builder
@@ -47,7 +43,7 @@ const BlogPostCard: FC<Props> = ({
             alt={mainImage?.alt || ''}
             width={400}
             height={400}
-            className='object-cover object-center h-52 rounded'
+            className='object-cover object-center h-72 sm:h-36 w-full rounded'
           />
         ) : (
           <div className='h-52 w-full flex items-center justify-center rounded bg-background'>
@@ -55,19 +51,22 @@ const BlogPostCard: FC<Props> = ({
           </div>
         )}
       </div>
-      <h2 className='flex-auto text-balance text-center text-lg font-medium text-brand-blue-dark group-hover:text-brand-blue transition'>
-        {title}
-      </h2>
-      {!!author?.name && (
-        <p className='flex-auto text-brand-gray-dark'>By {author?.name}</p>
-      )}
-      {!!publishedAt && !hideDate && (
-        <p className='text-brand-gray-medium text-xs'>
-          {format(publishedAt, 'MMM dd, yyyy')}
-        </p>
-      )}
+
+      <div className='flex flex-col max-sm:items-center gap-2'>
+        <h2 className='flex-auto text-balance text-brand-blue-dark max-w-prose text-lg max-sm:text-center font-medium group-hover:text-brand-blue transition'>
+          {title}
+        </h2>
+        {!!author?.name && (
+          <p className='flex-auto text-brand-gray-dark'>By {author?.name}</p>
+        )}
+        {!!publishedAt && !hideDate && (
+          <p className='text-brand-gray-medium text-xs'>
+            {format(publishedAt, 'MMM dd, yyyy')}
+          </p>
+        )}
+      </div>
     </Link>
   )
 }
 
-export default BlogPostCard
+export default BlogPostOverview

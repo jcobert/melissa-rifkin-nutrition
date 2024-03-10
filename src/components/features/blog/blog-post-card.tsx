@@ -28,14 +28,11 @@ const BlogPostCard: FC<Props> = ({
     <Link
       href={`/blog/${slug?.current}`}
       className={cn(
-        'group hover:bg-background/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border rounded shadow-sm',
+        'group hover:bg-almost-white/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border rounded shadow-sm',
         [className],
       )}
     >
-      <div
-        // href={`/blog/${slug?.current}`}
-        className='w-full'
-      >
+      <div className='w-full'>
         {image?.url ? (
           <Image
             src={image?.url}
@@ -50,12 +47,9 @@ const BlogPostCard: FC<Props> = ({
           </div>
         )}
       </div>
-      <div
-        // href={`/blog/${slug?.current}`}
-        className='flex-auto text-balance text-center text-lg font-medium group-hover:text-almost-black/hover transition'
-      >
+      <h2 className='flex-auto text-balance text-center text-lg font-medium text-brand-blue-dark group-hover:text-brand-blue transition'>
         {title}
-      </div>
+      </h2>
       {!!author?.name && (
         <p className='flex-auto text-brand-gray-dark'>By {author?.name}</p>
       )}

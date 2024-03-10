@@ -6,7 +6,6 @@ import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
 import { Post } from 'sanity-studio/types'
 
-import { getImageProps } from '@/utils/cms'
 import { cn } from '@/utils/style'
 
 import Logo from '@/components/common/logo'
@@ -21,7 +20,6 @@ type Props = {
 
 const BlogPostOverview: FC<Props> = ({ post, className, hideDate = false }) => {
   const { mainImage, slug, title, author, publishedAt } = post
-  const image = getImageProps(mainImage)
 
   return (
     <Link
@@ -42,7 +40,7 @@ const BlogPostOverview: FC<Props> = ({ post, className, hideDate = false }) => {
               .crop('focalpoint')
               .quality(80)
               .url()}
-            alt={image?.alt || ''}
+            alt={mainImage?.alt || ''}
             width={400}
             height={400}
             className='object-cover object-center h-72 sm:h-36 w-full rounded'

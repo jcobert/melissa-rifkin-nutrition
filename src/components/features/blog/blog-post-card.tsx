@@ -1,13 +1,16 @@
+import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { FC } from 'react'
+import { dataset, projectId } from 'sanity-studio/env'
 import { Post } from 'sanity-studio/types'
 
-import { getImageProps } from '@/utils/cms'
 import { cn } from '@/utils/style'
 
 import Logo from '@/components/common/logo'
+
+const builder = imageUrlBuilder({ projectId, dataset })
 
 type Props = {
   post: Post
@@ -22,8 +25,6 @@ const BlogPostCard: FC<Props> = ({
 }) => {
   const { mainImage, slug, title, author, publishedAt } = post
 
-  /** @todo use sanity image builder. */
-  const image = getImageProps(mainImage)
   return (
     <Link
       href={`/blog/${slug?.current}`}
@@ -33,12 +34,19 @@ const BlogPostCard: FC<Props> = ({
       )}
     >
       <div className='w-full'>
-        {image?.url ? (
+        {mainImage ? (
           <Image
-            src={image?.url}
-            alt={image?.alt || ''}
-            width={image?.width}
-            height={image?.height}
+            src={builder
+              .image(mainImage)
+              .width(400)
+              .height(400)
+              .fit('crop')
+              .crop('focalpoint')
+              .quality(80)
+              .url()}
+            alt={mainImage?.alt || ''}
+            width={400}
+            height={400}
             className='object-cover object-center h-52 rounded'
           />
         ) : (

@@ -6,8 +6,6 @@ import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
 
-import { getImageProps } from '@/utils/cms'
-
 import Logo from '@/components/common/logo'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -18,7 +16,6 @@ type Props = {
 
 const RecipeCard: FC<Props> = ({ recipe }) => {
   const { mainImage, slug, title, publishedAt } = recipe || {}
-  const image = getImageProps(mainImage)
   const linkToFull = `/recipes/${slug?.current}`
 
   return (
@@ -36,7 +33,7 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
             .crop('focalpoint')
             .quality(80)
             .url()}
-          alt={image?.alt || ''}
+          alt={mainImage?.alt || ''}
           width={400}
           height={400}
           className='object-cover object-center h-52 w-full rounded'

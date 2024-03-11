@@ -63,7 +63,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
                   <BlogPostOverview key={post?._id} post={post} />
                   <span
                     aria-hidden
-                    className='h-px w-full max-sm:w-2/3 border-b mx-auto sm:hidden'
+                    className='h-px w-full max-sm:w-2/3 border-b mx-auto sm:hidden last:hidden'
                   />
                 </>
               ))}

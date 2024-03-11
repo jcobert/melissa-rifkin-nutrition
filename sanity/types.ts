@@ -126,6 +126,15 @@ export enum RecipeUnit {
   pinch = 'pinch',
 }
 
+export enum RecipeCategory {
+  breakfast = 'Breakfast',
+  lunch = 'Lunch',
+  dinner = 'Dinner',
+  dessert = 'Dessert',
+  side = 'Side Dish',
+  snack = 'Snack',
+}
+
 /** Author */
 export interface Author extends SanityDocument {
   _type: 'author'

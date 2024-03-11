@@ -117,7 +117,13 @@ const BlogPost: FC<Props> = ({ post }) => {
         <div className='p-4 mt-16 w-full border-t flex flex-col gap-4'>
           <h5 className='text-center text-brand-gray-dark'>Categories</h5>
           <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
-            {tags?.map((tag) => <Tag key={tag} tag={tag} />)}
+            {tags?.map((tag) => (
+              <Tag
+                key={tag}
+                tag={tag}
+                className='max-sm:flex-1 max-sm:max-w-[calc(50%-16px)]'
+              />
+            ))}
           </div>
         </div>
       ) : null}

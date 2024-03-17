@@ -106,10 +106,18 @@ const BlogPost: FC<Props> = ({ post }) => {
 
       {/* External Link */}
       {externalUrl ? (
-        <a href={externalUrl} className='btn-outline flex items-center gap-2'>
-          <span>Keep reading</span>
-          <FiExternalLink />
-        </a>
+        <div className='flex flex-col items-center gap-2'>
+          <a
+            href={externalUrl}
+            className='btn-outline flex items-center gap-2 w-fit'
+          >
+            <span>Keep reading</span>
+            <FiExternalLink />
+          </a>
+          <p className='text-sm text-brand-gray-medium'>
+            {`This article was originally posted by ${author?.name} on another site.`}
+          </p>
+        </div>
       ) : null}
 
       {/* Tags */}
@@ -117,7 +125,13 @@ const BlogPost: FC<Props> = ({ post }) => {
         <div className='p-4 mt-16 w-full border-t flex flex-col gap-4'>
           <h5 className='text-center text-brand-gray-dark'>Categories</h5>
           <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
-            {tags?.map((tag) => <Tag key={tag} tag={tag} />)}
+            {tags?.map((tag) => (
+              <Tag
+                key={tag}
+                tag={tag}
+                className='max-sm:flex-1 max-sm:max-w-[calc(50%-16px)]'
+              />
+            ))}
           </div>
         </div>
       ) : null}

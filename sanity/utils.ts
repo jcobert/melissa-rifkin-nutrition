@@ -27,6 +27,5 @@ export const findParentsParent = ({
       }
     }, document)
 
-  console.log('ParentsParents')
   return obj
 }

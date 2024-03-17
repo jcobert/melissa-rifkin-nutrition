@@ -6,9 +6,8 @@ import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
 
-import { getImageProps } from '@/utils/cms'
-
 import Logo from '@/components/common/logo'
+import Tag from '@/components/common/tag'
 
 const builder = imageUrlBuilder({ projectId, dataset })
 
@@ -17,14 +16,13 @@ type Props = {
 }
 
 const RecipeCard: FC<Props> = ({ recipe }) => {
-  const { mainImage, slug, title, publishedAt } = recipe || {}
-  const image = getImageProps(mainImage)
+  const { mainImage, slug, title, publishedAt, category } = recipe || {}
   const linkToFull = `/recipes/${slug?.current}`
 
   return (
     <Link
       href={linkToFull}
-      className='flex flex-col w-full items-center gap-2 max-w-80 bg-almost-white border rounded shadow-sm transition-transform hover:-translate-y-1 transform max-md:mx-auto'
+      className='flex flex-col w-full items-center group gap-2 max-w-80 bg-almost-white border hover:border-brand-blue/hover rounded shadow-sm transition hover:-translate-y-1 transform max-md:mx-auto'
     >
       {mainImage ? (
         <Image
@@ -36,7 +34,7 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
             .crop('focalpoint')
             .quality(80)
             .url()}
-          alt={image?.alt || ''}
+          alt={mainImage?.alt || ''}
           width={400}
           height={400}
           className='object-cover object-center h-52 w-full rounded'
@@ -47,9 +45,9 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
         </div>
       )}
 
-      <div className='px-12 pt-6 pb-12'>
+      <div className='px-12 pt-6 pb-12 flex flex-col gap-2'>
         <span className='absolute inset-0 m-2 md:m-4 border border-brand-gray-light pointer-events-none'></span>
-        <p className='flex-auto text-balance text-center text-lg font-medium text-brand-gray-dark hover:text-brand-gray-dark/hover transition'>
+        <p className='flex-auto text-balance text-center text-lg font-medium text-brand-blue-dark group-hover:text-brand-blue transition'>
           {title}
         </p>
         {!!publishedAt && (
@@ -57,6 +55,17 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
             {format(publishedAt, 'MMM dd, yyyy')}
           </p>
         )}
+        {category?.length ? (
+          <div className='flex items-center justify-center gap-2 sm:gap-1'>
+            {category?.map((cat) => (
+              <Tag
+                key={cat}
+                tag={cat}
+                className='bg-almost-white text-brand-blue-dark border-gray-200 text-xs max-sm:py-1 max-sm:px-2'
+              />
+            ))}
+          </div>
+        ) : null}
       </div>
     </Link>
   )

@@ -12,8 +12,10 @@ import { cn } from '@/utils/style'
 import SelectInput, {
   SelectOption,
 } from '@/components/common/inputs/select-input'
+import LayoutToggle, { LayoutType } from '@/components/common/layout-toggle'
 import NoResults from '@/components/common/no-results'
 import RecipeCard from '@/components/features/recipe/recipe-card'
+import RecipeOverview from '@/components/features/recipe/recipe-overview'
 
 import { RecipesPageProps } from '@/app/recipes/page'
 
@@ -78,6 +80,8 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       })),
     [JSON.stringify(recipes)],
   )
+
+  const [layout, setLayout] = useState<LayoutType>('grid')
 
   const [tagFilter, setTagFilter] = useState<string | undefined>(tagParam)
   const [categoryFilter, setCategoryFilter] = useState<string | undefined>(
@@ -250,11 +254,35 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
         />
       </div>
 
+      {/* Layout Toggle */}
+      <div className='w-full flex items-center justify-end'>
+        <LayoutToggle layout={layout} setLayout={setLayout} />
+      </div>
+
+      {/* Recipes */}
       {filteredRecipes?.length ? (
-        <div className='grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full justify-items-center'>
-          {(filteredRecipes || [])?.map((recipe) => (
-            <RecipeCard key={recipe?._id} recipe={recipe} />
-          ))}
+        <div className='w-full'>
+          {layout === 'grid' && (
+            <div className='grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 w-full justify-items-center'>
+              {(filteredRecipes || [])?.map((recipe) => (
+                <RecipeCard key={recipe?._id} recipe={recipe} />
+              ))}
+            </div>
+          )}
+
+          {layout === 'list' && (
+            <div className='flex flex-col gap-10 sm:gap-8 w-full'>
+              {(filteredRecipes || [])?.map((recipe) => (
+                <>
+                  <RecipeOverview key={recipe?._id} recipe={recipe} />
+                  {/* <span
+                    aria-hidden
+                    className='h-px w-full max-sm:w-2/3 border-b mx-auto sm:hidden last:hidden'
+                  /> */}
+                </>
+              ))}
+            </div>
+          )}
         </div>
       ) : (
         <div className='my-8 flex flex-col items-center gap-6'>

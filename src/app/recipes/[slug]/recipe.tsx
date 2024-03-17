@@ -191,7 +191,12 @@ const Recipe: FC<Props> = ({ recipe }) => {
           <h5 className='text-center text-brand-gray-dark'>Categories</h5>
           <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
             {tags?.map((tag) => (
-              <Tag key={tag} tag={tag} href={`/recipes?tag=${tag}`} />
+              <Tag
+                key={tag}
+                tag={tag}
+                href={`/recipes?tag=${tag}`}
+                className='max-sm:flex-1 max-sm:max-w-[calc(50%-16px)]'
+              />
             ))}
           </div>
         </div>

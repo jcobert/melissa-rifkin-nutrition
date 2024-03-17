@@ -106,10 +106,18 @@ const BlogPost: FC<Props> = ({ post }) => {
 
       {/* External Link */}
       {externalUrl ? (
-        <a href={externalUrl} className='btn-outline flex items-center gap-2'>
-          <span>Keep reading</span>
-          <FiExternalLink />
-        </a>
+        <div className='flex flex-col items-center gap-2'>
+          <a
+            href={externalUrl}
+            className='btn-outline flex items-center gap-2 w-fit'
+          >
+            <span>Keep reading</span>
+            <FiExternalLink />
+          </a>
+          <p className='text-sm text-brand-gray-medium'>
+            {`This article was originally posted by ${author?.name} on another site.`}
+          </p>
+        </div>
       ) : null}
 
       {/* Tags */}

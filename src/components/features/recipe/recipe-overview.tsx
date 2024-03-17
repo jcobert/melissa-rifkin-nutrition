@@ -26,7 +26,7 @@ const RecipeOverview: FC<Props> = ({ recipe, className }) => {
     <Link
       href={linkToFull}
       className={cn(
-        'group transition w-full flex max-sm:flex-col gap-x-8 items-stretch__ sm:items-end gap-y-4 bg-almost-white sm:bg-almost-white/40 hover:bg-almost-white p-4 border border-gray-100 hover:border-gray-200 rounded hover:shadow-sm__',
+        'group transition w-full flex max-sm:flex-col gap-x-8 sm:items-end gap-y-4 bg-almost-white hover:bg-almost-white p-4 border border-gray-100 hover:border-brand-blue/hover rounded',
         [className],
       )}
     >
@@ -53,8 +53,8 @@ const RecipeOverview: FC<Props> = ({ recipe, className }) => {
         )}
       </div>
 
-      <div className='flex flex-col gap-2 md:gap-y-4__ max-sm:items-center'>
-        <p className='flex-auto__ md:pb-4__ text-balance text-brand-blue-dark max-w-prose text-lg max-sm:text-center font-medium group-hover:text-brand-blue transition'>
+      <div className='flex flex-col gap-2 max-sm:items-center'>
+        <p className='text-balance text-brand-blue-dark max-w-prose text-lg max-sm:text-center font-medium group-hover:text-brand-blue transition'>
           {title}
         </p>
 
@@ -64,26 +64,25 @@ const RecipeOverview: FC<Props> = ({ recipe, className }) => {
           </p>
         ) : null}
 
-        {/* {category?.length ? (
-          <div className='flex-auto__ max-sm:hidden'>
+        {category?.length ? (
+          <div className='flex items-center gap-4 sm:gap-2 max-sm:hidden'>
             {category?.map((cat) => (
               <Tag
                 key={cat}
                 tag={cat}
-                className='bg-almost-white text-brand-blue-dark border-gray-200'
-                // className='bg-brand-blue-dark text-almost-white border-none'
+                className='bg-almost-white text-brand-blue-dark border-gray-200 text-xs'
               />
             ))}
           </div>
-        ) : null} */}
+        ) : null}
 
         {tags?.length ? (
-          <div className='flex items-center gap-4 sm:gap-2 flex-auto__ mt-auto__ mt-4 max-sm:hidden'>
+          <div className='flex items-center gap-4 sm:gap-2 max-sm:hidden'>
             {tags?.map((tag) => (
               <Tag
                 key={tag}
                 tag={tag}
-                className='bg-gray-100 text-brand-gray-dark border-gray-200'
+                className='bg-gray-100 text-brand-gray-dark border-gray-200 text-xs'
               />
             ))}
           </div>

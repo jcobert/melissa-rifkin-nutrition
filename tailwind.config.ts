@@ -166,6 +166,16 @@ export default {
           from: { opacity: '1' },
           to: { opacity: '0' },
         },
+        fadeInOut: {
+          '0%': {
+            opacity: '0',
+            animationTimingFunction: 'ease-in',
+          },
+          '7%': { opacity: '1', animationTimingFunction: 'ease-out' },
+          '40%': { opacity: '1' },
+          '47%': { opacity: '0' },
+          '100%': { opacity: '0' },
+        },
       },
       animation: {
         flicker: 'flicker 3s linear infinite',
@@ -183,6 +193,7 @@ export default {
         enterFromRight: 'enterFromRight 250ms ease',
         exitToLeft: 'exitToLeft 250ms ease',
         exitToRight: 'exitToRight 250ms ease',
+        slideshow: 'fadeInOut ease-in-out infinite',
       },
     },
   },

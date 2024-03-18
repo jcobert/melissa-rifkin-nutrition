@@ -54,8 +54,14 @@ const HomePage = async () => {
         // className='w-full h-[30rem]__ h-screen sm:h-[36rem] bg-center bg-cover bg-no-repeat sm:bg-fixed before:absolute before:block before:top-42 sm:before:top-16 before:left-0 before:w-full before:h-[30rem]__ before:h-screen sm:before:h-[36rem] before:bg-[#0000006c] bg-[url("/images/cutting-board.jpeg")]__'
         // style={{ backgroundImage: 'url("/images/cutting-board.jpeg")' }}
       >
-        <BackgroundSlideshow imagePaths={['/images/cutting-board.jpeg']} />
-        <div className='layout py-8 h-full relative flex flex-col justify-center md:justify-end md:bottom-32__ md:bottom-[20%] gap-6'>
+        <BackgroundSlideshow
+          imagePaths={[
+            '/images/cutting-board.jpeg',
+            '/images/hero/4.jpg',
+            '/images/hero/5.jpg',
+          ]}
+        />
+        <div className='layout z-10 py-8 h-full relative flex flex-col justify-center md:justify-end md:bottom-32__ md:bottom-[20%] gap-6'>
           <h1 className='text-5xl md:w-2/3 lg:w-1/2 text-white font-prata text-pretty leading-normal'>
             Your Healthy Life Starts Here.
           </h1>

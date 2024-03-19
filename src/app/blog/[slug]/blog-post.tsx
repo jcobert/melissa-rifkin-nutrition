@@ -129,6 +129,7 @@ const BlogPost: FC<Props> = ({ post }) => {
               <Tag
                 key={tag}
                 tag={tag}
+                href={`/blog?category=${tag}`}
                 className='max-sm:flex-1 max-sm:max-w-[calc(50%-16px)]'
               />
             ))}

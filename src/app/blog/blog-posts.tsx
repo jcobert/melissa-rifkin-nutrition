@@ -1,7 +1,7 @@
 'use client'
 
 import { uniq } from 'lodash'
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
 import { Post } from 'sanity-studio/types'
@@ -16,11 +16,16 @@ import NoResults from '@/components/common/no-results'
 import BlogPostCard from '@/components/features/blog/blog-post-card'
 import BlogPostOverview from '@/components/features/blog/blog-post-overview'
 
+import { BlogPageProps } from '@/app/blog/page'
+
 type Props = {
   posts: Post[]
+  params?: BlogPageProps['searchParams']
 }
 
-const BlogPosts: FC<Props> = ({ posts }) => {
+const BlogPosts: FC<Props> = ({ posts, params }) => {
+  const { category: tagParam } = params || {}
+
   const allTags =
     uniq(posts?.flatMap((post) => (post?.tags || [])?.map((t) => t))) || []
 
@@ -48,7 +53,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
 
   const [layout, setLayout] = useState<'grid' | 'list'>('list')
 
-  const [tagFilter, setTagFilter] = useState<string | undefined>()
+  const [tagFilter, setTagFilter] = useState<string | undefined>(tagParam)
 
   const [searchFilter, setSearchFilter] = useState<string>()
   const [selectedPost, setSelectedPost] = useState<Post>()
@@ -78,6 +83,11 @@ const BlogPosts: FC<Props> = ({ posts }) => {
     setTagFilter(undefined)
     setSelectedPost(undefined)
   }
+
+  // Update filter values on url param change.
+  useEffect(() => {
+    setTagFilter(tagParam)
+  }, [tagParam])
 
   return (
     <div className='w-full sm:w-11/12 flex flex-col gap-8 pb-safe'>

@@ -30,7 +30,7 @@ const RecipeOverview: FC<Props> = ({ recipe, className }) => {
         [className],
       )}
     >
-      <div className='max-sm:w-full w-36'>
+      <div className='max-sm:w-full w-36 flex-none'>
         {mainImage ? (
           <Image
             src={builder

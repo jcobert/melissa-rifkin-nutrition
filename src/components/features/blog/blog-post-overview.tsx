@@ -29,7 +29,7 @@ const BlogPostOverview: FC<Props> = ({ post, className, hideDate = false }) => {
         [className],
       )}
     >
-      <div className='max-sm:w-full w-36'>
+      <div className='max-sm:w-full w-36 flex-none'>
         {mainImage ? (
           <Image
             src={builder

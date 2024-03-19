@@ -46,7 +46,9 @@ const Accordion: FC<Props> = ({
           <Radix.Item
             key={i}
             value={`item-${i + 1}`}
-            className={clsx('p-2', { [itemClassName]: !!itemClassName })}
+            className={clsx('p-2 rounded-md', {
+              [itemClassName]: !!itemClassName,
+            })}
           >
             <Radix.Header>
               <Radix.Trigger

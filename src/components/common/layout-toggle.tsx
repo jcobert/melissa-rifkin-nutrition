@@ -12,7 +12,7 @@ type Props = {
 
 const LayoutToggle: FC<Props> = ({ layout, setLayout }) => {
   return (
-    <div className='flex items-center gap-4 rounded p-2 text-xl w-fit self-end max-md:hidden'>
+    <div className='flex items-center gap-4 rounded p-2__ text-xl w-fit self-end max-md:hidden'>
       <button
         type='button'
         className={cn([

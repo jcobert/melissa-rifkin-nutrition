@@ -6,9 +6,14 @@ import { cn } from '@/utils/style'
 type Props = {
   testimonial: Testimonial
   className?: string
+  hideCredit?: boolean
 }
 
-const TestimonialCard: FC<Props> = ({ testimonial, className }) => {
+const TestimonialCard: FC<Props> = ({
+  testimonial,
+  className,
+  hideCredit = false,
+}) => {
   const isPartner = testimonial?.relationship === 'partner'
 
   return (
@@ -19,17 +24,19 @@ const TestimonialCard: FC<Props> = ({ testimonial, className }) => {
       ])}
     >
       <p>{`"${testimonial?.testimonial}"`}</p>
-      <div className='flex flex-col font-semibold text-brand-gray-dark text-pretty'>
-        <span className=''>{`- ${testimonial?.name}${testimonial?.location ? `, ${testimonial?.location}` : ''}`}</span>
-        {isPartner && (
-          <div className='inline-flex gap-1 flex-wrap'>
-            {testimonial?.position ? (
-              <span className=''>{`${testimonial?.position}, `}</span>
-            ) : null}
-            <span className='text-brand-blue-dark'>{`${testimonial?.company}`}</span>
-          </div>
-        )}
-      </div>
+      {!hideCredit ? (
+        <div className='flex flex-col font-semibold text-brand-gray-dark text-pretty'>
+          <span className=''>{`- ${testimonial?.name}${testimonial?.location ? `, ${testimonial?.location}` : ''}`}</span>
+          {isPartner && (
+            <div className='inline-flex gap-1 flex-wrap'>
+              {testimonial?.position ? (
+                <span className=''>{`${testimonial?.position}, `}</span>
+              ) : null}
+              <span className='text-brand-blue-dark'>{`${testimonial?.company}`}</span>
+            </div>
+          )}
+        </div>
+      ) : null}
     </div>
   )
 }

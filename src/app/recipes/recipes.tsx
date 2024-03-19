@@ -256,6 +256,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
           }}
           label='Category'
         />
+
         {/* Layout Toggle */}
         <div className='flex flex-col items-end justify-end gap-2'>
           <LayoutToggle layout={layout} setLayout={setLayout} />

@@ -2,7 +2,6 @@
 
 import { uniq } from 'lodash'
 import React, { FC, useMemo, useState } from 'react'
-import { CgMenu, CgMenuGridO } from 'react-icons/cg'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
 import { Post } from 'sanity-studio/types'
@@ -12,6 +11,7 @@ import { cn } from '@/utils/style'
 import SelectInput, {
   SelectOption,
 } from '@/components/common/inputs/select-input'
+import LayoutToggle from '@/components/common/layout-toggle'
 import NoResults from '@/components/common/no-results'
 import BlogPostCard from '@/components/features/blog/blog-post-card'
 import BlogPostOverview from '@/components/features/blog/blog-post-overview'
@@ -46,7 +46,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
     [JSON.stringify(posts)],
   )
 
-  const [view, setView] = useState<'grid' | 'list'>('list')
+  const [layout, setLayout] = useState<'grid' | 'list'>('list')
 
   const [tagFilter, setTagFilter] = useState<string | undefined>()
 
@@ -69,6 +69,10 @@ const BlogPosts: FC<Props> = ({ posts }) => {
     }
   }, [tagFilter, searchFilter, JSON.stringify(posts)])
 
+  const isFiltered = !!tagFilter || !!searchFilter
+  const foundCount = filteredPosts?.length || 0
+  const totalCount = posts?.length || 0
+
   const resetAllFilters = () => {
     setSearchFilter(undefined)
     setTagFilter(undefined)
@@ -76,7 +80,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
   }
 
   return (
-    <div className='w-full sm:w-11/12 flex flex-col'>
+    <div className='w-full sm:w-11/12 flex flex-col gap-8 pb-safe'>
       {/* Filters */}
       <div className='flex max-sm:flex-col sm:justify-end sm:items-end w-full gap-4 '>
         <SelectInput
@@ -168,38 +172,25 @@ const BlogPosts: FC<Props> = ({ posts }) => {
           }}
           label='Category'
         />
+
+        {/* Layout Toggle */}
+        <div className='flex flex-col items-end justify-end gap-2'>
+          <LayoutToggle layout={layout} setLayout={setLayout} />
+        </div>
       </div>
 
-      {/* View toggles */}
-      <div className='flex items-center gap-4 rounded p-2 text-xl w-fit self-end max-md:hidden'>
-        <button
-          type='button'
-          className={cn([
-            'border p-2 rounded',
-            view === 'list' && 'text-brand-blue',
-          ])}
-          aria-label='view posts as list.'
-          onClick={() => setView('list')}
-        >
-          <CgMenu />
-        </button>
-        <button
-          type='button'
-          className={cn([
-            'border p-2 rounded',
-            view === 'grid' && 'text-brand-blue',
-          ])}
-          aria-label='view posts as grid.'
-          onClick={() => setView('grid')}
-        >
-          <CgMenuGridO />
-        </button>
-      </div>
+      {/* Results Count */}
+      <p
+        className={cn([
+          'text-brand-gray-dark text-sm px-2 max-sm:-mb-2 sm:-my-4 max-sm:-mt-6 self-end',
+          (!isFiltered || !foundCount) && 'sm:invisible max-sm:hidden',
+        ])}
+      >{`Found ${foundCount} of ${totalCount} post${totalCount === 1 ? '' : 's'}`}</p>
 
       {/* Posts */}
       {filteredPosts?.length ? (
-        <div className='my-8 md:my-12 w-full'>
-          {view === 'grid' && (
+        <div className='my-8__ md:my-12__ w-full'>
+          {layout === 'grid' && (
             <div className='grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center'>
               {(filteredPosts || [])?.map((post) => (
                 <BlogPostCard key={post?._id} post={post} />
@@ -207,7 +198,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
             </div>
           )}
 
-          {view === 'list' && (
+          {layout === 'list' && (
             <div className='flex flex-col gap-10 sm:gap-8'>
               {(filteredPosts || [])?.map((post) => (
                 <>

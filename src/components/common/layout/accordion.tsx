@@ -1,3 +1,5 @@
+'use client'
+
 import * as Radix from '@radix-ui/react-accordion'
 import clsx from 'clsx'
 import React, { FC, ReactNode } from 'react'

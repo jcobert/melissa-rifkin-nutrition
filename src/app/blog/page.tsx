@@ -15,7 +15,13 @@ export const metadata: Metadata = {
   title: 'Blog',
 }
 
-const BlogPage: FC = async () => {
+export type BlogPageProps = {
+  searchParams?: {
+    category?: string
+  }
+}
+
+const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
   const initial = await loadQuery<SanityDocument<Post>[]>(
     POSTS_QUERY,
     {},
@@ -32,7 +38,7 @@ const BlogPage: FC = async () => {
       {draftMode()?.isEnabled ? (
         <BlogPostsPreview initial={initial} />
       ) : (
-        <BlogPosts posts={initial?.data} />
+        <BlogPosts posts={initial?.data} params={searchParams} />
       )}
     </PageLayout>
   )

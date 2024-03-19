@@ -1,8 +1,9 @@
 'use client'
 
 import { uniq } from 'lodash'
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
+import { TbListSearch } from 'react-icons/tb'
 import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
 import { Post } from 'sanity-studio/types'
 
@@ -12,15 +13,21 @@ import SelectInput, {
   SelectOption,
 } from '@/components/common/inputs/select-input'
 import LayoutToggle from '@/components/common/layout-toggle'
+import Accordion from '@/components/common/layout/accordion'
 import NoResults from '@/components/common/no-results'
 import BlogPostCard from '@/components/features/blog/blog-post-card'
 import BlogPostOverview from '@/components/features/blog/blog-post-overview'
 
+import { BlogPageProps } from '@/app/blog/page'
+
 type Props = {
   posts: Post[]
+  params?: BlogPageProps['searchParams']
 }
 
-const BlogPosts: FC<Props> = ({ posts }) => {
+const BlogPosts: FC<Props> = ({ posts, params }) => {
+  const { category: tagParam } = params || {}
+
   const allTags =
     uniq(posts?.flatMap((post) => (post?.tags || [])?.map((t) => t))) || []
 
@@ -48,7 +55,7 @@ const BlogPosts: FC<Props> = ({ posts }) => {
 
   const [layout, setLayout] = useState<'grid' | 'list'>('list')
 
-  const [tagFilter, setTagFilter] = useState<string | undefined>()
+  const [tagFilter, setTagFilter] = useState<string | undefined>(tagParam)
 
   const [searchFilter, setSearchFilter] = useState<string>()
   const [selectedPost, setSelectedPost] = useState<Post>()
@@ -79,105 +86,126 @@ const BlogPosts: FC<Props> = ({ posts }) => {
     setSelectedPost(undefined)
   }
 
+  // Update filter values on url param change.
+  useEffect(() => {
+    setTagFilter(tagParam)
+  }, [tagParam])
+
+  const FilterSection = (
+    <div className='flex max-sm:flex-col sm:justify-end sm:items-end w-full gap-4 p-2'>
+      <SelectInput
+        placeholder={
+          <span className='flex items-center gap-2'>
+            <HiOutlineSearch />
+            <span>Search...</span>
+          </span>
+        }
+        inputValue={searchFilter}
+        onInputChange={(val, { action }) => {
+          if (action !== 'input-change') {
+            setSearchFilter(searchFilter)
+            return
+          }
+          setSearchFilter(val)
+          setTagFilter(undefined)
+          setSelectedPost(undefined)
+        }}
+        onBlur={() => {
+          if (searchFilter) setSelectedPost(posts?.[0])
+        }}
+        defaultMenuIsOpen={false}
+        openMenuOnClick={false}
+        blurInputOnSelect
+        isClearable
+        controlShouldRenderValue={false}
+        onChange={(opt: SelectOption<Post>) => {
+          setSelectedPost(opt?.value)
+          if (!opt) setSearchFilter('')
+        }}
+        value={postSearchOptions?.find(
+          (opt) => opt?.value?._id === selectedPost?._id,
+        )}
+        components={{
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }}
+        options={postSearchOptions}
+        className='w-full sm:max-w-64 lg:max-w-64__'
+        labelClassName={cn([!!searchFilter && '!text-brand-blue'])}
+        classNames={{
+          container: () => 'md:max-w-48__ min-w-24',
+          input: () => '[&>*]:!opacity-100',
+          option: (props) =>
+            cn([
+              props.isSelected && '!bg-almost-white !text-almost-black',
+              props.isFocused && '!bg-almost-white',
+            ]),
+          control: () => cn([!!searchFilter && '!border-brand-blue !border']),
+        }}
+        filterOption={(option, input) => {
+          const post = (option as FilterOptionOption<SelectOption<Post>>)?.data
+            ?.value
+          const criteria = [post?.title, post?.tags?.join(), post?.author?.name]
+            ?.join()
+            ?.toLowerCase()
+            ?.trim()
+          return criteria?.includes(input?.toLowerCase()?.trim())
+        }}
+      />
+
+      <SelectInput
+        options={tagFilterOptions}
+        isClearable
+        // isSearchable={false}
+        menuShouldScrollIntoView
+        className='w-full sm:max-w-48'
+        labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
+        classNames={{
+          container: () => 'md:max-w-48__ min-w-24',
+          control: () => cn([!!tagFilter && '!border-brand-blue !border']),
+        }}
+        formatOptionLabel={(opt, _meta) => (
+          <span className='capitalize'>{(opt as SelectOption)?.label}</span>
+        )}
+        value={
+          tagFilterOptions?.find(
+            (opt) => opt?.value?.toLowerCase() === tagFilter?.toLowerCase(),
+          ) || ''
+        }
+        onChange={(opt) => {
+          setTagFilter(opt?.value)
+          setSearchFilter('')
+        }}
+        label='Category'
+      />
+
+      {/* Layout Toggle */}
+      <div className='flex flex-col items-end justify-end gap-2 max-md:hidden'>
+        <LayoutToggle layout={layout} setLayout={setLayout} />
+      </div>
+    </div>
+  )
+
   return (
     <div className='w-full sm:w-11/12 flex flex-col gap-8 pb-safe'>
       {/* Filters */}
-      <div className='flex max-sm:flex-col sm:justify-end sm:items-end w-full gap-4 '>
-        <SelectInput
-          placeholder={
-            <span className='flex items-center gap-2'>
-              <HiOutlineSearch />
-              <span>Search...</span>
-            </span>
-          }
-          inputValue={searchFilter}
-          onInputChange={(val, { action }) => {
-            if (action !== 'input-change') {
-              setSearchFilter(searchFilter)
-              return
-            }
-            setSearchFilter(val)
-            setTagFilter(undefined)
-            setSelectedPost(undefined)
-          }}
-          onBlur={() => {
-            if (searchFilter) setSelectedPost(posts?.[0])
-          }}
-          defaultMenuIsOpen={false}
-          openMenuOnClick={false}
-          blurInputOnSelect
-          isClearable
-          controlShouldRenderValue={false}
-          onChange={(opt: SelectOption<Post>) => {
-            setSelectedPost(opt?.value)
-            if (!opt) setSearchFilter('')
-          }}
-          value={postSearchOptions?.find(
-            (opt) => opt?.value?._id === selectedPost?._id,
-          )}
-          components={{
-            DropdownIndicator: () => null,
-            IndicatorSeparator: () => null,
-          }}
-          options={postSearchOptions}
-          className='w-full sm:max-w-64 lg:max-w-64__'
-          labelClassName={cn([!!searchFilter && '!text-brand-blue'])}
-          classNames={{
-            container: () => 'md:max-w-48__ min-w-24',
-            input: () => '[&>*]:!opacity-100',
-            option: (props) =>
-              cn([
-                props.isSelected && '!bg-almost-white !text-almost-black',
-                props.isFocused && '!bg-almost-white',
-              ]),
-            control: () => cn([!!searchFilter && '!border-brand-blue !border']),
-          }}
-          filterOption={(option, input) => {
-            const post = (option as FilterOptionOption<SelectOption<Post>>)
-              ?.data?.value
-            const criteria = [
-              post?.title,
-              post?.tags?.join(),
-              post?.author?.name,
-            ]
-              ?.join()
-              ?.toLowerCase()
-              ?.trim()
-            return criteria?.includes(input?.toLowerCase()?.trim())
-          }}
-        />
-
-        <SelectInput
-          options={tagFilterOptions}
-          isClearable
-          // isSearchable={false}
-          menuShouldScrollIntoView
-          className='w-full sm:max-w-48 lg:max-w-64__'
-          labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
-          classNames={{
-            container: () => 'md:max-w-48__ min-w-24',
-            control: () => cn([!!tagFilter && '!border-brand-blue !border']),
-          }}
-          formatOptionLabel={(opt, _meta) => (
-            <span className='capitalize'>{(opt as SelectOption)?.label}</span>
-          )}
-          value={
-            tagFilterOptions?.find(
-              (opt) => opt?.value?.toLowerCase() === tagFilter?.toLowerCase(),
-            ) || ''
-          }
-          onChange={(opt) => {
-            setTagFilter(opt?.value)
-            setSearchFilter('')
-          }}
-          label='Category'
-        />
-
-        {/* Layout Toggle */}
-        <div className='flex flex-col items-end justify-end gap-2'>
-          <LayoutToggle layout={layout} setLayout={setLayout} />
-        </div>
-      </div>
+      <Accordion
+        collapsible
+        className={cn(['md:hidden', isFiltered && 'border-brand-blue'])}
+        itemClassName='bg-almost-white'
+        items={[
+          {
+            header: (
+              <div className='flex items-center gap-2'>
+                <TbListSearch className='text-2xl text-brand-blue-dark' />
+                <span>Search and Filter</span>
+              </div>
+            ),
+            content: FilterSection,
+          },
+        ]}
+      />
+      <div className='max-md:hidden'>{FilterSection}</div>
 
       {/* Results Count */}
       <p

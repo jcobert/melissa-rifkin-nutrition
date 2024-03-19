@@ -1,7 +1,8 @@
 import * as Collapse from '@radix-ui/react-collapsible'
-import clsx from 'clsx'
 import React, { FC, ReactNode, useState } from 'react'
 import { MdOutlineExpandMore } from 'react-icons/md'
+
+import { cn } from '@/utils/style'
 
 type Props = {
   children?: ReactNode
@@ -25,19 +26,21 @@ const Collapsible: FC<Props> = ({
     <Collapse.Root
       open={open}
       onOpenChange={setOpen}
-      className={clsx('flex flex-col gap-1', { [className]: !!className })}
+      className={cn(['flex flex-col gap-1', className])}
     >
       <Collapse.Trigger
-        className={clsx('flex items-center gap-2 justify-between', {
-          [triggerClassName]: !!triggerClassName,
-        })}
+        className={cn([
+          'flex items-center gap-2 justify-between',
+          triggerClassName,
+        ])}
       >
         <>
           <h4 className='font-medium'>{header}</h4>
           <div
-            className={clsx('text-xl transition-transform', {
-              'rotate-180': open,
-            })}
+            className={cn([
+              'text-xl transition-transform',
+              open && 'rotate-180',
+            ])}
           >
             {triggerIcon ?? <MdOutlineExpandMore />}
           </div>

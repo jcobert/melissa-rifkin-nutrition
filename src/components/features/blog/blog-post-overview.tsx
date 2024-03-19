@@ -25,11 +25,11 @@ const BlogPostOverview: FC<Props> = ({ post, className, hideDate = false }) => {
     <Link
       href={`/blog/${slug?.current}`}
       className={cn(
-        'group transition flex max-sm:flex-col gap-x-8 items-center gap-y-2 bg-almost-white/40 hover:bg-almost-white p-4 sm:border border-gray-100 hover:border-gray-200 rounded hover:shadow-sm__',
+        'group transition flex max-sm:flex-col gap-x-8 items-center gap-y-2 bg-almost-white/40 hover:bg-almost-white p-4 sm:border border-gray-100 hover:border-brand-blue/30 rounded',
         [className],
       )}
     >
-      <div className='max-sm:w-full'>
+      <div className='max-sm:w-full w-36 flex-none'>
         {mainImage ? (
           <Image
             src={builder

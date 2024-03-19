@@ -100,6 +100,7 @@ const SelectInput: FC<SelectInputProps> = ({
           }),
         }}
         onChange={onChange as Props['onChange']}
+        menuPortalTarget={document.body}
         {...props}
       />
       <span className='text-xs text-gray-600'>{helper}</span>

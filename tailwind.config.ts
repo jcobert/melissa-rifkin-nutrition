@@ -176,6 +176,11 @@ export default {
           '47%': { opacity: '0' },
           '100%': { opacity: '0' },
         },
+        fade: {
+          '0%': { opacity: '1' },
+          '90%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
       },
       animation: {
         flicker: 'flicker 3s linear infinite',
@@ -194,6 +199,7 @@ export default {
         exitToLeft: 'exitToLeft 250ms ease',
         exitToRight: 'exitToRight 250ms ease',
         slideshow: 'fadeInOut ease-in-out infinite',
+        fade: 'fade ease',
       },
     },
   },

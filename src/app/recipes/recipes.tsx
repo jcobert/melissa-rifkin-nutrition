@@ -3,6 +3,7 @@
 import { uniq } from 'lodash'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
+import { TbListSearch } from 'react-icons/tb'
 import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
 import { Recipe } from 'sanity-studio/types'
 
@@ -13,6 +14,7 @@ import SelectInput, {
   SelectOption,
 } from '@/components/common/inputs/select-input'
 import LayoutToggle, { LayoutType } from '@/components/common/layout-toggle'
+import Accordion from '@/components/common/layout/accordion'
 import NoResults from '@/components/common/no-results'
 import RecipeCard from '@/components/features/recipe/recipe-card'
 import RecipeOverview from '@/components/features/recipe/recipe-overview'
@@ -134,134 +136,152 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
     setTagFilter(tagParam)
   }, [categoryParam, tagParam])
 
-  return (
-    <div className='flex flex-col gap-8 w-full items-center max-w-4xl'>
-      {/* Filters */}
-      <div className='flex max-sm:flex-col sm:justify-end sm:items-end w-full gap-4 '>
-        <SelectInput
-          placeholder={
-            <span className='flex items-center gap-2'>
-              <HiOutlineSearch />
-              <span>Search...</span>
-            </span>
+  const FilterSection = (
+    <div className='flex max-sm:flex-col sm:justify-end sm:items-end w-full gap-4 p-2'>
+      <SelectInput
+        placeholder={
+          <span className='flex items-center gap-2'>
+            <HiOutlineSearch />
+            <span>Search...</span>
+          </span>
+        }
+        inputValue={searchFilter}
+        onInputChange={(val, { action }) => {
+          if (action !== 'input-change') {
+            setSearchFilter(searchFilter)
+            return
           }
-          inputValue={searchFilter}
-          onInputChange={(val, { action }) => {
-            if (action !== 'input-change') {
-              setSearchFilter(searchFilter)
-              return
-            }
-            setSearchFilter(val)
-            setTagFilter(undefined)
-            setCategoryFilter(undefined)
-            setSelectedRecipe(undefined)
-          }}
-          onBlur={() => {
-            if (searchFilter) setSelectedRecipe(recipes?.[0])
-          }}
-          defaultMenuIsOpen={false}
-          openMenuOnClick={false}
-          blurInputOnSelect
-          isClearable
-          controlShouldRenderValue={false}
-          onChange={(opt: SelectOption<Recipe>) => {
-            setSelectedRecipe(opt?.value)
-            if (!opt) setSearchFilter('')
-          }}
-          value={recipeSearchOptions?.find(
-            (opt) => opt?.value?._id === selectedRecipe?._id,
-          )}
-          components={{
-            DropdownIndicator: () => null,
-            IndicatorSeparator: () => null,
-          }}
-          options={recipeSearchOptions}
-          className='w-full sm:max-w-64 lg:max-w-64__'
-          labelClassName={cn([!!searchFilter && '!text-brand-blue'])}
-          classNames={{
-            container: () => 'md:max-w-48__ min-w-24',
-            input: () => '[&>*]:!opacity-100',
-            option: (props) =>
-              cn([
-                props.isSelected && '!bg-almost-white !text-almost-black',
-                props.isFocused && '!bg-almost-white',
-              ]),
-            control: () => cn([!!searchFilter && '!border-brand-blue !border']),
-          }}
-          filterOption={(option, input) => {
-            const recipe = (option as FilterOptionOption<SelectOption<Recipe>>)
-              ?.data?.value
-            const ingredients = getRecipeIngredients(recipe)
-            const criteria = [
-              recipe?.title,
-              recipe?.tags?.join(),
-              ingredients?.join(),
-            ]
-              ?.join()
-              ?.toLowerCase()
-              ?.trim()
-            return criteria?.includes(input?.toLowerCase()?.trim())
-          }}
-        />
+          setSearchFilter(val)
+          setTagFilter(undefined)
+          setCategoryFilter(undefined)
+          setSelectedRecipe(undefined)
+        }}
+        onBlur={() => {
+          if (searchFilter) setSelectedRecipe(recipes?.[0])
+        }}
+        defaultMenuIsOpen={false}
+        openMenuOnClick={false}
+        blurInputOnSelect
+        isClearable
+        controlShouldRenderValue={false}
+        onChange={(opt: SelectOption<Recipe>) => {
+          setSelectedRecipe(opt?.value)
+          if (!opt) setSearchFilter('')
+        }}
+        value={recipeSearchOptions?.find(
+          (opt) => opt?.value?._id === selectedRecipe?._id,
+        )}
+        components={{
+          DropdownIndicator: () => null,
+          IndicatorSeparator: () => null,
+        }}
+        options={recipeSearchOptions}
+        className='w-full sm:max-w-64 lg:max-w-64__'
+        labelClassName={cn([!!searchFilter && '!text-brand-blue'])}
+        classNames={{
+          container: () => 'md:max-w-48__ min-w-24',
+          input: () => '[&>*]:!opacity-100',
+          option: (props) =>
+            cn([
+              props.isSelected && '!bg-almost-white !text-almost-black',
+              props.isFocused && '!bg-almost-white',
+            ]),
+          control: () => cn([!!searchFilter && '!border-brand-blue !border']),
+        }}
+        filterOption={(option, input) => {
+          const recipe = (option as FilterOptionOption<SelectOption<Recipe>>)
+            ?.data?.value
+          const ingredients = getRecipeIngredients(recipe)
+          const criteria = [
+            recipe?.title,
+            recipe?.tags?.join(),
+            ingredients?.join(),
+          ]
+            ?.join()
+            ?.toLowerCase()
+            ?.trim()
+          return criteria?.includes(input?.toLowerCase()?.trim())
+        }}
+      />
 
-        <SelectInput
-          options={categoryFilterOptions}
-          isClearable
-          isSearchable={false}
-          menuShouldScrollIntoView
-          className='w-full sm:max-w-48'
-          labelClassName={cn([!!categoryFilter && '!text-brand-blue'])}
-          classNames={{
-            container: () => 'md:max-w-48__ min-w-24',
-            control: () =>
-              cn([!!categoryFilter && '!border-brand-blue !border']),
-          }}
-          formatOptionLabel={(opt, _meta) => (
-            <span className='capitalize'>{(opt as SelectOption)?.label}</span>
-          )}
-          value={
-            categoryFilterOptions?.find(
-              (opt) => opt?.value === categoryFilter,
-            ) || ''
-          }
-          onChange={(opt) => {
-            setCategoryFilter(opt?.value)
-            setSearchFilter('')
-          }}
-          label='Meal'
-        />
+      <SelectInput
+        options={categoryFilterOptions}
+        isClearable
+        isSearchable={false}
+        menuShouldScrollIntoView
+        className='w-full sm:max-w-48'
+        labelClassName={cn([!!categoryFilter && '!text-brand-blue'])}
+        classNames={{
+          container: () => 'md:max-w-48__ min-w-24',
+          control: () => cn([!!categoryFilter && '!border-brand-blue !border']),
+        }}
+        formatOptionLabel={(opt, _meta) => (
+          <span className='capitalize'>{(opt as SelectOption)?.label}</span>
+        )}
+        value={
+          categoryFilterOptions?.find((opt) => opt?.value === categoryFilter) ||
+          ''
+        }
+        onChange={(opt) => {
+          setCategoryFilter(opt?.value)
+          setSearchFilter('')
+        }}
+        label='Meal'
+      />
 
-        <SelectInput
-          options={tagFilterOptions}
-          isClearable
-          // isSearchable={false}
-          menuShouldScrollIntoView
-          className='w-full sm:max-w-48 lg:max-w-64__'
-          labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
-          classNames={{
-            container: () => 'md:max-w-48__ min-w-24',
-            control: () => cn([!!tagFilter && '!border-brand-blue !border']),
-          }}
-          formatOptionLabel={(opt, _meta) => (
-            <span className='capitalize'>{(opt as SelectOption)?.label}</span>
-          )}
-          value={
-            tagFilterOptions?.find(
-              (opt) => opt?.value?.toLowerCase() === tagFilter?.toLowerCase(),
-            ) || ''
-          }
-          onChange={(opt) => {
-            setTagFilter(opt?.value)
-            setSearchFilter('')
-          }}
-          label='Category'
-        />
+      <SelectInput
+        options={tagFilterOptions}
+        isClearable
+        // isSearchable={false}
+        menuShouldScrollIntoView
+        className='w-full sm:max-w-48 lg:max-w-64__'
+        labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
+        classNames={{
+          container: () => 'md:max-w-48__ min-w-24',
+          control: () => cn([!!tagFilter && '!border-brand-blue !border']),
+        }}
+        formatOptionLabel={(opt, _meta) => (
+          <span className='capitalize'>{(opt as SelectOption)?.label}</span>
+        )}
+        value={
+          tagFilterOptions?.find(
+            (opt) => opt?.value?.toLowerCase() === tagFilter?.toLowerCase(),
+          ) || ''
+        }
+        onChange={(opt) => {
+          setTagFilter(opt?.value)
+          setSearchFilter('')
+        }}
+        label='Category'
+      />
 
-        {/* Layout Toggle */}
-        <div className='flex flex-col items-end justify-end gap-2'>
-          <LayoutToggle layout={layout} setLayout={setLayout} />
-        </div>
+      {/* Layout Toggle */}
+      <div className='flex flex-col items-end justify-end gap-2'>
+        <LayoutToggle layout={layout} setLayout={setLayout} />
       </div>
+    </div>
+  )
+
+  return (
+    <div className='flex flex-col gap-8 w-full items-center__ max-w-4xl'>
+      {/* Filters */}
+      <Accordion
+        collapsible
+        className={cn(['md:hidden', isFiltered && 'border-brand-blue'])}
+        itemClassName='bg-almost-white'
+        items={[
+          {
+            header: (
+              <div className='flex items-center gap-2'>
+                <TbListSearch className='text-2xl text-brand-blue-dark' />
+                <span>Search and Filter</span>
+              </div>
+            ),
+            content: FilterSection,
+          },
+        ]}
+      />
+      <div className='max-md:hidden'>{FilterSection}</div>
 
       {/* Results Count */}
       <p

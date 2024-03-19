@@ -14,7 +14,6 @@ import SelectInput, {
 } from '@/components/common/inputs/select-input'
 import LayoutToggle from '@/components/common/layout-toggle'
 import Accordion from '@/components/common/layout/accordion'
-import Collapsible from '@/components/common/layout/collapsible'
 import NoResults from '@/components/common/no-results'
 import BlogPostCard from '@/components/features/blog/blog-post-card'
 import BlogPostOverview from '@/components/features/blog/blog-post-overview'

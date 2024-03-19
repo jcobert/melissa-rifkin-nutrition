@@ -26,11 +26,11 @@ const RecipeOverview: FC<Props> = ({ recipe, className }) => {
     <Link
       href={linkToFull}
       className={cn(
-        'group transition w-full flex max-sm:flex-col gap-x-8 sm:items-end gap-y-4 bg-almost-white hover:bg-almost-white p-4 border border-gray-100 hover:border-brand-blue/hover rounded',
+        'group transition w-full flex max-sm:flex-col gap-x-8 sm:items-end gap-y-4 bg-almost-white hover:bg-almost-white p-4 border border-gray-100 hover:border-brand-blue/30 rounded',
         [className],
       )}
     >
-      <div className='max-sm:w-full'>
+      <div className='max-sm:w-full w-36'>
         {mainImage ? (
           <Image
             src={builder

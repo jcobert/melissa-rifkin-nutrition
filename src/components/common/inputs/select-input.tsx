@@ -95,8 +95,8 @@ const SelectInput: FC<SelectInputProps> = ({
           }),
           clearIndicator: (base) => ({
             ...base,
-            color: '#659cd7',
-            '&:hover': { color: '#36597f' },
+            color: '#828797',
+            '&:hover': { color: '#454957' },
           }),
         }}
         onChange={onChange as Props['onChange']}

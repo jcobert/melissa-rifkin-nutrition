@@ -117,6 +117,10 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
     }
   }, [tagFilter, categoryFilter, searchFilter, JSON.stringify(recipes)])
 
+  const isFiltered = !!tagFilter || !!categoryFilter || !!searchFilter
+  const foundCount = filteredRecipes?.length || 0
+  const totalCount = recipes?.length || 0
+
   const resetAllFilters = () => {
     setSearchFilter(undefined)
     setTagFilter(undefined)
@@ -230,7 +234,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
         <SelectInput
           options={tagFilterOptions}
           isClearable
-          isSearchable={false}
+          // isSearchable={false}
           menuShouldScrollIntoView
           className='w-full sm:max-w-48 lg:max-w-64__'
           labelClassName={cn([!!tagFilter && '!text-brand-blue'])}
@@ -250,14 +254,21 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
             setTagFilter(opt?.value)
             setSearchFilter('')
           }}
-          label='Filters'
+          label='Category'
         />
+        {/* Layout Toggle */}
+        <div className='flex flex-col items-end justify-end gap-2'>
+          <LayoutToggle layout={layout} setLayout={setLayout} />
+        </div>
       </div>
 
-      {/* Layout Toggle */}
-      <div className='w-full flex items-center justify-end'>
-        <LayoutToggle layout={layout} setLayout={setLayout} />
-      </div>
+      {/* Results Count */}
+      <p
+        className={cn([
+          'text-brand-gray-dark text-sm px-2 max-md:-mb-2 md:-my-4 max-md:-mt-6 self-end',
+          (!isFiltered || !foundCount) && 'sm:invisible max-sm:hidden',
+        ])}
+      >{`Found ${foundCount} of ${totalCount} recipe${totalCount === 1 ? '' : 's'}`}</p>
 
       {/* Recipes */}
       {filteredRecipes?.length ? (
@@ -285,7 +296,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
           )}
         </div>
       ) : (
-        <div className='my-8 flex flex-col items-center gap-6'>
+        <div className='sm:my-8 flex flex-col items-center gap-6'>
           <NoResults
             title={`We couldn't find any${tagFilter ? ` ${tagFilter}` : ''}${categoryFilter ? ` ${categoryFilter}` : ''} recipes.`}
             description="But check back soon, as we're always adding new recipes!"

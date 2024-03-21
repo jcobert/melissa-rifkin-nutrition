@@ -29,7 +29,7 @@ const BlogPostCard: FC<Props> = ({
     <Link
       href={`/blog/${slug?.current}`}
       className={cn(
-        'group hover:bg-almost-white/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border rounded shadow-sm',
+        'group hover:bg-almost-white/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border hover:border-brand-blue/30 rounded shadow-sm',
         [className],
       )}
     >

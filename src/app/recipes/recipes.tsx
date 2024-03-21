@@ -232,7 +232,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       <SelectInput
         options={tagFilterOptions}
         isClearable
-        // isSearchable={false}
+        isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48 lg:max-w-64__'
         labelClassName={cn([!!tagFilter && '!text-brand-blue'])}

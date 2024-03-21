@@ -16,7 +16,7 @@ const LayoutToggle: FC<Props> = ({ layout, setLayout }) => {
       <button
         type='button'
         className={cn([
-          'border p-2 rounded',
+          'border p-2 rounded bg-almost-white hover:bg-brand-gray-light/30 transition',
           layout === 'list' && 'text-brand-blue',
         ])}
         aria-label='view items as list.'
@@ -27,7 +27,7 @@ const LayoutToggle: FC<Props> = ({ layout, setLayout }) => {
       <button
         type='button'
         className={cn([
-          'border p-2 rounded',
+          'border p-2 rounded bg-almost-white hover:bg-brand-gray-light/30 transition',
           layout === 'grid' && 'text-brand-blue',
         ])}
         aria-label='view items as grid.'

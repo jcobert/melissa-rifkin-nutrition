@@ -156,7 +156,7 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
       <SelectInput
         options={tagFilterOptions}
         isClearable
-        // isSearchable={false}
+        isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48'
         labelClassName={cn([!!tagFilter && '!text-brand-blue'])}

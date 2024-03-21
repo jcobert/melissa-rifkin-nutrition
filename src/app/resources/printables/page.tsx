@@ -6,8 +6,16 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
+import { openGraphMeta } from '@/configuration/seo'
+import { siteConfig } from '@/configuration/site'
+
 export const metadata: Metadata = {
   title: 'Printables',
+  openGraph: openGraphMeta({
+    title: `Printables by ${siteConfig?.title}`,
+    description:
+      "A collection of resources for you to read and print out for quick reference. You'll find tips, tricks, and valuable health and wellness insight.",
+  }),
 }
 
 const PrintablesPage = async () => {

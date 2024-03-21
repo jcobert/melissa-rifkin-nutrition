@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import React, { FC, ReactNode } from 'react'
+import React, { FC, ReactNode, useEffect, useState } from 'react'
 import Select, {
   ActionMeta,
   GroupBase,
@@ -45,6 +45,12 @@ const SelectInput: FC<SelectInputProps> = ({
   classNames,
   ...props
 }) => {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <label htmlFor={id} className={clsx({ [className]: !!className })}>
       <span
@@ -100,7 +106,7 @@ const SelectInput: FC<SelectInputProps> = ({
           }),
         }}
         onChange={onChange as Props['onChange']}
-        menuPortalTarget={document.body}
+        menuPortalTarget={isMounted ? document.body : undefined}
         {...props}
       />
       <span className='text-xs text-gray-600'>{helper}</span>

@@ -19,6 +19,7 @@ import Footer from '@/components/common/layout/footer'
 import Header from '@/components/common/layout/header'
 import VisualEditing from '@/components/sanity/visual-editing'
 
+import { baseOpenGraph, baseTwitter } from '@/configuration/seo'
 import { siteConfig } from '@/configuration/site'
 import '@/styles/globals.css'
 
@@ -36,21 +37,8 @@ export const metadata: Metadata = {
     apple: '/apple-icon.png',
   },
   manifest: `/manifest.webmanifest`,
-  openGraph: {
-    url: siteConfig.url,
-    title: siteConfig.title,
-    description: siteConfig.description,
-    siteName: siteConfig.title,
-    // images: ['/opengraph-image.png'],
-    type: 'website',
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.title,
-    description: siteConfig.description,
-    // images: ['/opengraph-image.png'],
-  },
+  openGraph: { ...baseOpenGraph },
+  twitter: { ...baseTwitter },
 }
 
 // Sans-serif

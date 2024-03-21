@@ -11,8 +11,17 @@ import { cn } from '@/utils/style'
 import PageLayout from '@/components/common/layout/page-layout'
 import FullBio from '@/components/features/bio/full-bio'
 
+import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { siteConfig } from '@/configuration/site'
+
 export const metadata: Metadata = {
   title: 'About',
+  openGraph: openGraphMeta({
+    title: `Meet our team at ${siteConfig?.title}`,
+  }),
+  twitter: twitterMeta({
+    title: `Meet our team at ${siteConfig?.title}`,
+  }),
 }
 
 const AboutPage: FC = async () => {

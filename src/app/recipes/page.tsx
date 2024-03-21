@@ -10,9 +10,21 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import Recipes from '@/app/recipes/recipes'
 import RecipesPreview from '@/app/recipes/recipes-preview'
+import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { siteConfig } from '@/configuration/site'
 
 export const metadata: Metadata = {
   title: 'Recipes',
+  openGraph: openGraphMeta({
+    title: `Recipes by ${siteConfig?.title}`,
+    description:
+      'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
+  }),
+  twitter: twitterMeta({
+    title: `Recipes by ${siteConfig?.title}`,
+    description:
+      'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
+  }),
 }
 
 export type RecipesPageProps = {

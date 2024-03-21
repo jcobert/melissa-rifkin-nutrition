@@ -22,7 +22,7 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
   return (
     <Link
       href={linkToFull}
-      className='flex flex-col w-full items-center group gap-2 max-w-80 bg-almost-white border hover:border-brand-blue/hover rounded shadow-sm transition hover:-translate-y-1 transform max-md:mx-auto'
+      className='flex flex-col w-full items-center group gap-2 max-w-80 bg-almost-white border hover:border-brand-blue/30 rounded shadow-sm transition hover:-translate-y-1 transform max-md:mx-auto'
     >
       {mainImage ? (
         <Image

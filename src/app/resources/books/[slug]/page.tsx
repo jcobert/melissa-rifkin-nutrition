@@ -7,7 +7,7 @@ import PageLayout from '@/components/common/layout/page-layout'
 import ProductPage from '@/components/common/layout/product-page'
 import Back from '@/components/common/links/back'
 
-import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
 
 export type PageProps = {
   params: { slug: string }
@@ -44,7 +44,7 @@ export async function generateMetadata({
     }),
     twitter: twitterMeta({
       title,
-      description,
+      // description,
       images: [
         {
           url: featuredImage?.url || '',

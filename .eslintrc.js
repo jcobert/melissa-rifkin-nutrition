@@ -38,6 +38,7 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+    '@next/next/no-img-element': 'off',
   },
   globals: {
     React: true,

@@ -30,3 +30,25 @@ export const twitterMeta = (
 ): Metadata['twitter'] => {
   return { ...baseTwitter, ...meta }
 }
+
+export type OgImageParams = {
+  title?: string
+  subtitle?: string
+  url?: string
+  alt?: string
+  width?: string | number
+  height?: string | number
+}
+
+export const buildOgImage = (params?: OgImageParams) => {
+  const endpoint = `${process.env.SITE_BASE_URL}/api/og`
+  if (!params) return endpoint
+
+  const searchParams = {}
+  Object.keys(params)?.forEach((param) => {
+    searchParams[param] = (params[param] as string | number)?.toString()
+  })
+
+  const queryString = new URLSearchParams(searchParams)
+  return `${endpoint}?${queryString}`
+}

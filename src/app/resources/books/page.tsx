@@ -6,13 +6,14 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
-import { openGraphMeta } from '@/configuration/seo'
+import { buildOgImage, openGraphMeta } from '@/configuration/seo'
 import { siteConfig } from '@/configuration/site'
 
 export const metadata: Metadata = {
   title: 'Books',
   openGraph: openGraphMeta({
     title: `Books by ${siteConfig?.title}`,
+    images: [buildOgImage({ title: 'Books' })],
   }),
 }
 

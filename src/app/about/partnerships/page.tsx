@@ -16,16 +16,18 @@ import PageLayout from '@/components/common/layout/page-layout'
 import TestimonialCard from '@/components/testimonials/testimonial-card'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
 import { siteConfig } from '@/configuration/site'
 
 export const metadata: Metadata = {
   title: 'Partnerships',
   openGraph: openGraphMeta({
     title: `Explore a partnership with ${siteConfig?.title}`,
+    images: [buildOgImage({ title: 'Partnerships' })],
   }),
   twitter: twitterMeta({
     title: `Explore a partnership with ${siteConfig?.title}`,
+    images: [buildOgImage({ title: 'Partnerships' })],
   }),
 }
 

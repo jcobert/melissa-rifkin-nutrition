@@ -10,9 +10,19 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import BlogPosts from '@/app/blog/blog-posts'
 import BlogPostsPreview from '@/app/blog/blog-posts-preview'
+import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { siteConfig } from '@/configuration/site'
 
 export const metadata: Metadata = {
   title: 'Blog',
+  openGraph: openGraphMeta({
+    title: `The ${siteConfig?.title} Blog`,
+    images: [buildOgImage({ title: 'Blog' })],
+  }),
+  twitter: twitterMeta({
+    title: `The ${siteConfig?.title} Blog`,
+    images: [buildOgImage({ title: 'Blog' })],
+  }),
 }
 
 export type BlogPageProps = {

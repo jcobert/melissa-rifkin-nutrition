@@ -45,7 +45,10 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
       posts?.map((post) => ({
         value: post,
         label: (
-          <div className='flex flex-col whitespace-pre-wrap gap-1 text-sm border-b -mb-2 pb-2'>
+          <div
+            key={`opt-${post?._id}`}
+            className='flex flex-col whitespace-pre-wrap gap-1 text-sm border-b -mb-2 pb-2'
+          >
             <span>{post?.title}</span>
           </div>
         ),

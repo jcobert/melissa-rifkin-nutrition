@@ -8,8 +8,15 @@ import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
 import MealPlanCard from '@/components/features/meal-plan/meal-plan-card'
 
+import { buildOgImage, openGraphMeta } from '@/configuration/seo'
+import { siteConfig } from '@/configuration/site'
+
 export const metadata: Metadata = {
   title: 'Meal Plans',
+  openGraph: openGraphMeta({
+    title: `Meal Plans by ${siteConfig?.title}`,
+    images: [buildOgImage({ title: 'Meal Plans' })],
+  }),
 }
 
 const MealPlansPage = async () => {

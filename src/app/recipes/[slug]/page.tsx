@@ -12,7 +12,7 @@ import { getRecipeIngredients } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
-import { pageTitle } from '@/configuration/site'
+import { openGraphMeta, twitterMeta } from '@/configuration/seo'
 
 export type PageProps = {
   params: { slug: string }
@@ -31,26 +31,28 @@ export async function generateMetadata({
     title,
     keywords: tags?.join(', '),
     category: `${category?.join(', ')} recipe`,
-    openGraph: {
-      title: pageTitle(title),
+    openGraph: openGraphMeta({
+      title,
       images: [
         {
           url: mainImage?.asset?.url || '',
           width: mainImage?.asset?.metadata?.dimensions?.width,
           height: mainImage?.asset?.metadata?.dimensions?.height,
+          alt: mainImage?.alt,
         },
       ],
-    },
-    twitter: {
-      title: pageTitle(title),
+    }),
+    twitter: twitterMeta({
+      title,
       images: [
         {
           url: mainImage?.asset?.url || '',
           width: mainImage?.asset?.metadata?.dimensions?.width,
           height: mainImage?.asset?.metadata?.dimensions?.height,
+          alt: mainImage?.alt,
         },
       ],
-    },
+    }),
   }
 }
 

@@ -7,8 +7,52 @@ import PageLayout from '@/components/common/layout/page-layout'
 import ProductPage from '@/components/common/layout/product-page'
 import Back from '@/components/common/links/back'
 
-export const metadata: Metadata = {
-  title: 'Printables',
+import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
+
+export type PageProps = {
+  params: { slug: string }
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const slug = decodeURI(params?.slug)
+
+  const allPrintables = await getCollectionProducts({
+    collection: 'printables',
+  })
+
+  const { title, description, featuredImage } =
+    allPrintables?.find((p) => p?.handle === slug) || {}
+
+  return {
+    title,
+    description,
+    // keywords: tags?.join(', '),
+    openGraph: openGraphMeta({
+      title,
+      images: [
+        {
+          url: featuredImage?.url || '',
+          width: featuredImage?.width,
+          height: featuredImage?.height,
+          alt: featuredImage?.altText,
+        },
+      ],
+    }),
+    twitter: twitterMeta({
+      title,
+      // description,
+      images: [
+        {
+          url: featuredImage?.url || '',
+          width: featuredImage?.width,
+          height: featuredImage?.height,
+          alt: featuredImage?.altText,
+        },
+      ],
+    }),
+  }
 }
 
 const PrintablePage: FC<{ params: { slug: string } }> = async ({ params }) => {

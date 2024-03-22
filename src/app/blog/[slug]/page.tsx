@@ -11,7 +11,8 @@ import { BlogPosting, WithContext } from 'schema-dts'
 
 import BlogPost from '@/app/blog/[slug]/blog-post'
 import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
-import { pageTitle, siteConfig } from '@/configuration/site'
+import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { siteConfig } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
@@ -31,26 +32,28 @@ export async function generateMetadata({
     keywords: tags?.join(', '),
     category: 'Blog post',
     authors: [{ name: author?.name, url: siteConfig?.url }],
-    openGraph: {
-      title: pageTitle(title),
+    openGraph: openGraphMeta({
+      title,
       images: [
         {
           url: mainImage?.asset?.url || '',
           width: mainImage?.asset?.metadata?.dimensions?.width,
           height: mainImage?.asset?.metadata?.dimensions?.height,
+          alt: mainImage?.alt,
         },
       ],
-    },
-    twitter: {
-      title: pageTitle(title),
+    }),
+    twitter: twitterMeta({
+      title,
       images: [
         {
           url: mainImage?.asset?.url || '',
           width: mainImage?.asset?.metadata?.dimensions?.width,
           height: mainImage?.asset?.metadata?.dimensions?.height,
+          alt: mainImage?.alt,
         },
       ],
-    },
+    }),
   }
 }
 

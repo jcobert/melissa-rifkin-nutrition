@@ -13,7 +13,7 @@ const Back: FC<Props> = ({ text = '', className = '', ...props }) => {
   return (
     <Link
       className={cn(
-        'flex items-center gap-1 w-fit group font-medium self-start mt-6 md:-mb-8',
+        'flex items-center gap-1 w-fit group font-medium self-start mt-6 md:-mb-8 print:hidden',
         [className],
       )}
       {...props}

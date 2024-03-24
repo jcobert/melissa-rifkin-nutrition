@@ -1,3 +1,4 @@
+import { intersectionBy, pick } from 'lodash'
 import {
   Ingredient,
   IngredientGroup,
@@ -29,3 +30,18 @@ export const getRecipeIngredients = (recipe: Recipe) => {
     ingredientNamesFromGroup(group),
   )
 }
+
+export const findIngredientGroupMatch = (
+  group: IngredientGroup,
+  ingredient?: (IngredientMeasurement | undefined)[],
+) =>
+  intersectionBy(group?.ingredients, ingredient, (ing) =>
+    JSON.stringify(
+      pick(ing, [
+        'ingredientName',
+        'amount',
+        'unit',
+        'note',
+      ] as (keyof IngredientMeasurement)[]),
+    )?.toLowerCase(),
+  )?.[0]

@@ -2,11 +2,11 @@ import { ButtonHTMLAttributes, FC } from 'react'
 
 import { cn } from '@/utils/style'
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   unstyled?: boolean
 }
 
-const Button: FC<Props> = ({
+const Button: FC<ButtonProps> = ({
   children,
   className = '',
   type = 'button',

@@ -1,13 +1,17 @@
+'use client'
+
 import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import { pick, uniqBy } from 'lodash'
 import Image from 'next/image'
-import React, { FC } from 'react'
+import React, { FC, useRef } from 'react'
+import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
 import { IngredientMeasurement, type Recipe } from 'sanity-studio/types'
 
 import { getIngredientDetails } from '@/utils/recipe'
 
+import PrintButton from '@/components/common/buttons/print-button'
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
@@ -30,14 +34,24 @@ const Recipe: FC<Props> = ({ recipe }) => {
     instructions,
     tags,
   } = recipe || {}
+  const printContentRef = useRef(null)
+  const handlePrint = useReactToPrint({
+    content: () => printContentRef.current,
+  })
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
       <Back href='/recipes' text='All Recipes' />
-      <div className='my-8 md:my-16 flex flex-col items-center gap-8 w-full'>
+
+      <div
+        ref={printContentRef}
+        className='my-8 md:my-16 flex flex-col items-center gap-8 w-full print:layout'
+      >
+        <div className='hidden print:block'>
+          <Logo />
+        </div>
         {/* Heading */}
-        <section className='flex max-md:flex-col w-full items-center md:items-end gap-y-4 gap-x-6 pb-4 md:self-start md:px-8'>
-          {/* Image */}
+        <section className='flex max-md:flex-col print:flex-row w-full items-center md:items-end print:items-end gap-y-4 gap-x-6 pb-4 md:self-start print:self-start md:px-8'>
           {mainImage ? (
             <Image
               src={builder
@@ -82,17 +96,22 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
         <span
           aria-hidden
-          className='h-px max-md:w-1/3 w-full border-b mx-auto -my-4 mb-2__'
+          className='h-px max-md:w-1/3 print:w-full w-full border-b mx-auto -my-4'
         />
+
+        {/* Toolbar */}
+        <section className='w-full flex gap-4 items-center justify-center md:justify-end print:hidden'>
+          <PrintButton onClick={handlePrint} />
+        </section>
 
         {/* Ingredients */}
         <section className='flex flex-col gap-4 w-full'>
           <h2 className='text-2xl font-medium'>Ingredients</h2>
-          <div className='grid gap-x-2 gap-y-6 md:divide-x-1__ max-md:grid-cols-1 md:grid-flow-col md:w-fit__ md:min-w-96'>
+          <div className='grid gap-x-2 gap-y-6 max-md:grid-cols-1 print:grid-cols-2 md:grid-flow-col md:min-w-96'>
             {ingredientGroups?.map((group) => (
               <div
                 key={group?._key}
-                className='px-2 sm:px-4 py-1 border rounded bg-almost-white'
+                className='px-2 sm:px-4 py-1 border rounded bg-almost-white print:bg-transparent'
               >
                 {ingredientGroups?.length > 1 && (
                   <h3 className='text-xl font-semibold mb-2 text-brand'>
@@ -118,13 +137,13 @@ const Recipe: FC<Props> = ({ recipe }) => {
         </section>
 
         {/* Instructions */}
-        <section className='flex flex-col gap-4 w-full'>
+        <section className='flex flex-col gap-4 w-full print:break-inside-avoid-page'>
           <h2 className='text-2xl font-medium'>Steps</h2>
           <div className='flex flex-col gap-y-8 sm:gap-y-12'>
             {instructions?.map((inst, step) => (
               <div
                 key={inst?._key}
-                className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-16 gap-y-6'
+                className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-16 gap-y-6 print:break-inside-avoid-page'
               >
                 {/* ingredient group */}
                 {inst?.ingredients?.length ? (
@@ -175,7 +194,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
                 ) : null}
 
                 {/* directions */}
-                <div className='flex gap-6 pl-16__'>
+                <div className='flex gap-6 pl-16'>
                   <h4 className='text-4xl font-bold text-brand'>{step + 1}</h4>
                   <p className='text-pretty max-w-prose'>{inst?.description}</p>
                 </div>
@@ -187,7 +206,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
       {/* Tags */}
       {tags?.length ? (
-        <div className='p-4 mt-16 w-full border-t flex flex-col gap-4'>
+        <div className='p-4 mt-16 w-full border-t flex flex-col gap-4 print:hidden'>
           <h5 className='text-center text-brand-gray-dark'>Categories</h5>
           <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
             {tags?.map((tag) => (

@@ -7,7 +7,7 @@ const Header: FC = async () => {
   return (
     <>
       <HeaderNav />
-      <div className='sticky z-50 top-4 -mt-16 h-px flex justify-end layout'>
+      <div className='sticky z-50 top-4 -mt-16 h-px flex justify-end layout print:hidden'>
         <Cart />
       </div>
     </>

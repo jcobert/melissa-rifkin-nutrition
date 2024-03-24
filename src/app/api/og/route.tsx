@@ -27,10 +27,9 @@ export const GET = async (request: Request) => {
     return new ImageResponse(
       (
         <div
-          // tw='bg-white h-full w-full flex flex-col items-center justify-center text-center'
           style={{
             backgroundColor: '#FDFDFF',
-            backgroundSize: '150px 150px',
+            // backgroundSize: '150px 150px',
             height: '100%',
             width: '100%',
             // height: 1200,
@@ -59,11 +58,10 @@ export const GET = async (request: Request) => {
                 width={imgWidth}
                 height={imgHeight}
                 src={imgUrl}
-                // tw='mx-6'
                 style={{
-                  // margin: '0 30px',
                   backgroundSize: 'contain',
                   // backgroundPosition: 'center'
+                  // margin: '0 30px',
                 }}
               />
             </div>
@@ -71,7 +69,6 @@ export const GET = async (request: Request) => {
 
           {/* Logo */}
           <div
-            // tw='flex items-center justify-center justify-items-center'
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -84,25 +81,36 @@ export const GET = async (request: Request) => {
               // width={600}
               // height={184}
               src={logoData}
-              // tw='mx-6'
               style={{ margin: '0 30px', width: '80%' }}
             />
           </div>
 
+          <div
+            style={{
+              height: '1px',
+              width: '20%',
+              border: '2px solid rgb(130, 135, 151, 0.65)',
+              borderRadius: '4px',
+              marginTop: '32px',
+            }}
+          />
+
           {/* Title */}
           {title ? (
             <div
-              // tw='text-6xl text-brand mt-6 px-28 whitespace-pre-wrap'
               style={{
-                fontSize: 72,
+                fontSize: 80,
                 fontStyle: 'normal',
-                fontFamily: '"Karla"',
                 letterSpacing: '-0.025em',
-                color: '#E46169',
                 marginTop: 30,
                 padding: '0 120px',
                 lineHeight: 1.4,
                 whiteSpace: 'pre-wrap',
+                // color: '#E46169',
+                backgroundImage:
+                  'linear-gradient(to bottom right, rgb(228, 97, 105), rgb(228, 97, 105, 0.75))',
+                backgroundClip: 'text',
+                color: 'transparent',
               }}
             >
               {title}

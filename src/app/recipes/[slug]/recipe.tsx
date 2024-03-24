@@ -194,7 +194,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
                 ) : null}
 
                 {/* directions */}
-                <div className='flex gap-6 pl-16'>
+                <div className='flex gap-6 pl-16 print:pl-0'>
                   <h4 className='text-4xl font-bold text-brand'>{step + 1}</h4>
                   <p className='text-pretty max-w-prose'>{inst?.description}</p>
                 </div>

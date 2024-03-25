@@ -6,7 +6,7 @@ import {
   FaInstagram,
   FaPhone,
   FaPinterest,
-  FaTwitter,
+  FaXTwitter,
 } from 'react-icons/fa6'
 import {
   ContactInfo,
@@ -29,7 +29,7 @@ export const socialIcons: {
   facebook: <FaFacebook aria-hidden />,
   instagram: <FaInstagram aria-hidden />,
   pinterest: <FaPinterest aria-hidden />,
-  twitter: <FaTwitter aria-hidden />,
+  twitter: <FaXTwitter aria-hidden />,
   email: <FaEnvelope aria-hidden />,
   phone: <FaPhone aria-hidden />,
 }

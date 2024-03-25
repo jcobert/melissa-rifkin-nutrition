@@ -4,6 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import { pick, uniqBy } from 'lodash'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import React, { FC, useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
@@ -11,13 +12,13 @@ import { IngredientMeasurement, type Recipe } from 'sanity-studio/types'
 
 import { getIngredientDetails } from '@/utils/recipe'
 
-import PrintButton from '@/components/common/buttons/print-button'
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo from '@/components/common/logo'
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
+import ShareBar from '@/components/share-bar'
 
 const builder = imageUrlBuilder({ projectId, dataset })
 
@@ -38,6 +39,8 @@ const Recipe: FC<Props> = ({ recipe }) => {
   const handlePrint = useReactToPrint({
     content: () => printContentRef.current,
   })
+  const pathName = usePathname()
+  const url = `${process.env.NEXT_PUBLIC_SITE_BASE_URL}${pathName}`
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
@@ -100,9 +103,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
         />
 
         {/* Toolbar */}
-        <section className='w-full flex gap-4 items-center justify-center md:justify-end print:hidden'>
-          <PrintButton onClick={handlePrint} />
-        </section>
+        <ShareBar url={url} printHandler={handlePrint} />
 
         {/* Ingredients */}
         <section className='flex flex-col gap-4 w-full'>
@@ -143,16 +144,17 @@ const Recipe: FC<Props> = ({ recipe }) => {
             {instructions?.map((inst, step) => (
               <div
                 key={inst?._key}
-                className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-16 gap-y-6 print:break-inside-avoid-page'
+                className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-4 md:gap-x-10  gap-y-6 print:gap-x-10 print:break-inside-avoid-page'
               >
                 {/* ingredient group */}
                 {inst?.ingredients?.length ? (
                   <div className='flex flex-col gap-2 border-y py-2'>
-                    {!!inst?.title && (
+                    {inst?.title ||
+                    (!inst?.title && !!inst?.ingredients?.length) ? (
                       <h3 className='font-medium text-brand uppercase'>
-                        {inst?.title}
+                        {inst?.title || 'Next'}
                       </h3>
-                    )}
+                    ) : null}
                     <div className='flex flex-col'>
                       {inst?.ingredients?.map((ingredient) => {
                         const measurement = getIngredientDetails(
@@ -194,7 +196,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
                 ) : null}
 
                 {/* directions */}
-                <div className='flex gap-6 pl-16 print:pl-0'>
+                <div className='flex gap-6 sm:pl-16 print:pl-0'>
                   <h4 className='text-4xl font-bold text-brand'>{step + 1}</h4>
                   <p className='text-pretty max-w-prose'>{inst?.description}</p>
                 </div>

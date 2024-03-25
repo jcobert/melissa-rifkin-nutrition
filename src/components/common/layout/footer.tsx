@@ -27,7 +27,7 @@ const Footer: FC = async () => {
   const currentYear = new Date().getFullYear()
 
   return (
-    <div className='w-full bg-brand-gray-medium pb-safe mt-8'>
+    <div className='w-full bg-brand-gray-medium pb-safe mt-8 print:hidden'>
       <div className='flex flex-col items-center py-8 mx-auto text-almost-white max-w-layoutMax md:w-11/12 md:py-2 md:flex-row gap-y-8 md:justify-between gap-x-8'>
         {/* Links */}
         <div className='flex gap-x-16 md:gap-x-10 flex-wrap'>

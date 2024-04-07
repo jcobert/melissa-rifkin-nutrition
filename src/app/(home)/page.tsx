@@ -169,17 +169,19 @@ const HomePage = async () => {
             Recent Blog Posts
           </h2>
           <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {blogPosts?.data?.map((post, i) => (
-              <BlogPostCard
-                key={post?._id}
-                post={post}
-                hideDate
-                className={cn('', [
-                  i >= 2 && 'max-md:hidden',
-                  i >= 3 && 'max-lg:hidden',
-                ])}
-              />
-            ))}
+            {blogPosts?.data
+              ?.slice(0, 4)
+              ?.map((post, i) => (
+                <BlogPostCard
+                  key={post?._id}
+                  post={post}
+                  hideDate
+                  className={cn('', [
+                    i >= 2 && 'max-md:hidden',
+                    i >= 3 && 'max-lg:hidden',
+                  ])}
+                />
+              ))}
           </div>
           <Link href='/blog' className='w-fit btn'>
             See All Posts

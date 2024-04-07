@@ -1,6 +1,6 @@
 'use client'
 
-import { uniq } from 'lodash'
+import { sortBy, uniq } from 'lodash'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { TbListSearch } from 'react-icons/tb'
@@ -64,12 +64,12 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
   const [selectedPost, setSelectedPost] = useState<Post>()
 
   const filteredPosts = useMemo(() => {
-    if (!tagFilter && !searchFilter) return posts
+    let newPosts = posts
+    // if (!tagFilter && !searchFilter) return posts
     if (tagFilter && !searchFilter) {
-      return posts?.filter((p) => p?.tags?.includes(tagFilter))
-    }
-    if (searchFilter) {
-      return posts?.filter((p) => {
+      newPosts = posts?.filter((p) => p?.tags?.includes(tagFilter))
+    } else if (searchFilter) {
+      newPosts = posts?.filter((p) => {
         const criteria = [p?.title, p?.tags?.join(), p?.author?.name]
           ?.join()
           ?.toLowerCase()
@@ -77,6 +77,7 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
         return criteria?.includes(searchFilter?.toLowerCase()?.trim())
       })
     }
+    return sortBy(newPosts, (post) => post?.publishedAt)?.reverse()
   }, [tagFilter, searchFilter, JSON.stringify(posts)])
 
   const isFiltered = !!tagFilter || !!searchFilter

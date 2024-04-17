@@ -9,6 +9,8 @@ import Image from 'next/image'
 import { ImQuotesLeft } from 'react-icons/im'
 import { dataset, projectId } from 'sanity-studio/env'
 
+import PortableVideo from '@/components/common/portable/components/portable-video'
+
 const builder = imageUrlBuilder({ projectId, dataset })
 
 export const PortableImage = ({
@@ -68,7 +70,7 @@ export const PortableDivider = ({
 export const portableComponents: PortableTextComponents = {
   types: {
     image: PortableImage,
-    // code: PortableCode,
+    videoEmbed: PortableVideo,
   },
   block: {
     blockquote: PortableQuote,

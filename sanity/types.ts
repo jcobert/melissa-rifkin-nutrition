@@ -1,3 +1,4 @@
+import { SanityFileAsset } from '@sanity/asset-utils'
 import type {
   SanityAsset,
   SanityBlock,
@@ -44,7 +45,13 @@ export type Image = {
   alt?: string
 }
 
-export type Slug = { _type: 'slug'; current: string }
+export type VideoEmbed = {
+  _type: 'videoEmbed'
+  file: { _type: string; asset: SanityFileAsset }
+  alt?: string
+}
+
+export type Slug = { _type: 'file'; current: string }
 
 /** Post */
 export interface Post extends SanityDocument {
@@ -185,7 +192,9 @@ export enum SocialNetworks {
 
 export type SocialLinks = { [x in keyof typeof SocialNetworks]?: string }
 
-export type BlockContent = Array<SanityKeyed<SanityBlock> | SanityKeyed<Image>>
+export type BlockContent = Array<
+  SanityKeyed<SanityBlock> | SanityKeyed<Image> | SanityKeyed<VideoEmbed>
+>
 
 export type ContactInfo = {
   email?: string

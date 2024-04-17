@@ -13,6 +13,7 @@ import ingredientGroup from 'sanity-studio/schemas/recipe/ingredient-group'
 import ingredientMeasurement from 'sanity-studio/schemas/recipe/ingredient-measurement'
 import instruction from 'sanity-studio/schemas/recipe/instruction'
 import socialLinks from 'sanity-studio/schemas/socialLinks'
+import video from 'sanity-studio/schemas/video'
 
 const schema: SchemaTypeDefinition[] = [
   post,
@@ -29,6 +30,7 @@ const schema: SchemaTypeDefinition[] = [
   contactInfo,
   socialLinks,
   aboutPage,
+  video,
 ]
 
 export default schema

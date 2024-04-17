@@ -64,9 +64,14 @@ export default defineType({
           type: 'string',
           title: 'Image Description',
           description:
-            'Used for people who cannot see the image. E.g. "A woman gardening"',
+            'Used for people who cannot see the image and for Google search. E.g. "A woman gardening"',
         },
       ],
+    }),
+    defineArrayMember({
+      type: 'video',
+      name: 'videoEmbed',
+      title: 'Video',
     }),
   ],
 })

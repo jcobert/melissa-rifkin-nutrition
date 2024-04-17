@@ -1,8 +1,8 @@
 import { groq } from 'next-sanity'
 
 // POST
-export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)]{ ..., author->, mainImage{ ..., asset-> } }`
-export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug]{ ..., author->, mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } } }[0]`
+export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)]{ ..., author->, mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, body[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }`
+export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug]{ ..., author->, mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, body[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }[0]`
 
 // BIO
 export const BIOS_QUERY = groq`*[_type == "bio"]`

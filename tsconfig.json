@@ -28,7 +28,6 @@
     ],
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "files": ["node_modules/next/image-types/global.d.ts"],
   "exclude": ["node_modules"],
   "moduleResolution": ["node_modules", ".next", "node"],
 }

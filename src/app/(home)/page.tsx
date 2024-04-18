@@ -55,9 +55,9 @@ const HomePage = async () => {
       <section className='w-full h-screen__ h-[calc(100vh-4rem)] -mb-16__'>
         <BackgroundSlideshow
           imagePaths={[
-            { path: '/images/cutting-board.jpeg', order: 0 },
-            { path: '/images/hero/4.jpg', order: 1 },
-            { path: '/images/hero/5.jpg', order: 2 },
+            { path: '/images/hero/5.jpg', order: 0 },
+            { path: '/images/cutting-board.jpeg', order: 1 },
+            { path: '/images/hero/4.jpg', order: 2 },
           ]}
           // duration={8}
         />

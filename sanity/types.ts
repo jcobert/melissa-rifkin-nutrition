@@ -187,6 +187,7 @@ export enum SocialNetworks {
   facebook = 'Facebook',
   twitter = 'Twitter',
   pinterest = 'Pinterest',
+  tiktok = 'TikTok',
   // iherb = 'iHerb',
 }
 

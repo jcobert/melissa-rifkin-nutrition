@@ -22,6 +22,11 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'tiktok',
+      title: 'TikTok',
+      type: 'string',
+    }),
+    defineField({
       name: 'twitter',
       title: 'X (Twitter)',
       type: 'string',

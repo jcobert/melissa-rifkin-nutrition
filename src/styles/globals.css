@@ -78,8 +78,8 @@
       0 2px,
       100% 2px;
   }
+}
 
-  @page {
-    margin: 0.5in 0.25in;
-  }
+@page {
+  margin: 0.5in 0.25in;
 }

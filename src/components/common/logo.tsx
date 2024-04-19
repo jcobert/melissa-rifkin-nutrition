@@ -2,7 +2,7 @@ import Image, { ImageProps } from 'next/image'
 import Link, { LinkProps } from 'next/link'
 import React, { FC } from 'react'
 
-const logos = {
+export const logos = {
   full: { src: '/images/logo-expanded.png', width: 150, height: 37 },
   small: { src: '/images/logo.png', width: 50, height: 50 },
 }
@@ -37,13 +37,7 @@ const Logo: FC<Props> = ({
       {Img}
     </Link>
   ) : (
-    <Image
-      src={src}
-      alt='Melissa Rifkin Nutrition logo'
-      width={width}
-      height={height}
-      {...imageProps}
-    />
+    Img
   )
 }
 

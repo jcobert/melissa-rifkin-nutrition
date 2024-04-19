@@ -14,7 +14,7 @@ import { getIngredientDetails } from '@/utils/recipe'
 
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
-import Logo from '@/components/common/logo'
+import Logo, { logos } from '@/components/common/logo'
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
@@ -42,29 +42,42 @@ const Recipe: FC<Props> = ({ recipe }) => {
   const pathName = usePathname()
   const url = `${process.env.NEXT_PUBLIC_SITE_BASE_URL}${pathName}`
 
+  const imgSrc = mainImage
+    ? builder
+        .image(mainImage)
+        .width(600)
+        .height(600)
+        .fit('crop')
+        .crop('focalpoint')
+        .quality(80)
+        .url()
+    : ''
+
+  const logo = logos?.full
+
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
       <Back href='/recipes' text='All Recipes' />
 
       <div
         ref={printContentRef}
-        className='my-8 md:my-16 flex flex-col items-center gap-8 w-full print:layout'
+        className='my-8 md:my-16 flex flex-col items-center gap-8 w-full print:layout print:my-2'
       >
         <div className='hidden print:block'>
-          <Logo />
+          {/* <Logo /> */}
+          <img
+            alt='logo'
+            src={logo?.src}
+            width={logo?.width}
+            height={logo?.height}
+          />
         </div>
         {/* Heading */}
         <section className='flex max-md:flex-col print:flex-row w-full items-center md:items-end print:items-end gap-y-4 gap-x-6 pb-4 md:self-start print:self-start md:px-8'>
           {mainImage ? (
             <Image
-              src={builder
-                .image(mainImage)
-                .width(600)
-                .height(600)
-                .fit('crop')
-                .crop('focalpoint')
-                .quality(80)
-                .url()}
+              priority
+              src={imgSrc}
               alt={mainImage?.alt || ''}
               width={600}
               height={600}
@@ -108,11 +121,11 @@ const Recipe: FC<Props> = ({ recipe }) => {
         {/* Ingredients */}
         <section className='flex flex-col gap-4 w-full'>
           <h2 className='text-2xl font-medium'>Ingredients</h2>
-          <div className='grid gap-x-2 gap-y-6 max-md:grid-cols-1 print:grid-cols-2 md:grid-flow-col md:min-w-96'>
+          <div className='grid gap-x-2 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
             {ingredientGroups?.map((group) => (
               <div
                 key={group?._key}
-                className='px-2 sm:px-4 py-1 border rounded bg-almost-white print:bg-transparent'
+                className='px-2 sm:px-4 py-1 border rounded bg-almost-white print:bg-transparent print:flex-auto'
               >
                 {ingredientGroups?.length > 1 && (
                   <h3 className='text-xl font-semibold mb-2 text-brand'>

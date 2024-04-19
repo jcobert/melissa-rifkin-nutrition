@@ -10,22 +10,29 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import Recipes from '@/app/recipes/recipes'
 import RecipesPreview from '@/app/recipes/recipes-preview'
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
+
+const pageTitle = 'Recipes'
+const seoDescription =
+  'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.'
 
 export const metadata: Metadata = {
-  title: 'Recipes',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `Recipes by ${siteConfig?.title}`,
-    description:
-      'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
-    images: [buildOgImage({ title: 'Recipes' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
   twitter: twitterMeta({
-    title: `Recipes by ${siteConfig?.title}`,
-    description:
-      'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
-    images: [buildOgImage({ title: 'Recipes' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 
@@ -48,7 +55,7 @@ const RecipesPage: FC<RecipesPageProps> = async ({ searchParams }) => {
 
   return (
     <PageLayout
-      heading='Recipes'
+      heading={pageTitle}
       className='flex flex-col gap-12 items-center text-almost-black'
     >
       <div className='prose self-start'>

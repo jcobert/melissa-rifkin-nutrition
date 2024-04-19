@@ -12,11 +12,12 @@ import { BlogPosting, WithContext } from 'schema-dts'
 import BlogPost from '@/app/blog/[slug]/blog-post'
 import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
 import { openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { appendPath, siteConfig } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
 }
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -25,15 +26,23 @@ export async function generateMetadata({
     slug,
   })
 
-  const { title, tags, mainImage, author } = post || {}
+  const { title, mainImage, author } = post || {}
+
+  /** @todo Replace this with description returned from post, once added to schema. */
+  const seoDescription = title
 
   return {
     title,
-    keywords: tags?.join(', '),
+    description: seoDescription,
+    // keywords: tags?.join(', '), // not beneficial for SEO anymore
     category: 'Blog post',
     authors: [{ name: author?.name, url: siteConfig?.url }],
     openGraph: openGraphMeta({
+      url: appendPath(`/blog/${slug}`),
       title,
+      description: seoDescription,
+      type: 'article',
+      authors: author?.name,
       images: [
         {
           url: mainImage?.asset?.url || '',
@@ -45,6 +54,7 @@ export async function generateMetadata({
     }),
     twitter: twitterMeta({
       title,
+      description: seoDescription,
       images: [
         {
           url: mainImage?.asset?.url || '',

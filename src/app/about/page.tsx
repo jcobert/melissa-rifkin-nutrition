@@ -11,18 +11,29 @@ import { cn } from '@/utils/style'
 import PageLayout from '@/components/common/layout/page-layout'
 import FullBio from '@/components/features/bio/full-bio'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
 import { siteConfig } from '@/configuration/site'
 
+const pageTitle = 'About Us'
+const seoDescription = `Meet Melissa and our team of expert dieticians and nutritionists at ${siteConfig?.title}.`
+
 export const metadata: Metadata = {
-  title: 'About',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `Meet our team at ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'About Us' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
   twitter: twitterMeta({
-    title: `Meet our team at ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'About Us' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 
@@ -38,7 +49,7 @@ const AboutPage: FC = async () => {
 
   return (
     <PageLayout
-      heading='About Us'
+      heading={pageTitle}
       className='flex flex-col gap-16 items-center text-almost-black'
     >
       <div className='flex flex-col gap-12 mt-4 md:mt-8'>

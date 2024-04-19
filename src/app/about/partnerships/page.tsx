@@ -16,18 +16,29 @@ import PageLayout from '@/components/common/layout/page-layout'
 import TestimonialCard from '@/components/testimonials/testimonial-card'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
 import { siteConfig } from '@/configuration/site'
 
+const pageTitle = 'Partnerships'
+const seoDescription = `Explore a partnership with ${siteConfig?.title}.`
+
 export const metadata: Metadata = {
-  title: 'Partnerships',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `Explore a partnership with ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Partnerships' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
   twitter: twitterMeta({
-    title: `Explore a partnership with ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Partnerships' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 

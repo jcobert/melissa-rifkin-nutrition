@@ -22,11 +22,11 @@ import Instagram from '@/components/instagram'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { buildOgImage } from '@/configuration/seo'
+import { buildOgImage, openGraphMeta } from '@/configuration/seo'
 
 export const metadata: Metadata = {
   title: 'Home',
-  openGraph: { images: [buildOgImage()] },
+  openGraph: openGraphMeta({ images: [buildOgImage()] }),
 }
 
 const HomePage = async () => {

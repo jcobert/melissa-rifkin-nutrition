@@ -8,14 +8,29 @@ import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
 import MealPlanCard from '@/components/features/meal-plan/meal-plan-card'
 
-import { buildOgImage, openGraphMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
+
+const pageTitle = 'Meal Plans'
+const seoDescription =
+  'Curated plans to match your goals, food preferences and energy needs individually. Easy-to-make and low-ingredient meals.'
 
 export const metadata: Metadata = {
-  title: 'Meal Plans',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `Meal Plans by ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Meal Plans' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
+  }),
+  twitter: twitterMeta({
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 

@@ -6,14 +6,29 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
-import { buildOgImage, openGraphMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
+
+const pageTitle = 'Books'
+const seoDescription =
+  'A selection of fun and informative books available for purchase from Melissa Rifkin Nutrition.'
 
 export const metadata: Metadata = {
-  title: 'Books',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `Books by ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Books' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
+  }),
+  twitter: twitterMeta({
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 
@@ -28,7 +43,7 @@ const BooksPage = async () => {
 
   return (
     <PageLayout
-      heading='Books'
+      heading={pageTitle}
       className='flex flex-col gap-16 items-center text-almost-black'
     >
       {/* <div className='prose self-start'>

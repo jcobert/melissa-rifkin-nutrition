@@ -4,28 +4,35 @@ import React, { FC } from 'react'
 import Calendly from '@/components/calendly'
 import PageLayout from '@/components/common/layout/page-layout'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
+
+const pageTitle = 'Contact Us'
+const seoDescription =
+  "We'd love to learn about you and your wellness goals! Contact us, so we can identify the right path forward for you."
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `Contact ${siteConfig?.title}`,
-    description:
-      "We'd love to learn about you and your wellness goals! Schedule a quick call with us, so we can identify the right path forward for you.",
-    images: [buildOgImage({ title: 'Contact Us' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
   twitter: twitterMeta({
-    title: `Contact ${siteConfig?.title}`,
-    description:
-      "We'd love to learn about you and your wellness goals! Schedule a quick call with us, so we can identify the right path forward for you.",
-    images: [buildOgImage({ title: 'Contact Us' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 
 const ContactPage: FC = () => {
   return (
-    <PageLayout heading='Contact Us'>
+    <PageLayout heading={pageTitle}>
       <div className='flex flex-col items-center gap-8'>
         {/* <h2>Schedule a Consultation</h2> */}
         <p className='prose'>

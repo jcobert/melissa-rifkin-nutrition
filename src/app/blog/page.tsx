@@ -10,18 +10,29 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import BlogPosts from '@/app/blog/blog-posts'
 import BlogPostsPreview from '@/app/blog/blog-posts-preview'
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import {
+  buildOgImage,
+  generatePageTitle,
+  openGraphMeta,
+  twitterMeta,
+} from '@/configuration/seo'
+
+const pageTitle = 'Blog'
+const seoDescription =
+  'Our blog includes a collection of insightful posts and articles about health and wellness.'
 
 export const metadata: Metadata = {
-  title: 'Blog',
+  title: pageTitle,
+  description: seoDescription,
   openGraph: openGraphMeta({
-    title: `The ${siteConfig?.title} Blog`,
-    images: [buildOgImage({ title: 'Blog' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
   twitter: twitterMeta({
-    title: `The ${siteConfig?.title} Blog`,
-    images: [buildOgImage({ title: 'Blog' })],
+    title: generatePageTitle(pageTitle),
+    description: seoDescription,
+    images: [buildOgImage({ title: pageTitle })],
   }),
 }
 
@@ -42,7 +53,7 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
 
   return (
     <PageLayout
-      heading='Blog'
+      heading={pageTitle}
       className='flex flex-col gap-16 items-center text-almost-black'
     >
       {draftMode()?.isEnabled ? (

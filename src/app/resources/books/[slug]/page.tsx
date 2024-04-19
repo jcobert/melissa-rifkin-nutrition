@@ -7,7 +7,7 @@ import PageLayout from '@/components/common/layout/page-layout'
 import ProductPage from '@/components/common/layout/product-page'
 import Back from '@/components/common/links/back'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { openGraphMeta, twitterMeta } from '@/configuration/seo'
 
 export type PageProps = {
   params: { slug: string }
@@ -30,9 +30,10 @@ export async function generateMetadata({
   return {
     title,
     description,
-    // keywords: tags?.join(', '),
+    // keywords: tags?.join(', '), // not beneficial for SEO anymore
     openGraph: openGraphMeta({
       title,
+      description,
       images: [
         {
           url: featuredImage?.url || '',
@@ -44,7 +45,7 @@ export async function generateMetadata({
     }),
     twitter: twitterMeta({
       title,
-      // description,
+      description,
       images: [
         {
           url: featuredImage?.url || '',

@@ -2,6 +2,10 @@ import { Metadata } from 'next'
 
 import { siteConfig } from '@/configuration/site'
 
+/** Appends site name to provided page title. */
+export const generatePageTitle = (title?: string) =>
+  !title ? siteConfig?.title : `${title} | ${siteConfig?.title}`
+
 export const baseOpenGraph: Metadata['openGraph'] = {
   url: siteConfig.url,
   title: siteConfig.title,
@@ -30,6 +34,10 @@ export const twitterMeta = (
 ): Metadata['twitter'] => {
   return { ...baseTwitter, ...meta }
 }
+
+// export const generatePageMeta = (meta?: Metadata): Metadata => {
+//   return { ...meta }
+// }
 
 export type OgImageParams = {
   title?: string

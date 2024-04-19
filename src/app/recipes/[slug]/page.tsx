@@ -17,6 +17,7 @@ import { openGraphMeta, twitterMeta } from '@/configuration/seo'
 export type PageProps = {
   params: { slug: string }
 }
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -25,14 +26,19 @@ export async function generateMetadata({
     slug,
   })
 
-  const { title, tags, category, mainImage } = recipe || {}
+  const { title, category, mainImage } = recipe || {}
+
+  /** @todo Replace this with description returned from recipe, once added to schema. */
+  const seoDescription = 'An easy and delicious recipe.'
 
   return {
     title,
-    keywords: tags?.join(', '),
+    description: seoDescription,
+    // keywords: tags?.join(', '), // not beneficial for SEO anymore
     category: `${category?.join(', ')} recipe`,
     openGraph: openGraphMeta({
       title,
+      description: seoDescription,
       images: [
         {
           url: mainImage?.asset?.url || '',
@@ -44,6 +50,7 @@ export async function generateMetadata({
     }),
     twitter: twitterMeta({
       title,
+      description: seoDescription,
       images: [
         {
           url: mainImage?.asset?.url || '',

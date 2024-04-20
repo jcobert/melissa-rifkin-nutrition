@@ -10,24 +10,15 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import Recipes from '@/app/recipes/recipes'
 import RecipesPreview from '@/app/recipes/recipes-preview'
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = generatePageMeta({
   title: 'Recipes',
-  openGraph: openGraphMeta({
-    title: `Recipes by ${siteConfig?.title}`,
-    description:
-      'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
-    images: [buildOgImage({ title: 'Recipes' })],
-  }),
-  twitter: twitterMeta({
-    title: `Recipes by ${siteConfig?.title}`,
-    description:
-      'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
-    images: [buildOgImage({ title: 'Recipes' })],
-  }),
-}
+  description:
+    'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
+  url: canonicalUrl('/recipes'),
+})
 
 export type RecipesPageProps = {
   searchParams?: {

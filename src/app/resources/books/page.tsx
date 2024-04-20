@@ -6,16 +6,15 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
-import { buildOgImage, openGraphMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = generatePageMeta({
   title: 'Books',
-  openGraph: openGraphMeta({
-    title: `Books by ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Books' })],
-  }),
-}
+  description:
+    'A selection of fun and informative books available for purchase from Melissa Rifkin Nutrition.',
+  url: canonicalUrl('/resources/books'),
+})
 
 const BooksPage = async () => {
   /**

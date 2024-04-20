@@ -7,7 +7,8 @@ import PageLayout from '@/components/common/layout/page-layout'
 import ProductPage from '@/components/common/layout/product-page'
 import Back from '@/components/common/links/back'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
@@ -27,34 +28,19 @@ export async function generateMetadata({
   const { title, description, featuredImage } =
     allBooks?.find((b) => b?.handle === slug) || {}
 
-  return {
+  return generatePageMeta({
     title,
     description,
-    // keywords: tags?.join(', '),
-    openGraph: openGraphMeta({
-      title,
-      images: [
-        {
-          url: featuredImage?.url || '',
-          width: featuredImage?.width,
-          height: featuredImage?.height,
-          alt: featuredImage?.altText,
-        },
-      ],
-    }),
-    twitter: twitterMeta({
-      title,
-      // description,
-      images: [
-        {
-          url: featuredImage?.url || '',
-          width: featuredImage?.width,
-          height: featuredImage?.height,
-          alt: featuredImage?.altText,
-        },
-      ],
-    }),
-  }
+    images: [
+      {
+        url: featuredImage?.url || '',
+        width: featuredImage?.width,
+        height: featuredImage?.height,
+        alt: featuredImage?.altText,
+      },
+    ],
+    url: canonicalUrl(`/resources/books/${slug}`),
+  })
 }
 
 const BookPage: FC<{ params: { slug: string } }> = async ({ params }) => {

@@ -4,24 +4,15 @@ import React, { FC } from 'react'
 import Calendly from '@/components/calendly'
 import PageLayout from '@/components/common/layout/page-layout'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  openGraph: openGraphMeta({
-    title: `Contact ${siteConfig?.title}`,
-    description:
-      "We'd love to learn about you and your wellness goals! Schedule a quick call with us, so we can identify the right path forward for you.",
-    images: [buildOgImage({ title: 'Contact Us' })],
-  }),
-  twitter: twitterMeta({
-    title: `Contact ${siteConfig?.title}`,
-    description:
-      "We'd love to learn about you and your wellness goals! Schedule a quick call with us, so we can identify the right path forward for you.",
-    images: [buildOgImage({ title: 'Contact Us' })],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'Contact Us',
+  description:
+    "We'd love to learn about you and your wellness goals! Contact us, so we can identify the right path forward for you.",
+  url: canonicalUrl('/contact'),
+})
 
 const ContactPage: FC = () => {
   return (

@@ -16,20 +16,14 @@ import PageLayout from '@/components/common/layout/page-layout'
 import TestimonialCard from '@/components/testimonials/testimonial-card'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl, siteConfig } from '@/configuration/site'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = generatePageMeta({
   title: 'Partnerships',
-  openGraph: openGraphMeta({
-    title: `Explore a partnership with ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Partnerships' })],
-  }),
-  twitter: twitterMeta({
-    title: `Explore a partnership with ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'Partnerships' })],
-  }),
-}
+  description: `Explore a partnership with ${siteConfig?.title}.`,
+  url: canonicalUrl('/about/partnerships'),
+})
 
 const PartnershipsPage: FC = async () => {
   const general = await loadQuery<SanityDocument<General>>(

@@ -12,11 +12,13 @@ import { getRecipeIngredients } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
-import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
 }
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -25,35 +27,23 @@ export async function generateMetadata({
     slug,
   })
 
-  const { title, tags, category, mainImage } = recipe || {}
+  const { title, category, mainImage } = recipe || {}
 
-  return {
+  return generatePageMeta({
     title,
-    keywords: tags?.join(', '),
+    /** @todo Replace this with description returned from recipe, once added to schema. */
+    description: 'An easy and delicious recipe.',
     category: `${category?.join(', ')} recipe`,
-    openGraph: openGraphMeta({
-      title,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-    twitter: twitterMeta({
-      title,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-  }
+    images: [
+      {
+        url: mainImage?.asset?.url || '',
+        width: mainImage?.asset?.metadata?.dimensions?.width,
+        height: mainImage?.asset?.metadata?.dimensions?.height,
+        alt: mainImage?.alt,
+      },
+    ],
+    url: canonicalUrl(`/recipes/${slug}`),
+  })
 }
 
 export async function generateStaticParams() {

@@ -10,20 +10,15 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import BlogPosts from '@/app/blog/blog-posts'
 import BlogPostsPreview from '@/app/blog/blog-posts-preview'
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = generatePageMeta({
   title: 'Blog',
-  openGraph: openGraphMeta({
-    title: `The ${siteConfig?.title} Blog`,
-    images: [buildOgImage({ title: 'Blog' })],
-  }),
-  twitter: twitterMeta({
-    title: `The ${siteConfig?.title} Blog`,
-    images: [buildOgImage({ title: 'Blog' })],
-  }),
-}
+  description:
+    'Our blog includes a collection of insightful posts and articles about health and wellness.',
+  url: canonicalUrl('/blog'),
+})
 
 export type BlogPageProps = {
   searchParams?: {

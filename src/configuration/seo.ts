@@ -1,6 +1,12 @@
 import { Metadata } from 'next'
+import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 
+// import { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types'
 import { siteConfig } from '@/configuration/site'
+
+/** Appends site name to provided page title. */
+export const buildPageTitle = (title?: string) =>
+  !title ? siteConfig?.title : `${title} | ${siteConfig?.title}`
 
 export const baseOpenGraph: Metadata['openGraph'] = {
   url: siteConfig.url,
@@ -29,6 +35,39 @@ export const twitterMeta = (
   meta?: Metadata['twitter'],
 ): Metadata['twitter'] => {
   return { ...baseTwitter, ...meta }
+}
+
+export const generatePageMeta = ({
+  title,
+  description,
+  url,
+  images,
+  ...meta
+}: Omit<Metadata, 'title' | 'description'> & {
+  title?: string
+  description?: string
+  url?: string
+  images?: OpenGraph['images']
+}): Metadata => {
+  const { openGraph, twitter, ...rest } = meta
+  return {
+    title: buildPageTitle(title),
+    description,
+    openGraph: openGraphMeta({
+      title: buildPageTitle(title),
+      description,
+      url,
+      images: images ?? [buildOgImage({ title })],
+      ...openGraph,
+    }),
+    twitter: twitterMeta({
+      title: buildPageTitle(title),
+      description,
+      images: images ?? [buildOgImage({ title })],
+      ...twitter,
+    }),
+    ...rest,
+  }
 }
 
 export type OgImageParams = {

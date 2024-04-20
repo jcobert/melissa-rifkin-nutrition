@@ -11,12 +11,13 @@ import { BlogPosting, WithContext } from 'schema-dts'
 
 import BlogPost from '@/app/blog/[slug]/blog-post'
 import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
-import { openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl, siteConfig } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
 }
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -25,36 +26,25 @@ export async function generateMetadata({
     slug,
   })
 
-  const { title, tags, mainImage, author } = post || {}
+  const { title, mainImage, author } = post || {}
 
-  return {
+  return generatePageMeta({
     title,
-    keywords: tags?.join(', '),
+    /** @todo Replace this with description returned from post, once added to schema. */
+    description: title,
     category: 'Blog post',
     authors: [{ name: author?.name, url: siteConfig?.url }],
-    openGraph: openGraphMeta({
-      title,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-    twitter: twitterMeta({
-      title,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-  }
+    url: canonicalUrl(`/blog/${slug}`),
+    images: [
+      {
+        url: mainImage?.asset?.url || '',
+        width: mainImage?.asset?.metadata?.dimensions?.width,
+        height: mainImage?.asset?.metadata?.dimensions?.height,
+        alt: mainImage?.alt,
+      },
+    ],
+    openGraph: { type: 'article', authors: author?.name },
+  })
 }
 
 export async function generateStaticParams() {

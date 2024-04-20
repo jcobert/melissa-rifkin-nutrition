@@ -11,20 +11,14 @@ import { cn } from '@/utils/style'
 import PageLayout from '@/components/common/layout/page-layout'
 import FullBio from '@/components/features/bio/full-bio'
 
-import { buildOgImage, openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl, siteConfig } from '@/configuration/site'
 
-export const metadata: Metadata = {
-  title: 'About',
-  openGraph: openGraphMeta({
-    title: `Meet our team at ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'About Us' })],
-  }),
-  twitter: twitterMeta({
-    title: `Meet our team at ${siteConfig?.title}`,
-    images: [buildOgImage({ title: 'About Us' })],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'About Us',
+  description: `Meet Melissa and our team of expert dieticians and nutritionists at ${siteConfig?.title}.`,
+  url: canonicalUrl('/about'),
+})
 
 const AboutPage: FC = async () => {
   const content = await loadQuery<SanityDocument<AboutPage>>(

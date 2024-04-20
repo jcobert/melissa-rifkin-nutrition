@@ -10,31 +10,15 @@ import PageLayout from '@/components/common/layout/page-layout'
 
 import Recipes from '@/app/recipes/recipes'
 import RecipesPreview from '@/app/recipes/recipes-preview'
-import {
-  buildOgImage,
-  generatePageTitle,
-  openGraphMeta,
-  twitterMeta,
-} from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-const pageTitle = 'Recipes'
-const seoDescription =
-  'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.'
-
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: seoDescription,
-  openGraph: openGraphMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-  twitter: twitterMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'Recipes',
+  description:
+    'A selection of quick, delicious, and nutritious recipes, for you to enjoy at home.',
+  url: canonicalUrl('/recipes'),
+})
 
 export type RecipesPageProps = {
   searchParams?: {
@@ -55,7 +39,7 @@ const RecipesPage: FC<RecipesPageProps> = async ({ searchParams }) => {
 
   return (
     <PageLayout
-      heading={pageTitle}
+      heading='Recipes'
       className='flex flex-col gap-12 items-center text-almost-black'
     >
       <div className='prose self-start'>

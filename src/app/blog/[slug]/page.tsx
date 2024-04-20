@@ -11,8 +11,8 @@ import { BlogPosting, WithContext } from 'schema-dts'
 
 import BlogPost from '@/app/blog/[slug]/blog-post'
 import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
-import { openGraphMeta, twitterMeta } from '@/configuration/seo'
-import { appendPath, siteConfig } from '@/configuration/site'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl, siteConfig } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
@@ -28,43 +28,23 @@ export async function generateMetadata({
 
   const { title, mainImage, author } = post || {}
 
-  /** @todo Replace this with description returned from post, once added to schema. */
-  const seoDescription = title
-
-  return {
+  return generatePageMeta({
     title,
-    description: seoDescription,
-    // keywords: tags?.join(', '), // not beneficial for SEO anymore
+    /** @todo Replace this with description returned from post, once added to schema. */
+    description: title,
     category: 'Blog post',
     authors: [{ name: author?.name, url: siteConfig?.url }],
-    openGraph: openGraphMeta({
-      url: appendPath(`/blog/${slug}`),
-      title,
-      description: seoDescription,
-      type: 'article',
-      authors: author?.name,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-    twitter: twitterMeta({
-      title,
-      description: seoDescription,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-  }
+    url: canonicalUrl(`/blog/${slug}`),
+    images: [
+      {
+        url: mainImage?.asset?.url || '',
+        width: mainImage?.asset?.metadata?.dimensions?.width,
+        height: mainImage?.asset?.metadata?.dimensions?.height,
+        alt: mainImage?.alt,
+      },
+    ],
+    openGraph: { type: 'article', authors: author?.name },
+  })
 }
 
 export async function generateStaticParams() {

@@ -12,7 +12,8 @@ import { getRecipeIngredients } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
-import { openGraphMeta, twitterMeta } from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
 export type PageProps = {
   params: { slug: string }
@@ -28,39 +29,21 @@ export async function generateMetadata({
 
   const { title, category, mainImage } = recipe || {}
 
-  /** @todo Replace this with description returned from recipe, once added to schema. */
-  const seoDescription = 'An easy and delicious recipe.'
-
-  return {
+  return generatePageMeta({
     title,
-    description: seoDescription,
-    // keywords: tags?.join(', '), // not beneficial for SEO anymore
+    /** @todo Replace this with description returned from recipe, once added to schema. */
+    description: 'An easy and delicious recipe.',
     category: `${category?.join(', ')} recipe`,
-    openGraph: openGraphMeta({
-      title,
-      description: seoDescription,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-    twitter: twitterMeta({
-      title,
-      description: seoDescription,
-      images: [
-        {
-          url: mainImage?.asset?.url || '',
-          width: mainImage?.asset?.metadata?.dimensions?.width,
-          height: mainImage?.asset?.metadata?.dimensions?.height,
-          alt: mainImage?.alt,
-        },
-      ],
-    }),
-  }
+    images: [
+      {
+        url: mainImage?.asset?.url || '',
+        width: mainImage?.asset?.metadata?.dimensions?.width,
+        height: mainImage?.asset?.metadata?.dimensions?.height,
+        alt: mainImage?.alt,
+      },
+    ],
+    url: canonicalUrl(`/recipes/${slug}`),
+  })
 }
 
 export async function generateStaticParams() {

@@ -8,31 +8,15 @@ import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
 import MealPlanCard from '@/components/features/meal-plan/meal-plan-card'
 
-import {
-  buildOgImage,
-  generatePageTitle,
-  openGraphMeta,
-  twitterMeta,
-} from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-const pageTitle = 'Meal Plans'
-const seoDescription =
-  'Curated plans to match your goals, food preferences and energy needs individually. Easy-to-make and low-ingredient meals.'
-
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: seoDescription,
-  openGraph: openGraphMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-  twitter: twitterMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'Meal Plans',
+  description:
+    'Curated plans to match your goals, food preferences and energy needs individually. Easy-to-make and low-ingredient meals.',
+  url: canonicalUrl('/resources/meal-plans'),
+})
 
 const MealPlansPage = async () => {
   const mealPlans = await getCollectionProducts({ collection: 'meal-plans' })

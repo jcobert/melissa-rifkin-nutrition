@@ -4,35 +4,19 @@ import React, { FC } from 'react'
 import Calendly from '@/components/calendly'
 import PageLayout from '@/components/common/layout/page-layout'
 
-import {
-  buildOgImage,
-  generatePageTitle,
-  openGraphMeta,
-  twitterMeta,
-} from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-const pageTitle = 'Contact Us'
-const seoDescription =
-  "We'd love to learn about you and your wellness goals! Contact us, so we can identify the right path forward for you."
-
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: seoDescription,
-  openGraph: openGraphMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-  twitter: twitterMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'Contact Us',
+  description:
+    "We'd love to learn about you and your wellness goals! Contact us, so we can identify the right path forward for you.",
+  url: canonicalUrl('/contact'),
+})
 
 const ContactPage: FC = () => {
   return (
-    <PageLayout heading={pageTitle}>
+    <PageLayout heading='Contact Us'>
       <div className='flex flex-col items-center gap-8'>
         {/* <h2>Schedule a Consultation</h2> */}
         <p className='prose'>

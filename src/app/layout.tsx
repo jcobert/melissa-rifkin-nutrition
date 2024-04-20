@@ -25,10 +25,11 @@ import '@/styles/globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.title,
-    template: `%s | ${siteConfig.title}`,
-  },
+  // title: {
+  //   default: siteConfig.title,
+  //   template: `%s | ${siteConfig.title}`,
+  // },
+  title: siteConfig?.title,
   description: siteConfig.description,
   robots: { index: true, follow: true },
   icons: {

@@ -6,31 +6,15 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
-import {
-  buildOgImage,
-  generatePageTitle,
-  openGraphMeta,
-  twitterMeta,
-} from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-const pageTitle = 'Books'
-const seoDescription =
-  'A selection of fun and informative books available for purchase from Melissa Rifkin Nutrition.'
-
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: seoDescription,
-  openGraph: openGraphMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-  twitter: twitterMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [buildOgImage({ title: pageTitle })],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'Books',
+  description:
+    'A selection of fun and informative books available for purchase from Melissa Rifkin Nutrition.',
+  url: canonicalUrl('/resources/books'),
+})
 
 const BooksPage = async () => {
   /**
@@ -43,7 +27,7 @@ const BooksPage = async () => {
 
   return (
     <PageLayout
-      heading={pageTitle}
+      heading='Books'
       className='flex flex-col gap-16 items-center text-almost-black'
     >
       {/* <div className='prose self-start'>

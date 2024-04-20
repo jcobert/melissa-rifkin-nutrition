@@ -7,7 +7,7 @@ export const siteConfig = {
 }
 
 /** Appends the provided pathname to the site's base URL. */
-export const appendPath = (path: string) => `${siteConfig?.url}${path}`
+export const canonicalUrl = (path: string) => `${siteConfig?.url}${path}`
 
 export const calendlyDiscoveryUrl =
   process.env.NEXT_PUBLIC_CALENDLY_DISCOVERY_URL || ''

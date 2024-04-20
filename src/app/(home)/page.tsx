@@ -22,10 +22,14 @@ import Instagram from '@/components/instagram'
 import Testimonials from '@/components/testimonials/testimonials'
 import TestimonialsPreview from '@/components/testimonials/testimonials-preview'
 
-import { buildOgImage, openGraphMeta } from '@/configuration/seo'
+import {
+  buildOgImage,
+  buildPageTitle,
+  openGraphMeta,
+} from '@/configuration/seo'
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: buildPageTitle('Home'),
   openGraph: openGraphMeta({ images: [buildOgImage()] }),
 }
 

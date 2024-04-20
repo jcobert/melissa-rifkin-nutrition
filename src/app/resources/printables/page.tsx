@@ -6,39 +6,15 @@ import { getCollectionProducts } from '@/lib/shopify'
 import PageLayout from '@/components/common/layout/page-layout'
 import ProductCard from '@/components/product-card'
 
-import {
-  buildOgImage,
-  generatePageTitle,
-  openGraphMeta,
-  twitterMeta,
-} from '@/configuration/seo'
+import { generatePageMeta } from '@/configuration/seo'
+import { canonicalUrl } from '@/configuration/site'
 
-const pageTitle = 'Printables'
-const seoDescription =
-  'A collection of resources for you to read and print out for quick reference. Tips, tricks, and valuable insight.'
-
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: seoDescription,
-  openGraph: openGraphMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [
-      buildOgImage({
-        title: pageTitle,
-      }),
-    ],
-  }),
-  twitter: twitterMeta({
-    title: generatePageTitle(pageTitle),
-    description: seoDescription,
-    images: [
-      buildOgImage({
-        title: pageTitle,
-      }),
-    ],
-  }),
-}
+export const metadata: Metadata = generatePageMeta({
+  title: 'Printables',
+  description:
+    'A collection of resources for you to read and print out for quick reference. Tips, tricks, and valuable insight.',
+  url: canonicalUrl('/resources/printables'),
+})
 
 const PrintablesPage = async () => {
   const printables = await getCollectionProducts({
@@ -48,7 +24,7 @@ const PrintablesPage = async () => {
 
   return (
     <PageLayout
-      heading={pageTitle}
+      heading='Printables'
       className='flex flex-col gap-16 items-center text-almost-black'
     >
       <div className='prose self-start'>

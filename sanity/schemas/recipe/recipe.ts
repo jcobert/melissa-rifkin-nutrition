@@ -6,6 +6,15 @@ export default defineType({
   title: 'Recipe',
   type: 'document',
   icon: FaBook,
+  fieldsets: [
+    {
+      name: 'seo',
+      title: 'Seach Engine Optimization (SEO)',
+      description:
+        'These fields impact your presence on Google search results.',
+    },
+  ],
+  groups: [{ name: 'seo', title: 'SEO' }],
   fields: [
     defineField({
       name: 'title',
@@ -108,6 +117,15 @@ export default defineType({
       of: [{ type: 'instruction' }],
       options: { modal: { type: 'dialog', width: 'auto' } },
       description: 'All recipe steps. Drag to reorder. Top is the first step.',
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Recipe Description',
+      description:
+        'Provide a short description of this recipe (one or two sentences).',
+      type: 'string',
+      group: 'seo',
+      fieldset: 'seo',
     }),
   ],
 

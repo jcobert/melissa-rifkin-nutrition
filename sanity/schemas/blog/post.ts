@@ -1,5 +1,6 @@
 import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
+import { CustomTextInput } from 'sanity-studio/components/text-input'
 
 export default defineType({
   name: 'post',
@@ -103,6 +104,9 @@ export default defineType({
       type: 'string',
       group: 'seo',
       fieldset: 'seo',
+      components: {
+        input: CustomTextInput,
+      },
     }),
   ],
 

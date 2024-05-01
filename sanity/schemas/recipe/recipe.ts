@@ -1,5 +1,6 @@
 import { FaBook } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
+import { CustomTextInput } from 'sanity-studio/components/text-input'
 
 export default defineType({
   name: 'recipe',
@@ -126,6 +127,9 @@ export default defineType({
       type: 'string',
       group: 'seo',
       fieldset: 'seo',
+      components: {
+        input: CustomTextInput,
+      },
     }),
   ],
 

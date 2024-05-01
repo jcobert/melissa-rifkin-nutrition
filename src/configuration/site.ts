@@ -4,7 +4,7 @@ export const siteConfig = {
   businessName: 'Melissa Rifkin Nutrition, LLC',
   /** Without trailing slash. */
   url: process.env.SITE_BASE_URL || 'https://melissarifkinnutrition.com',
-}
+} as const
 
 /** Appends the provided pathname to the site's base URL. */
 export const canonicalUrl = (path: string) => `${siteConfig?.url}${path}`

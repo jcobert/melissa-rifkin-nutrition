@@ -26,12 +26,11 @@ export async function generateMetadata({
     slug,
   })
 
-  const { title, mainImage, author } = post || {}
+  const { title, mainImage, author, seoDescription } = post || {}
 
   return generatePageMeta({
     title,
-    /** @todo Replace this with description returned from post, once added to schema. */
-    description: title,
+    description: seoDescription || title,
     category: 'Blog post',
     authors: [{ name: author?.name, url: siteConfig?.url }],
     url: canonicalUrl(`/blog/${slug}`),

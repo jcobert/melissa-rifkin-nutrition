@@ -72,6 +72,7 @@ export interface Post extends SanityDocument {
   body?: BlockContent
   external?: boolean
   externalUrl?: string
+  seoDescription?: string
 }
 
 /** Recipe */
@@ -95,6 +96,7 @@ export interface Recipe extends SanityDocument {
     SanityKeyedReference<IngredientGroup> & IngredientGroup
   >
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
+  seoDescription?: string
 }
 
 export interface Ingredient extends SanityDocument {

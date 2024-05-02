@@ -27,12 +27,11 @@ export async function generateMetadata({
     slug,
   })
 
-  const { title, category, mainImage } = recipe || {}
+  const { title, category, mainImage, seoDescription } = recipe || {}
 
   return generatePageMeta({
     title,
-    /** @todo Replace this with description returned from recipe, once added to schema. */
-    description: 'An easy and delicious recipe.',
+    description: seoDescription || 'An easy and delicious recipe.',
     category: `${category?.join(', ')} recipe`,
     images: [
       {

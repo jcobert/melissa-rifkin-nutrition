@@ -1,5 +1,6 @@
 import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
+import { CustomTextInput } from 'sanity-studio/components/text-input'
 
 export default defineType({
   name: 'post',
@@ -13,7 +14,14 @@ export default defineType({
       description:
         'If the blog post was published on another site like iHerb.com, select this.',
     },
+    {
+      name: 'seo',
+      title: 'Seach Engine Optimization (SEO)',
+      description:
+        'These fields impact your presence on Google search results.',
+    },
   ],
+  groups: [{ name: 'seo', title: 'SEO' }],
   fields: [
     defineField({
       name: 'title',
@@ -87,6 +95,18 @@ export default defineType({
       type: 'blockContent',
       description:
         'If linking to an external post, add a preview here (e.g. the first paragraph of the post). A link will be provided to the reader to continue reading at the URL you provided above.',
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Post Description',
+      description:
+        'Provide a short summary of this blog post (one or two sentences).',
+      type: 'string',
+      group: 'seo',
+      fieldset: 'seo',
+      components: {
+        input: CustomTextInput,
+      },
     }),
   ],
 

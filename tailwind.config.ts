@@ -38,6 +38,9 @@ export default {
       fontSize: {
         '2xs': ['0.625rem', '0.75rem'],
       },
+      maxWidth: {
+        layout: '68.75rem',
+      },
       screens: {
         '2xl': '1440px',
       },

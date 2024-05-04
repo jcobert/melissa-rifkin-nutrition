@@ -87,62 +87,66 @@ const HeaderNav: FC = () => {
           />
           {/* Links */}
           <div className='flex flex-col gap-6 mt-10 pb-safe mb-24'>
-            {navItems?.map((item) => {
-              const hasMenu = !!item?.menu?.links?.length
-              return (
-                <NavbarMenuItem
-                  key={item?.id}
-                  className='text-right text-xl border-b border-brand-gray-medium/15 pb-2 flex justify-end'
-                  isActive={isActive(item, pathname)}
-                >
-                  {!hasMenu ? (
-                    <Link
-                      className='w-full font-semibold text-brand-gray-dark py-2'
-                      href={item?.url}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item?.name}
-                    </Link>
-                  ) : (
-                    <Accordion
-                      collapsible
-                      className='border-none pr-0 w-full'
-                      triggerClassName='!justify-end font-semibold text-brand-gray-dark data-[state=open]:text-brand'
-                      itemClassName='!p-0'
-                      items={[
-                        {
-                          header: item?.name,
-                          content: (
-                            <div className='flex flex-col gap-8 bg-almost-white/40__ py-4 pr-6_ rounded border__ border-brand-gray-light/30'>
-                              {!!item?.url && (
-                                <Link
-                                  key={`${item?.id}-menu`}
-                                  className='w-full font-medium text-brand-gray-dark pr-8'
-                                  href={item?.url}
-                                  onClick={() => setIsMenuOpen(false)}
-                                >
-                                  {`All ${item?.name}`}
-                                </Link>
-                              )}
-                              {item?.menu?.links?.map((link) => (
-                                <Link
-                                  key={link?.id}
-                                  className='w-full font-medium text-brand-gray-dark pr-8'
-                                  href={link?.url}
-                                  onClick={() => setIsMenuOpen(false)}
-                                >
-                                  {link?.name}
-                                </Link>
-                              ))}
-                            </div>
-                          ),
-                        },
-                      ]}
-                    />
-                  )}
-                </NavbarMenuItem>
-              )
-            })}
+            {navItems
+              ?.filter((item) => !item?.hidden)
+              ?.map((item) => {
+                const hasMenu = !!item?.menu?.links?.length
+                return (
+                  <NavbarMenuItem
+                    key={item?.id}
+                    className='text-right text-xl border-b border-brand-gray-medium/15 pb-2 flex justify-end'
+                    isActive={isActive(item, pathname)}
+                  >
+                    {!hasMenu ? (
+                      <Link
+                        className='w-full font-semibold text-brand-gray-dark py-2'
+                        href={item?.url}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item?.name}
+                      </Link>
+                    ) : (
+                      <Accordion
+                        collapsible
+                        className='border-none pr-0 w-full'
+                        triggerClassName='!justify-end font-semibold text-brand-gray-dark data-[state=open]:text-brand'
+                        itemClassName='!p-0'
+                        items={[
+                          {
+                            header: item?.name,
+                            content: (
+                              <div className='flex flex-col gap-8 bg-almost-white/40__ py-4 pr-6_ rounded border__ border-brand-gray-light/30'>
+                                {!!item?.url && (
+                                  <Link
+                                    key={`${item?.id}-menu`}
+                                    className='w-full font-medium text-brand-gray-dark pr-8'
+                                    href={item?.url}
+                                    onClick={() => setIsMenuOpen(false)}
+                                  >
+                                    {`All ${item?.name}`}
+                                  </Link>
+                                )}
+                                {item?.menu?.links
+                                  ?.filter((link) => !link?.hidden)
+                                  ?.map((link) => (
+                                    <Link
+                                      key={link?.id}
+                                      className='w-full font-medium text-brand-gray-dark pr-8'
+                                      href={link?.url}
+                                      onClick={() => setIsMenuOpen(false)}
+                                    >
+                                      {link?.name}
+                                    </Link>
+                                  ))}
+                              </div>
+                            ),
+                          },
+                        ]}
+                      />
+                    )}
+                  </NavbarMenuItem>
+                )
+              })}
           </div>
         </NavbarMenu>
       </Navbar>

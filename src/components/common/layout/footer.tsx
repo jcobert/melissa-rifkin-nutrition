@@ -1,5 +1,6 @@
 import { SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
+import Link from 'next/link'
 import React, { FC } from 'react'
 import { GENERAL_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
@@ -8,6 +9,7 @@ import { ContactInfo, General } from 'sanity-studio/types'
 import CalendlyPopup from '@/components/calendly-popup'
 import { SocialLinks } from '@/components/social-links'
 
+import { NavId, navItems } from '@/configuration/nav'
 import { siteConfig } from '@/configuration/site'
 
 const Footer: FC = async () => {
@@ -26,9 +28,33 @@ const Footer: FC = async () => {
 
   const currentYear = new Date().getFullYear()
 
+  const navLinks = navItems
+    ?.flatMap((item) =>
+      !item?.url && item?.menu?.links?.length ? item?.menu?.links : item,
+    )
+    ?.filter((link) => !(['mealPlans'] as NavId[])?.includes(link?.id))
+
   return (
     <div className='w-full bg-brand-gray-medium pb-safe mt-8 print:hidden'>
-      <div className='flex flex-col items-center py-8 mx-auto text-almost-white max-w-layoutMax md:w-11/12 md:py-2 md:flex-row gap-y-8 md:justify-between gap-x-8'>
+      <ul className='flex flex-col gap-2 md:gap-2 layout py-8 md:py-4'>
+        {navLinks?.map((link) => (
+          <li key={link?.id} className='max-md:py-2'>
+            <Link
+              href={link?.url}
+              className='text-almost-white hover:text-brand-gray-light max-md:text-lg transition max-md:p-2'
+            >
+              {link?.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <div
+        aria-hidden
+        className='h-px w-full border-b border-brand-gray-dark/25'
+      />
+
+      <div className='flex flex-col items-center py-8 mx-auto text-almost-white w-full md:layout md:py-2 md:flex-row gap-y-8 md:justify-between gap-x-8'>
         {/* Links */}
         <div className='flex gap-x-16 md:gap-x-10 flex-wrap'>
           {socialLinks || contactInfo ? (

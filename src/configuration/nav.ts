@@ -1,13 +1,34 @@
 import { HTMLProps } from 'react'
 
+export type NavId =
+  | 'resources'
+  | 'mealPlans'
+  | 'printables'
+  | 'books'
+  | 'recipes'
+  | 'breakfast'
+  | 'lunch'
+  | 'dinner'
+  | 'dessert'
+  | 'side'
+  | 'snack'
+  | 'blog'
+  | 'about'
+  | 'partnerships'
+  | 'contact'
+
 export type NavLink = {
-  id: string
+  id: NavId
   name: string
   url: string
   description?: string
+  hidden?: boolean
 }
 
-export type NavMenu = { links: NavLink[]; img?: HTMLProps<HTMLImageElement> }
+export type NavMenu = {
+  links: NavLink[]
+  img?: HTMLProps<HTMLImageElement>
+}
 
 export type NavItem = NavLink & { menu?: NavMenu }
 
@@ -84,6 +105,12 @@ export const navItems: NavItem[] = [
     id: 'about',
     name: 'About',
     url: '/about',
+  },
+  {
+    id: 'partnerships',
+    name: 'Partnerships',
+    url: '/about/partnerships',
+    hidden: true,
   },
   {
     id: 'contact',

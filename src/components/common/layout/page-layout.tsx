@@ -26,7 +26,7 @@ const PageLayout: FC<PageLayoutProps> = ({
 
   return (
     <main>
-      <div className='items-center justify-start w-screen min-h-screen pb-safe'>
+      <div className='items-center justify-start w-screen__ min-h-screen pb-safe'>
         <div
           className={cn([
             'flex flex-col gap-2 mb-8',

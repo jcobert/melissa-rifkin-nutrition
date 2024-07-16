@@ -54,18 +54,17 @@ const Footer: FC = async () => {
         className='h-px w-full border-b border-brand-gray-dark/25'
       />
 
-      <div className='flex flex-col items-center py-8 mx-auto text-almost-white w-full md:layout md:py-2 md:flex-row gap-y-8 md:justify-between gap-x-8'>
+      <div className='flex max-md:px-4 flex-col items-center py-8 mx-auto text-almost-white w-full md:layout md:py-2 md:flex-row gap-y-8 md:justify-between gap-x-8'>
         {/* Links */}
-        <div className='flex gap-x-16 md:gap-x-10 flex-wrap'>
-          {socialLinks || contactInfo ? (
-            <SocialLinks
-              socialLinks={socialLinks}
-              contactInfo={contactInfo}
-              className='flex gap-x-16 md:gap-x-10 flex-wrap'
-              linkClassName='text-2xl md:text-xl text-almost-white hover:text-brand-gray-light'
-            />
-          ) : null}
-        </div>
+        {socialLinks || contactInfo ? (
+          <SocialLinks
+            socialLinks={socialLinks}
+            contactInfo={contactInfo}
+            className='max-md:w-full max-md:justify-evenly md:gap-x-8'
+            linkClassName='text-2xl md:text-xl text-almost-white hover:text-brand-gray-light'
+          />
+        ) : null}
+
         <div className='flex-grow'>
           <CalendlyPopup className='md:text-sm md:px-2 border border-brand-gray-light/50' />
         </div>

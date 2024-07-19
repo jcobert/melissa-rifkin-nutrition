@@ -215,10 +215,25 @@ export interface Bio extends SanityDocument {
   socialLinks?: SocialLinks
 }
 
-/** AboutPage */
+/** About Page */
 export interface AboutPage extends SanityDocument {
   _type: 'aboutPage'
   bios?: Array<Bio & { _ref: string; _key: string }>
+}
+
+export type FeatureFlagKey = 'meal-plans'
+
+export type FeatureFlag = {
+  title: string
+  key: FeatureFlagKey
+  description: string
+  status: boolean
+}
+
+/** Feature Flags */
+export interface FeatureFlags extends SanityDocument {
+  _type: 'featureFlags'
+  flags?: Array<FeatureFlag>
 }
 
 export type Documents =
@@ -230,5 +245,6 @@ export type Documents =
   | General
   | Bio
   | AboutPage
+  | FeatureFlags
 
 export type DocumentType = Documents['_type']

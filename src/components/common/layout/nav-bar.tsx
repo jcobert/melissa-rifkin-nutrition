@@ -10,7 +10,10 @@ import { navItems } from '@/configuration/nav'
 
 const NavBar: FC = () => {
   return (
-    <NavigationMenu.Root className='relative_ z-[1] flex justify-center'>
+    <NavigationMenu.Root
+      className='relative_ z-[1] flex justify-center'
+      delayDuration={50}
+    >
       <NavigationMenu.List className='center m-0 flex gap-1 list-none rounded-[6px] p-1'>
         {navItems
           ?.filter((item) => !item?.hidden)
@@ -104,6 +107,9 @@ const NavBar: FC = () => {
                             ?.map((subItem) => (
                               <NavigationMenu.Item
                                 key={`${item?.id}.${subItem?.id}`}
+                                className={cn([
+                                  !item?.menu?.img?.src && 'col-span-full',
+                                ])}
                               >
                                 <NavLink
                                   href={subItem?.url}
@@ -120,7 +126,7 @@ const NavBar: FC = () => {
                                       {subItem?.name}
                                     </span>
                                     {!!subItem?.description && (
-                                      <p className='font-normal text-brand-gray-medium text-pretty min-[840px]:min-w-72'>
+                                      <p className='font-normal text-brand-gray-medium text-pretty min-[840px]:min-w-72__'>
                                         {subItem?.description}
                                       </p>
                                     )}

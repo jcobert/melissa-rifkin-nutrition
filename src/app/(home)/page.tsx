@@ -79,7 +79,7 @@ const HomePage = async () => {
       </section>
 
       {/* Meal Plans */}
-      <section className='sm:layout bg-brand-gray-light max-sm:py-4'>
+      {/* <section className='sm:layout bg-brand-gray-light max-sm:py-4'>
         <div className='flex gap-x-8'>
           <Image
             src='/images/hero/4.jpg'
@@ -110,7 +110,7 @@ const HomePage = async () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Recipes */}
       <section className='sm:layout bg-brand-green max-sm:py-4'>

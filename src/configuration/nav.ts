@@ -34,38 +34,6 @@ export type NavItem = NavLink & { menu?: NavMenu }
 
 export const navItems: NavItem[] = [
   {
-    id: 'resources',
-    name: 'Resources',
-    url: '',
-    menu: {
-      img: {
-        src: '/images/food-tray-portions.jpeg',
-        alt: 'portions of various foods in tray.',
-      },
-      links: [
-        {
-          id: 'mealPlans',
-          name: 'Meal Plans',
-          url: '/resources/meal-plans',
-          description: "Get started with a curated menu that's right for you.",
-        },
-        {
-          id: 'printables',
-          name: 'Printables',
-          url: '/resources/printables',
-          description:
-            'A selection of handouts with helpful tips and information.',
-        },
-        {
-          id: 'books',
-          name: 'Books',
-          url: '/resources/books',
-          description: 'Dig in to one of our fun and informative books.',
-        },
-      ],
-    },
-  },
-  {
     id: 'recipes',
     name: 'Recipes',
     url: '/recipes',
@@ -93,6 +61,39 @@ export const navItems: NavItem[] = [
           url: '/recipes/?category=side',
         },
         { id: 'snack', name: 'Snacks', url: '/recipes/?category=snack' },
+      ],
+    },
+  },
+  {
+    id: 'resources',
+    name: 'Resources',
+    url: '',
+    menu: {
+      // img: {
+      //   src: '/images/food-tray-portions.jpeg',
+      //   alt: 'portions of various foods in tray.',
+      // },
+      links: [
+        {
+          id: 'mealPlans',
+          name: 'Meal Plans',
+          url: '/resources/meal-plans',
+          description: "Get started with a curated menu that's right for you.",
+          hidden: true,
+        },
+        {
+          id: 'printables',
+          name: 'Printables',
+          url: '/resources/printables',
+          description:
+            'A selection of handouts with helpful tips and information.',
+        },
+        {
+          id: 'books',
+          name: 'Books',
+          url: '/resources/books',
+          description: 'Dig in to one of our fun and informative books.',
+        },
       ],
     },
   },

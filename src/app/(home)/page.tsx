@@ -141,7 +141,7 @@ const HomePage = async () => {
             width={500}
             height={500}
             priority
-            className='mx-auto h-72 md:h-96 lg:h-[28rem] object-center object-cover max-sm:hidden'
+            className='mx-auto h-72 md:h-96 lg:h-[28rem] object-center object-cover max-sm:hidden max-lg:max-w-96 max-md:max-w-72'
           />
         </div>
       </section>

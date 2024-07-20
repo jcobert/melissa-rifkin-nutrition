@@ -1,6 +1,6 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import React, { FC } from 'react'
-import { FaAngleUp } from 'react-icons/fa6'
+import { FaAngleDown } from 'react-icons/fa6'
 
 import { cn } from '@/utils/style'
 
@@ -10,7 +10,10 @@ import { navItems } from '@/configuration/nav'
 
 const NavBar: FC = () => {
   return (
-    <NavigationMenu.Root className='relative_ z-[1] flex justify-center'>
+    <NavigationMenu.Root
+      className='relative_ z-[1] flex justify-center'
+      delayDuration={50}
+    >
       <NavigationMenu.List className='center m-0 flex gap-1 list-none rounded-[6px] p-1'>
         {navItems
           ?.filter((item) => !item?.hidden)
@@ -31,7 +34,7 @@ const NavBar: FC = () => {
                   <>
                     <NavigationMenu.Trigger className='text-brand-gray-dark hover:border-y-brand/10 group flex select-none items-center justify-between gap-1 rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none data-[state=open]:text-brand__ group'>
                       <span>{item?.name}</span>
-                      <FaAngleUp className='text-xs group-data-[state=open]:rotate-180 transition duration-75' />
+                      <FaAngleDown className='text-2xs group-data-[state=open]:rotate-180 transition duration-75' />
                     </NavigationMenu.Trigger>
                     <div className='perspective-[2000px] absolute top-full flex justify-center w-[var(--radix-navigation-menu-viewport-width)]'>
                       <NavigationMenu.Content className='relative mt-4 data-[state=open]:animate-scaleIn shadow-xl data-[state=closed]:animate-scaleOut h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-auto rounded-[6px] bg-white transition-[width,_height] duration-300 w-[var(--radix-navigation-menu-viewport-width)] max-h-[70dvh]'>
@@ -104,6 +107,9 @@ const NavBar: FC = () => {
                             ?.map((subItem) => (
                               <NavigationMenu.Item
                                 key={`${item?.id}.${subItem?.id}`}
+                                className={cn([
+                                  !item?.menu?.img?.src && 'col-span-full',
+                                ])}
                               >
                                 <NavLink
                                   href={subItem?.url}
@@ -120,7 +126,7 @@ const NavBar: FC = () => {
                                       {subItem?.name}
                                     </span>
                                     {!!subItem?.description && (
-                                      <p className='font-normal text-brand-gray-medium text-pretty min-[840px]:min-w-72'>
+                                      <p className='font-normal text-brand-gray-medium text-pretty min-[840px]:min-w-72__'>
                                         {subItem?.description}
                                       </p>
                                     )}

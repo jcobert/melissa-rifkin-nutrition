@@ -79,7 +79,7 @@ const HomePage = async () => {
       </section>
 
       {/* Meal Plans */}
-      <section className='sm:layout bg-brand-gray-light max-sm:py-4'>
+      {/* <section className='sm:layout bg-brand-gray-light max-sm:py-4'>
         <div className='flex gap-x-8'>
           <Image
             src='/images/hero/4.jpg'
@@ -110,7 +110,7 @@ const HomePage = async () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Recipes */}
       <section className='sm:layout bg-brand-green max-sm:py-4'>
@@ -141,7 +141,7 @@ const HomePage = async () => {
             width={500}
             height={500}
             priority
-            className='mx-auto h-72 md:h-96 lg:h-[28rem] object-center object-cover max-sm:hidden'
+            className='mx-auto h-72 md:h-96 lg:h-[28rem] object-center object-cover max-sm:hidden max-lg:max-w-96 max-md:max-w-72'
           />
         </div>
       </section>

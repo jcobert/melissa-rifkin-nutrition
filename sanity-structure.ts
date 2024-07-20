@@ -13,6 +13,13 @@ export const customStructure = (S: StructureBuilder) =>
           .documentId('generalInfoAndSettings')
           .title('General Info and Settings'),
       ),
+      // Feature Flags
+      // S.documentTypeListItem('featureFlags' as DocumentType).child(
+      //   S.document()
+      //     .schemaType('featureFlags' as DocumentType)
+      //     .documentId('featureFlags')
+      //     .title('Features'),
+      // ),
       S.divider(),
 
       // Recipe
@@ -54,6 +61,7 @@ export const customStructure = (S: StructureBuilder) =>
               'general',
               'aboutPage',
               'bio',
+              'featureFlags',
             ] as DocumentType[]
           ).includes(item.getId() as DocumentType),
       ),

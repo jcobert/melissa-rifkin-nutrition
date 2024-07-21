@@ -3,11 +3,11 @@ import imageUrlBuilder from '@sanity/image-url'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { FC } from 'react'
+import { FaEnvelope } from 'react-icons/fa6'
 import { IoIosArrowForward } from 'react-icons/io'
 import { dataset, projectId } from 'sanity-studio/env'
-import { Bio } from 'sanity-studio/types'
+import { Bio, General } from 'sanity-studio/types'
 
-import CalendlyPopup from '@/components/calendly-popup'
 import { portableComponents } from '@/components/common/portable/portable-components'
 import { SocialLinks } from '@/components/social-links'
 
@@ -15,10 +15,13 @@ const builder = imageUrlBuilder({ projectId, dataset })
 
 type Props = {
   bio?: Bio
+  general?: General
 }
 
-const FullBio: FC<Props> = ({ bio }) => {
+const FullBio: FC<Props> = ({ bio, general }) => {
   const { name, background, photo, contactInfo, socialLinks, _id } = bio || {}
+
+  const email = general?.email
 
   const isMelissa = _id === '97e84b85-0b3b-4a7d-bbb8-a53ff7fd3a93'
 
@@ -59,8 +62,15 @@ const FullBio: FC<Props> = ({ bio }) => {
       </div>
       {isMelissa && (
         <div className='flex justify-around sm:items-center max-sm:flex-col gap-x-6 gap-y-8'>
-          <CalendlyPopup className='max-sm:w-full' />
-          <Link href='/about/partnerships' className='btn-outline'>
+          {/* <CalendlyPopup className='max-sm:w-full' /> */}
+          <a
+            href={email ? `mailto:${email}` : '/contact'}
+            className='btn sm:w-fit__ flex-1'
+          >
+            <FaEnvelope aria-hidden />
+            <span>Email Us</span>
+          </a>
+          <Link href='/about/partnerships' className='btn-outline flex-1'>
             <span>Explore a Partnership</span>
             <IoIosArrowForward aria-hidden />
           </Link>

@@ -2,9 +2,9 @@ import { Metadata } from 'next'
 import { SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
 import React, { FC } from 'react'
-import { ABOUT_PAGE_QUERY } from 'sanity-studio/lib/queries'
+import { ABOUT_PAGE_QUERY, GENERAL_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
-import { type AboutPage } from 'sanity-studio/types'
+import { type AboutPage, General } from 'sanity-studio/types'
 
 import { cn } from '@/utils/style'
 
@@ -30,6 +30,8 @@ const AboutPage: FC = async () => {
   )
   const data = content?.data
 
+  const general = await loadQuery<SanityDocument<General>>(GENERAL_QUERY)
+
   return (
     <PageLayout
       heading='About Us'
@@ -39,7 +41,7 @@ const AboutPage: FC = async () => {
         {data?.bios?.length
           ? data?.bios?.map((bio, i) => (
               <div key={bio?._id} className='flex flex-col gap-4'>
-                <FullBio bio={bio} />
+                <FullBio bio={bio} general={general?.data} />
                 <span
                   aria-hidden
                   className={cn(

@@ -41,15 +41,15 @@ const ContactPage: FC = async () => {
       <div className='flex flex-col items-center gap-8'>
         {/* <h2>Schedule a Consultation</h2> */}
         <p className='prose text-pretty'>
-          We'd love to learn about you and your wellness goals! Schedule a quick
-          call with us, so we can identify the right path forward for you.
+          We'd love to learn about you and your wellness goals! Connect with us,
+          so we can identify the right path forward for you.
         </p>
         <span
           aria-hidden
           className='h-px max-md:w-1/3 w-3/4 border-b mx-auto mb-2'
         />
 
-        <div className='w-full sm:w-10/12 md:w-3/4 lg:w-1/2__ flex flex-col gap-16 max-sm:text-center__'>
+        <div className='w-full sm:w-10/12 md:w-3/4 lg:w-2/3 xl:w-1/2 flex flex-col gap-20 max-sm:text-center__'>
           {/* <div className='flex flex-col gap-4'>
             <h2 className='text-lg font-medium text-brand-gray-dark text-balance'>
               Reach Out
@@ -70,7 +70,7 @@ const ContactPage: FC = async () => {
               className='btn sm:w-fit__ flex-1'
             >
               <FaEnvelope aria-hidden />
-              <span>Send an Email</span>
+              <span>Email Us</span>
             </a>
             <Link
               href='/about/partnerships'
@@ -89,7 +89,7 @@ const ContactPage: FC = async () => {
               // contactInfo={contactInfo}
               socialLinks={socialLinks}
               // showText
-              linkClassName='text-2xl md:text-3xl'
+              linkClassName='!text-2xl md:text-3xl__'
               className='max-sm:justify-evenly sm:!gap-16 flex-wrap'
               // className='flex-col items-start gap-6'
             />

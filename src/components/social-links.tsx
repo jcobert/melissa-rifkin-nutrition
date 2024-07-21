@@ -20,8 +20,7 @@ import { cn } from '@/utils/style'
 import { LinkWithIcon } from '@/typings/utility'
 
 type SocialLinkWithIcon = LinkWithIcon<
-  keyof typeof SocialNetworks | 'email' | 'phone',
-  SocialNetworks | 'Email' | 'Phone'
+  keyof typeof SocialNetworks | 'email' | 'phone'
 >
 
 export const socialIcons: {
@@ -39,20 +38,30 @@ export const socialIcons: {
 type SocialLinkProps = {
   link?: SocialLinkWithIcon
   className?: string
+  showText?: boolean
 }
 
-export const SocialLink: FC<SocialLinkProps> = ({ link, className = '' }) => {
+export const SocialLink: FC<SocialLinkProps> = ({
+  link,
+  className,
+  showText = false,
+}) => {
   return (
     <a
       key={link?.id}
       className={cn([
-        'transition-all text-xl md:text-lg text-brand-gray-dark hover:text-brand-gray-medium',
+        'transition-all text-xl md:text-lg text-brand-gray-dark hover:text-brand-gray-medium group flex items-center gap-4',
         className,
       ])}
       href={link?.url}
-      aria-label={`${link?.name}`}
+      aria-label={link?.ariaLabel || link?.id}
     >
       {link?.icon}
+      {showText ? (
+        <span className='group-hover:underline text-lg text-brand-blue-dark group-hover:text-brand-blue transition-all'>
+          {link?.text}
+        </span>
+      ) : null}
     </a>
   )
 }
@@ -62,15 +71,16 @@ type SocialLinksProps = {
   contactInfo?: ContactInfo
   className?: string
   linkClassName?: string
-}
+} & Pick<SocialLinkProps, 'showText'>
 
 export const SocialLinks: FC<SocialLinksProps> = ({
-  socialLinks,
+  socialLinks = {},
   contactInfo,
   className = '',
   linkClassName = '',
+  showText,
 }) => {
-  if (!socialLinks) return null
+  // if (!socialLinks) return null
 
   const links: SocialLinkWithIcon[] = Object.keys(socialLinks)
     ?.filter((link) => link !== '_type')
@@ -78,7 +88,8 @@ export const SocialLinks: FC<SocialLinksProps> = ({
       (key) =>
         ({
           id: key,
-          name: SocialNetworks[key],
+          text: socialLinks[key],
+          ariaLabel: SocialNetworks[key],
           url: socialLinks[key],
           icon: socialIcons[key],
         }) as SocialLinkWithIcon,
@@ -96,11 +107,12 @@ export const SocialLinks: FC<SocialLinksProps> = ({
       ])}
     >
       {sortedLinks?.map((link) =>
-        link?.name ? (
+        link?.url ? (
           <SocialLink
-            key={link?.name}
+            key={link?.id}
             link={{ ...link }}
             className={cn([linkClassName])}
+            showText={showText}
           />
         ) : null,
       )}
@@ -108,22 +120,26 @@ export const SocialLinks: FC<SocialLinksProps> = ({
         <SocialLink
           link={{
             id: 'email',
-            name: 'Email',
+            text: contactInfo?.email,
+            ariaLabel: 'Email',
             url: `mailto:${contactInfo?.email}`,
             icon: socialIcons?.email,
           }}
           className={cn([linkClassName])}
+          showText={showText}
         />
       ) : null}
       {contactInfo?.phone ? (
         <SocialLink
           link={{
             id: 'phone',
-            name: 'Phone',
+            text: contactInfo?.phone,
+            ariaLabel: 'Phone',
             url: `tel:${contactInfo?.phone}`,
             icon: socialIcons?.phone,
           }}
           className={cn([linkClassName])}
+          showText={showText}
         />
       ) : null}
     </div>

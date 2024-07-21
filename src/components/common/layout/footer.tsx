@@ -2,11 +2,11 @@ import { SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
 import Link from 'next/link'
 import React, { FC } from 'react'
+import { FaEnvelope } from 'react-icons/fa6'
 import { GENERAL_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { ContactInfo, General } from 'sanity-studio/types'
 
-import CalendlyPopup from '@/components/calendly-popup'
 import { SocialLinks } from '@/components/social-links'
 
 import { NavId, navItems } from '@/configuration/nav'
@@ -59,14 +59,21 @@ const Footer: FC = async () => {
         {socialLinks || contactInfo ? (
           <SocialLinks
             socialLinks={socialLinks}
-            contactInfo={contactInfo}
+            // contactInfo={contactInfo}
             className='max-md:w-full max-md:justify-evenly md:gap-x-8'
             linkClassName='text-2xl md:text-xl text-almost-white hover:text-brand-gray-light'
           />
         ) : null}
 
         <div className='flex-grow'>
-          <CalendlyPopup className='md:text-sm md:px-2 border border-brand-gray-light/50' />
+          {/* <CalendlyPopup className='md:text-sm md:px-2 border border-brand-gray-light/50' /> */}
+          <a
+            href={email ? `mailto:${email}` : '/contact'}
+            className='btn sm:w-fit md:text-sm md:px-2 border border-brand-gray-light/50'
+          >
+            <FaEnvelope aria-hidden />
+            <span>Email Us</span>
+          </a>
         </div>
         {/* Credit */}
         <div className='flex flex-col items-center md:flex-row gap-y-8 gap-x-8'>

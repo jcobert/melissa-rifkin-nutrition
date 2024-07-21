@@ -15,7 +15,6 @@ import { cn } from '@/utils/style'
 
 import BackgroundSlideshow from '@/components/background-slideshow'
 import BrandBanner from '@/components/brand-banner'
-import CalendlyPopup from '@/components/calendly-popup'
 import PageLayout from '@/components/common/layout/page-layout'
 import BlogPostCard from '@/components/features/blog/blog-post-card'
 import Instagram from '@/components/instagram'
@@ -70,11 +69,14 @@ const HomePage = async () => {
             Your Healthy Life Starts Here.
           </h1>
           <p className='text-almost-white text-xl text-balance'>
-            Get started with meal plans and resources that can transform your
-            life.
+            Get started with resources, recipes, and consulting that can
+            transform your life.
           </p>
           {/* CTA */}
-          <CalendlyPopup className='py-4 text-lg' />
+          {/* <CalendlyPopup className='py-4 text-lg' /> */}
+          <Link href='/contact' className='btn w-fit py-4 text-lg'>
+            <span>Connect With Us</span>
+          </Link>
         </div>
       </section>
 

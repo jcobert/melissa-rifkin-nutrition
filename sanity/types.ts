@@ -92,6 +92,8 @@ export interface Recipe extends SanityDocument {
   tags?: Array<string>
   prepTime?: number
   cookTime?: number
+  layout?: 'advanced' | 'basic'
+  body?: BlockContent
   ingredientGroups?: Array<
     SanityKeyedReference<IngredientGroup> & IngredientGroup
   >

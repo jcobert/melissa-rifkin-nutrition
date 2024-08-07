@@ -50,15 +50,9 @@ export default defineType({
         },
       ],
     }),
-    // defineField({
-    //   name: 'category',
-    //   title: 'Category',
-    //   type: 'reference',
-    //   to: { type: 'recipeCategory' },
-    // }),
     defineField({
       name: 'category',
-      title: 'Category',
+      title: 'Categories',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
@@ -103,6 +97,29 @@ export default defineType({
       description: 'In minutes',
     }),
     defineField({
+      name: 'layout',
+      title: 'Layout',
+      type: 'string',
+      description:
+        '"Advanced" uses a layout that groups ingredients per step (a little bit more work to set up here, but a more pleasant experience for the reader). "Basic" will display the recipe as one block of text.',
+      options: {
+        list: [
+          { value: 'advanced', title: 'Advanced' },
+          { value: 'basic', title: 'Basic' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'advanced',
+    }),
+    defineField({
+      name: 'body',
+      title: 'Instructions',
+      type: 'blockContent',
+      description:
+        'The full recipe content. Write/paste all steps and ingredients here.',
+      hidden: (props) => props.parent.layout !== 'basic',
+    }),
+    defineField({
       name: 'ingredientGroups',
       title: 'Ingredient Groups',
       type: 'array',
@@ -110,6 +127,7 @@ export default defineType({
       options: { modal: { type: 'dialog', width: 'auto' } },
       description:
         'Subsets of ingredients for the recipe. For example, you might have one ingredient group for the pork chop and another for the mango chutney that goes on top.',
+      hidden: (props) => props.parent.layout !== 'advanced',
     }),
     defineField({
       name: 'instructions',
@@ -118,6 +136,7 @@ export default defineType({
       of: [{ type: 'instruction' }],
       options: { modal: { type: 'dialog', width: 'auto' } },
       description: 'All recipe steps. Drag to reorder. Top is the first step.',
+      hidden: (props) => props.parent.layout !== 'advanced',
     }),
     defineField({
       name: 'seoDescription',

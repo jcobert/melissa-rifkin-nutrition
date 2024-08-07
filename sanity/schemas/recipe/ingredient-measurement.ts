@@ -43,7 +43,7 @@ export default defineType({
       name: 'note',
       title: 'Note',
       type: 'string',
-      description: 'A comment such as "sliced" or "whole grain works best"',
+      description: 'A comment such as, "sliced" or, "whole grain works best".',
     }),
   ],
   preview: {

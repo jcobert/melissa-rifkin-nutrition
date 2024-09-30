@@ -13,9 +13,9 @@ import RecipesPreview from '@/app/recipes/recipes-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'default-no-store'
-export const revalidate = 10
+// export const dynamic = 'force-dynamic'
+// export const fetchCache = 'default-no-store'
+// export const revalidate = 60
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Recipes',
@@ -38,8 +38,8 @@ const RecipesPage: FC<RecipesPageProps> = async ({ searchParams }) => {
     {},
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
-      next: { revalidate: 10 },
-      cache: 'no-store',
+      next: { revalidate: 60 },
+      // cache: 'no-store',
     },
   )
 

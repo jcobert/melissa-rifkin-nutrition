@@ -15,9 +15,9 @@ import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'default-no-store'
-export const revalidate = 10
+// export const dynamic = 'force-dynamic'
+// export const fetchCache = 'default-no-store'
+// export const revalidate = 60
 
 export type PageProps = {
   params: { slug: string }
@@ -27,9 +27,16 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const slug = params?.slug
-  const recipe = await client.fetch<SanityDocument<Recipe>>(RECIPE_QUERY, {
-    slug,
-  })
+  const recipe = await client.fetch<SanityDocument<Recipe>>(
+    RECIPE_QUERY,
+    {
+      slug,
+    },
+    {
+      next: { revalidate: 60 },
+      // cache: 'no-store'
+    },
+  )
 
   const { title, category, mainImage, seoDescription } = recipe || {}
 
@@ -63,8 +70,8 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     params,
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
-      next: { revalidate: 10 },
-      cache: 'no-store',
+      next: { revalidate: 60 },
+      // cache: 'no-store',
     },
   )
 

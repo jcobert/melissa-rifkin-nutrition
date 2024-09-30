@@ -17,6 +17,7 @@ import { canonicalUrl } from '@/configuration/site'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'default-no-store'
+export const revalidate = 10
 
 export type PageProps = {
   params: { slug: string }
@@ -62,6 +63,8 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     params,
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+      next: { revalidate: 10 },
+      cache: 'no-store',
     },
   )
 

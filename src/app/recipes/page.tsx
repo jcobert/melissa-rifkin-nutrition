@@ -39,6 +39,7 @@ const RecipesPage: FC<RecipesPageProps> = async ({ searchParams }) => {
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
       next: { revalidate: 10 },
+      cache: 'no-store',
     },
   )
 

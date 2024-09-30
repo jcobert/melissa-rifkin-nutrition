@@ -37,6 +37,7 @@ const BlogPage: FC<BlogPageProps> = async ({ searchParams }) => {
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
       next: { revalidate: 10 },
+      cache: 'no-store',
     },
   )
 

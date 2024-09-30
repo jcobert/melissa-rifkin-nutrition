@@ -13,6 +13,8 @@ import BlogPostsPreview from '@/app/blog/blog-posts-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = generatePageMeta({
   title: 'Blog',
   description:

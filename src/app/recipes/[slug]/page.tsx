@@ -15,6 +15,8 @@ import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 
+export const dynamic = 'force-dynamic'
+
 export type PageProps = {
   params: { slug: string }
 }

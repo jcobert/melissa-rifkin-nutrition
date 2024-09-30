@@ -25,13 +25,15 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Title (required)',
       type: 'string',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'slug',
-      title: 'URL-friendly Name',
+      title: 'URL-friendly Name (required)',
       type: 'slug',
+      validation: (rule) => rule.required(),
       options: {
         source: 'title',
         maxLength: 96,

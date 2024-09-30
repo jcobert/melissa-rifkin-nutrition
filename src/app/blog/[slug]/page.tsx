@@ -16,6 +16,7 @@ import { canonicalUrl, siteConfig } from '@/configuration/site'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'default-no-store'
+export const revalidate = 10
 
 export type PageProps = {
   params: { slug: string }

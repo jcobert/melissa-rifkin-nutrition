@@ -15,6 +15,7 @@ import { canonicalUrl } from '@/configuration/site'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'default-no-store'
+export const revalidate = 10
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Blog',

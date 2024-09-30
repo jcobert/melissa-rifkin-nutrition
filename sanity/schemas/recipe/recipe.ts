@@ -104,15 +104,15 @@ export default defineType({
       title: 'Layout',
       type: 'string',
       description:
-        '"Advanced" uses a layout that groups ingredients per step (a little bit more work to set up here, but a more pleasant experience for the reader). "Basic" will display the recipe as one block of text.',
+        '"Basic" will display the recipe as one block of text. "Advanced" uses a layout that groups ingredients per step (a little bit more work to set up here, but a more pleasant experience for the reader).',
       options: {
         list: [
-          { value: 'advanced', title: 'Advanced' },
           { value: 'basic', title: 'Basic' },
+          { value: 'advanced', title: 'Advanced' },
         ],
         layout: 'radio',
       },
-      initialValue: 'advanced',
+      initialValue: 'basic',
     }),
     defineField({
       name: 'body',

@@ -13,6 +13,8 @@ import RecipesPreview from '@/app/recipes/recipes-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = generatePageMeta({
   title: 'Recipes',
   description:

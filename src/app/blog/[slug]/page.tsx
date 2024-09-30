@@ -14,6 +14,8 @@ import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl, siteConfig } from '@/configuration/site'
 
+export const dynamic = 'force-dynamic'
+
 export type PageProps = {
   params: { slug: string }
 }

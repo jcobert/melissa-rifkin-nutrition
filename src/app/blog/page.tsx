@@ -14,6 +14,7 @@ import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 
 export const dynamic = 'force-dynamic'
+export const fetchCache = 'default-no-store'
 
 export const metadata: Metadata = generatePageMeta({
   title: 'Blog',

@@ -1,6 +1,6 @@
 'use client'
 
-import { uniq } from 'lodash'
+import { sortBy, uniq } from 'lodash'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { TbListSearch } from 'react-icons/tb'
@@ -93,22 +93,21 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe>()
 
   const filteredRecipes = useMemo(() => {
-    if (!tagFilter && !searchFilter && !categoryFilter) return recipes
-    if (tagFilter && !searchFilter && !categoryFilter) {
-      return recipes?.filter((rec) => rec?.tags?.includes(tagFilter))
-    }
-    if (categoryFilter && !searchFilter && !tagFilter) {
-      return recipes?.filter((rec) => rec?.category?.includes(categoryFilter))
-    }
-    if (categoryFilter && tagFilter && !searchFilter) {
-      return recipes?.filter(
+    let newArr: Recipe[] = []
+    if (!tagFilter && !searchFilter && !categoryFilter) {
+      newArr = recipes
+    } else if (tagFilter && !searchFilter && !categoryFilter) {
+      newArr = recipes?.filter((rec) => rec?.tags?.includes(tagFilter))
+    } else if (categoryFilter && !searchFilter && !tagFilter) {
+      newArr = recipes?.filter((rec) => rec?.category?.includes(categoryFilter))
+    } else if (categoryFilter && tagFilter && !searchFilter) {
+      newArr = recipes?.filter(
         (rec) =>
           rec?.category?.includes(categoryFilter) &&
           rec?.tags?.includes(tagFilter),
       )
-    }
-    if (searchFilter) {
-      return recipes?.filter((rec) => {
+    } else if (searchFilter) {
+      newArr = recipes?.filter((rec) => {
         const ingredients = getRecipeIngredients(rec)
         const criteria = [rec?.title, rec?.tags?.join(), ingredients?.join()]
           ?.join()
@@ -117,6 +116,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
         return criteria?.includes(searchFilter?.toLowerCase()?.trim())
       })
     }
+    return sortBy(newArr, (rec) => rec?._createdAt)?.reverse()
   }, [tagFilter, categoryFilter, searchFilter, JSON.stringify(recipes)])
 
   const isFiltered = !!tagFilter || !!categoryFilter || !!searchFilter

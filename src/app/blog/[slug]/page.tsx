@@ -14,9 +14,9 @@ import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl, siteConfig } from '@/configuration/site'
 
-export const dynamic = 'force-dynamic'
-export const fetchCache = 'default-no-store'
-export const revalidate = 10
+// export const dynamic = 'force-dynamic'
+// export const fetchCache = 'default-no-store'
+// export const revalidate = 60
 
 export type PageProps = {
   params: { slug: string }
@@ -26,9 +26,16 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const slug = params?.slug
-  const post = await client.fetch<SanityDocument<Post>>(POST_QUERY, {
-    slug,
-  })
+  const post = await client.fetch<SanityDocument<Post>>(
+    POST_QUERY,
+    {
+      slug,
+    },
+    {
+      next: { revalidate: 60 },
+      // cache: 'no-store'
+    },
+  )
 
   const { title, mainImage, author, seoDescription } = post || {}
 
@@ -60,8 +67,8 @@ export async function generateStaticParams() {
 const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
   const initial = await loadQuery<SanityDocument<Post>>(POST_QUERY, params, {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
-    next: { revalidate: 10 },
-    cache: 'no-store',
+    next: { revalidate: 60 },
+    // cache: 'no-store',
   })
 
   const { title, body, tags, mainImage } = initial?.data || {}

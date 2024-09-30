@@ -60,6 +60,7 @@ export async function generateStaticParams() {
 const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
   const initial = await loadQuery<SanityDocument<Post>>(POST_QUERY, params, {
     perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+    next: { revalidate: 10 },
   })
 
   const { title, body, tags, mainImage } = initial?.data || {}

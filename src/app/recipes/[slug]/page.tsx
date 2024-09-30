@@ -63,6 +63,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     params,
     {
       perspective: draftMode().isEnabled ? 'previewDrafts' : 'published',
+      next: { revalidate: 10 },
     },
   )
 

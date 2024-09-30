@@ -66,7 +66,7 @@ const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
 
   const { title, body, tags, mainImage } = initial?.data || {}
 
-  const articleBody = toPlainText(body as BlockContent)
+  const articleBody = body ? toPlainText(body as BlockContent) : ''
 
   const jsonLd: WithContext<BlogPosting> = {
     '@context': 'https://schema.org',

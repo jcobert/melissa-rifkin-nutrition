@@ -27,7 +27,8 @@ export default defineType({
       name: 'slug',
       title: 'URL-friendly Name (required)',
       type: 'slug',
-      validation: (rule) => rule.required(),
+      // validation: (rule) => rule.required(),
+      hidden: true,
       options: {
         source: 'title',
         maxLength: 96,

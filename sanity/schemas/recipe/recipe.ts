@@ -1,6 +1,9 @@
 import { FaBook } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
-import { CustomTextInput } from 'sanity-studio/components/text-input'
+import {
+  CustomTextField,
+  CustomTextInput,
+} from 'sanity-studio/components/text-input'
 
 export default defineType({
   name: 'recipe',
@@ -15,13 +18,30 @@ export default defineType({
         'These fields impact your presence on Google search results.',
     },
   ],
-  groups: [{ name: 'seo', title: 'SEO' }],
+  groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
   fields: [
     defineField({
       name: 'title',
-      title: 'Recipe Name (required)',
+      title: 'Recipe Name',
       type: 'string',
       validation: (rule) => rule.required(),
+      components: {
+        field: CustomTextField,
+      },
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Recipe Description',
+      description:
+        'Provide a short description of this recipe (one or two sentences). This is important for Google search results.',
+      type: 'string',
+      validation: (rule) => rule.required(),
+      group: 'seo',
+      // fieldset: 'seo',
+      components: {
+        input: CustomTextInput,
+        field: CustomTextField,
+      },
     }),
     defineField({
       name: 'slug',
@@ -56,6 +76,7 @@ export default defineType({
     defineField({
       name: 'category',
       title: 'Categories',
+      description: 'Select any that apply.',
       type: 'array',
       of: [{ type: 'string' }],
       options: {
@@ -140,18 +161,6 @@ export default defineType({
       options: { modal: { type: 'dialog', width: 'auto' } },
       description: 'All recipe steps. Drag to reorder. Top is the first step.',
       hidden: (props) => props.parent.layout !== 'advanced',
-    }),
-    defineField({
-      name: 'seoDescription',
-      title: 'Recipe Description',
-      description:
-        'Provide a short description of this recipe (one or two sentences).',
-      type: 'string',
-      group: 'seo',
-      fieldset: 'seo',
-      components: {
-        input: CustomTextInput,
-      },
     }),
   ],
 

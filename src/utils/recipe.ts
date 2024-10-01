@@ -45,3 +45,9 @@ export const findIngredientGroupMatch = (
       ] as (keyof IngredientMeasurement)[]),
     )?.toLowerCase(),
   )?.[0]
+
+/** Returns a number of minutes in ISO duration format. */
+export const formatCookTime = (time?: number) => {
+  if (typeof time === 'undefined') return undefined
+  return `PT${time}M`
+}

@@ -251,13 +251,15 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
             subtitle='📝'
             description="But check back soon, as we're always adding new content!"
           />
-          <button
-            type='button'
-            className='text-brand-blue bg-almost-white py-4 sm:py-2 w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
-            onClick={() => resetAllFilters()}
-          >
-            Show all posts
-          </button>
+          {posts?.length || isFiltered ? (
+            <button
+              type='button'
+              className='text-brand-blue bg-almost-white py-4 sm:py-2 w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
+              onClick={() => resetAllFilters()}
+            >
+              Show all posts
+            </button>
+          ) : null}
         </div>
       )}
     </div>

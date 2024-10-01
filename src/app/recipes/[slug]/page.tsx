@@ -8,7 +8,7 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { type Recipe } from 'sanity-studio/types'
 import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
 
-import { getRecipeIngredients } from '@/utils/recipe'
+import { formatCookTime, getRecipeIngredients } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
@@ -42,7 +42,9 @@ export async function generateMetadata({
 
   return generatePageMeta({
     title,
-    description: seoDescription || 'An easy and delicious recipe.',
+    description:
+      seoDescription ||
+      `An easy and delicious${title ? ` ${title}` : ''} recipe.`,
     category: `${category?.join(', ')} recipe`,
     images: [
       {
@@ -75,27 +77,39 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     },
   )
 
-  const { title, category, instructions, mainImage } = initial?.data || {}
+  const {
+    title,
+    category,
+    instructions,
+    ingredientGroups,
+    mainImage,
+    prepTime,
+    cookTime,
+  } = initial?.data || {}
 
-  const schemaInstructions: RecipeSchema['recipeInstructions'] =
-    instructions?.map((inst, i) => {
-      const stepNum = i + 1
-      const stepText = inst?.description
-      return {
-        '@type': 'HowTo',
-        step: {
-          '@type': 'HowToStep',
-          position: stepNum,
-          itemListElement: [
-            { '@type': 'HowToDirection', position: 1, text: stepText },
-          ],
-        },
-      }
-    })
+  const schemaInstructions: RecipeSchema['recipeInstructions'] = instructions
+    ? instructions?.map((inst, i) => {
+        const stepNum = i + 1
+        const stepText = inst?.description
+        return {
+          '@type': 'HowTo',
+          step: {
+            '@type': 'HowToStep',
+            position: stepNum,
+            itemListElement: [
+              { '@type': 'HowToDirection', position: 1, text: stepText },
+            ],
+          },
+        }
+      })
+    : undefined
 
-  const schemaIngredients = getRecipeIngredients(initial?.data)?.map(
-    (ing) => ing || '',
-  )
+  const schemaIngredients = ingredientGroups
+    ? getRecipeIngredients(initial?.data)?.map((ing) => ing || '')
+    : undefined
+
+  const schemaPrepTime = formatCookTime(prepTime)
+  const schemaCookTime = formatCookTime(cookTime)
 
   const jsonLd: WithContext<RecipeSchema> = {
     '@context': 'https://schema.org',
@@ -104,13 +118,13 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     image: {
       '@type': 'ImageObject',
       contentUrl: mainImage?.asset?.url,
-      name: mainImage?.alt,
+      name: mainImage?.alt || title,
     },
-    recipeCategory: category,
+    recipeCategory: category || undefined,
     recipeInstructions: schemaInstructions,
     recipeIngredient: schemaIngredients,
-    // prepTime,
-    // cookTime,
+    prepTime: schemaPrepTime,
+    cookTime: schemaCookTime,
   }
 
   return draftMode().isEnabled ? (

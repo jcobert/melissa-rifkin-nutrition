@@ -1,6 +1,9 @@
 import { FaNewspaper } from 'react-icons/fa6'
 import { defineField, defineType } from 'sanity'
-import { CustomTextInput } from 'sanity-studio/components/text-input'
+import {
+  CustomTextField,
+  CustomTextInput,
+} from 'sanity-studio/components/text-input'
 
 export default defineType({
   name: 'post',
@@ -20,14 +23,36 @@ export default defineType({
       description:
         'These fields impact your presence on Google search results.',
     },
+    {
+      name: 'info',
+      title: 'Misc.',
+      description: 'Additional info and metadata about the post.',
+    },
   ],
-  groups: [{ name: 'seo', title: 'SEO' }],
+  groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
   fields: [
     defineField({
       name: 'title',
-      title: 'Title (required)',
+      title: 'Title',
       type: 'string',
       validation: (rule) => rule.required(),
+      components: {
+        field: CustomTextField,
+      },
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Post Description',
+      description:
+        'Provide a short summary of this blog post (one or two sentences). This is important for Google search results.',
+      type: 'string',
+      validation: (rule) => rule.required(),
+      group: 'seo',
+      // fieldset: 'seo',
+      components: {
+        input: CustomTextInput,
+        field: CustomTextField,
+      },
     }),
     defineField({
       name: 'slug',
@@ -73,11 +98,6 @@ export default defineType({
       options: { layout: 'tags' },
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
-    }),
-    defineField({
       name: 'external',
       title: 'External?',
       type: 'boolean',
@@ -100,16 +120,21 @@ export default defineType({
         'If linking to an external post, add a preview here (e.g. the first paragraph of the post). A link will be provided to the reader to continue reading at the URL you provided above.',
     }),
     defineField({
-      name: 'seoDescription',
-      title: 'Post Description',
+      name: 'publishedAt',
+      title: 'Published Date',
       description:
-        'Provide a short summary of this blog post (one or two sentences).',
-      type: 'string',
-      group: 'seo',
-      fieldset: 'seo',
-      components: {
-        input: CustomTextInput,
-      },
+        'When the post was written. Defaults to today. You should rarely need to change this.',
+      type: 'datetime',
+      fieldset: 'info',
+      initialValue: new Date().toISOString(),
+      readOnly: (props) => !props.parent.overridePublishedAt,
+    }),
+    defineField({
+      name: 'overridePublishedAt',
+      title: 'Change Date',
+      type: 'boolean',
+      fieldset: 'info',
+      initialValue: false,
     }),
   ],
 

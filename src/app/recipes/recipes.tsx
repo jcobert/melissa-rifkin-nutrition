@@ -322,13 +322,15 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
             title={`We couldn't find any${tagFilter ? ` ${tagFilter}` : ''}${categoryFilter ? ` ${categoryFilter}` : ''} recipes.`}
             description="But check back soon, as we're always adding new recipes!"
           />
-          <button
-            type='button'
-            className='text-brand-blue bg-almost-white py-4 sm:py-2 w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
-            onClick={() => resetAllFilters()}
-          >
-            Show all recipes
-          </button>
+          {recipes?.length || isFiltered ? (
+            <button
+              type='button'
+              className='text-brand-blue bg-almost-white py-4 sm:py-2 w-full sm:w-fit px-4 hover:text-brand-blue-dark transition border rounded'
+              onClick={() => resetAllFilters()}
+            >
+              Show all recipes
+            </button>
+          ) : null}
         </div>
       )}
     </div>

@@ -80,7 +80,7 @@ const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
     '@type': 'BlogPosting',
     name: title,
     articleBody,
-    keywords: tags?.join(', '),
+    keywords: tags ? tags?.join(', ') : undefined,
     image: {
       '@type': 'ImageObject',
       contentUrl: mainImage?.asset?.url,

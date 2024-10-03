@@ -1,5 +1,5 @@
 import { LucideIcon } from 'lucide-react'
-import React, { ComponentPropsWithRef, FC, forwardRef } from 'react'
+import React, { ComponentPropsWithRef, forwardRef } from 'react'
 import { IconType } from 'react-icons'
 import { ImSpinner2 } from 'react-icons/im'
 
@@ -23,10 +23,7 @@ type IconButtonProps = {
   }
 } & ComponentPropsWithRef<'button'>
 
-const IconButton: FC<IconButtonProps> = forwardRef<
-  HTMLButtonElement,
-  IconButtonProps
->(
+const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
   (
     {
       className,

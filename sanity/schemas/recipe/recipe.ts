@@ -31,13 +31,36 @@ export default defineType({
       options: { collapsible: true, columns: 2 },
     },
   ],
-  groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
+  groups: [
+    {
+      name: 'basicInfo',
+      title: 'Basic Info',
+    },
+    {
+      name: 'classification',
+      title: 'Categories and Keywords',
+    },
+    {
+      name: 'stepsAndIgredients',
+      title: 'Steps and Ingredients',
+    },
+    {
+      name: 'detailsAndNutrition',
+      title: 'Details and Nutrition',
+    },
+    // {
+    //   name: 'additionalInfo',
+    //   title: 'Additional Info',
+    // },
+  ],
+  // groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
   fields: [
     defineField({
       name: 'title',
       title: 'Recipe Name',
       type: 'string',
-      fieldset: 'basicInfo',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
       validation: (rule) => rule.required(),
       // components: {
       //   field: CustomTextField,
@@ -49,10 +72,10 @@ export default defineType({
       description:
         'Provide a short description of this recipe (one or two sentences). This is important for Google search results.',
       type: 'string',
-      fieldset: 'basicInfo',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
       validation: (rule) => rule.required(),
-      group: 'seo',
-      // fieldset: 'seo',
+      // group: 'seo',
       components: {
         input: CustomTextInput,
         // field: CustomTextField,
@@ -75,7 +98,8 @@ export default defineType({
       name: 'mainImage',
       title: 'Main Photo',
       type: 'image',
-      fieldset: 'basicInfo',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
       description: 'The featured image at the top of the recipe.',
       validation: (rule) => rule.required(),
       options: {
@@ -125,7 +149,8 @@ export default defineType({
         },
       ],
       options: { layout: 'grid' },
-      fieldset: 'basicInfo',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
       description: 'Any other photos you wish to display.',
     }),
     defineField({
@@ -135,7 +160,8 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
       validation: (rule) => rule.min(1).length(1).required(),
-      fieldset: 'classification',
+      // fieldset: 'classification',
+      group: 'classification',
       options: {
         list: [
           { value: 'breakfast', title: 'Breakfast' },
@@ -155,7 +181,8 @@ export default defineType({
       type: 'array',
       of: [{ type: 'string' }],
       validation: (rule) => rule.min(1).length(1).required(),
-      fieldset: 'classification',
+      // fieldset: 'classification',
+      group: 'classification',
       options: { layout: 'tags' },
       description:
         'Keywords to help someone filtering for recipes on the website. These are user-facing. Keep them short and more generic. E.g. pasta, soup, instant pot, vegan.',
@@ -165,8 +192,9 @@ export default defineType({
       title: 'SEO Tags',
       type: 'array',
       of: [{ type: 'string' }],
-      fieldset: 'classification',
-      group: 'seo',
+      // fieldset: 'classification',
+      group: 'classification',
+      // group: 'seo',
       options: { layout: 'tags' },
       description:
         'Additional keywords/short phrases related to the recipe. These are hidden and only used to help Google search. E.g. garlicky shrimp, zesty indian curry',
@@ -176,8 +204,9 @@ export default defineType({
       title: 'Cuisine Types',
       type: 'array',
       of: [{ type: 'string' }],
-      fieldset: 'classification',
-      group: 'seo',
+      // fieldset: 'classification',
+      group: 'classification',
+      // group: 'seo',
       options: { layout: 'tags' },
       description: 'E.g. Mexican, Greek, Japanese',
     }),
@@ -187,42 +216,7 @@ export default defineType({
       type: 'datetime',
       hidden: true,
     }),
-    defineField({
-      name: 'prepTime',
-      title: 'Prep Time',
-      type: 'number',
-      fieldset: 'times',
-      description: 'In minutes',
-    }),
-    defineField({
-      name: 'cookTime',
-      title: 'Cook Time',
-      type: 'number',
-      fieldset: 'times',
-      description: 'In minutes',
-    }),
-    defineField({
-      name: 'servings',
-      title: 'Servings',
-      description:
-        'How much this recipe yields. E.g. 4 people, 12 cookies, etc.',
-      type: 'object',
-      options: { columns: 2 },
-      fields: [
-        defineField({
-          name: 'quantity',
-          title: 'Qty',
-          type: 'number',
-        }),
-        defineField({
-          name: 'unit',
-          title: 'Unit',
-          type: 'string',
-          placeholder: 'people',
-          initialValue: 'people',
-        }),
-      ],
-    }),
+
     defineField({
       name: 'layout',
       title: 'Layout',
@@ -239,6 +233,7 @@ export default defineType({
       initialValue: 'advanced',
       hidden: true,
     }),
+
     defineField({
       name: 'body',
       title: 'Instructions',
@@ -248,32 +243,83 @@ export default defineType({
       // hidden: (ctx) => ctx.parent?.layout !== 'basic',
       hidden: true,
     }),
+
     defineField({
       name: 'ingredientGroups',
       title: 'Ingredient Groups',
       type: 'array',
       of: [{ type: 'ingredientGroup' }],
+      group: 'stepsAndIgredients',
       validation: (rule) => rule.min(1).length(1).required(),
       options: { modal: { type: 'dialog', width: 'auto' } },
       description:
         'Sets of ingredients for the recipe. For example, you might have one ingredient group for the salad and another for the dressing. At least one group is required.',
       // hidden: (ctx) => ctx.parent?.layout !== 'advanced',
     }),
+
     defineField({
       name: 'instructions',
       title: 'Instructions',
       type: 'array',
       of: [{ type: 'instruction' }],
+      group: 'stepsAndIgredients',
       validation: (rule) => rule.min(1).length(1).required(),
       options: { modal: { type: 'dialog', width: 'auto' } },
       description: 'All recipe steps. Drag to reorder. Top is the first step.',
       // hidden: (ctx) => ctx.parent?.layout !== 'advanced',
     }),
+
+    defineField({
+      name: 'prepTime',
+      title: 'Prep Time',
+      type: 'number',
+      // fieldset: 'times',
+      group: 'detailsAndNutrition',
+      description: 'In minutes',
+    }),
+
+    defineField({
+      name: 'cookTime',
+      title: 'Cook Time',
+      type: 'number',
+      // fieldset: 'times',
+      group: 'detailsAndNutrition',
+      description: 'In minutes',
+    }),
+
+    defineField({
+      name: 'servings',
+      title: 'Servings',
+      description:
+        'How much this recipe yields. E.g. 4 people, 12 cookies, etc.',
+      type: 'object',
+      group: 'detailsAndNutrition',
+      options: { columns: 2 },
+      fields: [
+        defineField({
+          name: 'quantity',
+          title: 'Qty',
+          type: 'number',
+        }),
+        defineField({
+          name: 'unit',
+          title: 'Unit',
+          type: 'string',
+          placeholder: 'people',
+          initialValue: 'people',
+        }),
+      ],
+    }),
+
     defineField({
       name: 'nutritionInformation',
       title: 'Nutrition Information',
       type: 'nutrition',
-      options: { collapsible: true, columns: 2 } as ObjectOptions,
+      group: 'detailsAndNutrition',
+      options: {
+        // collapsible: true,
+        columns: 2,
+      } as ObjectOptions,
     }),
   ],
 

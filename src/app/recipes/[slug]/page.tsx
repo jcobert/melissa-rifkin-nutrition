@@ -80,6 +80,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
   const {
     title,
     category,
+    tags,
     instructions,
     ingredientGroups,
     mainImage,
@@ -96,6 +97,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
           step: {
             '@type': 'HowToStep',
             position: stepNum,
+            name: inst?.title,
             itemListElement: [
               { '@type': 'HowToDirection', position: 1, text: stepText },
             ],
@@ -125,6 +127,9 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     recipeIngredient: schemaIngredients,
     prepTime: schemaPrepTime,
     cookTime: schemaCookTime,
+    // recipeYield: '',
+    // recipeCuisine: [],
+    // keywords: tags ? tags?.join(', ') : undefined,
   }
 
   return draftMode().isEnabled ? (

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { IngredientCheckbox } from 'sanity-studio/components/ingredient-selector'
 
 export default defineType({
   name: 'ingredientGroup',
@@ -9,15 +10,16 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description:
-        'E.g. "Sauce". If only one group, title won\'t be shown, so you can leave blank.',
+      description: 'E.g. "Dressing". If only one group, leave blank.',
     }),
     defineField({
       name: 'ingredients',
       title: 'Ingredients',
       type: 'array',
+      // options: { modal: { type: 'popover' } },
       of: [{ type: 'ingredientMeasurement' }],
       // of: [{ type: 'reference', to: { type: 'ingredient' } }],
+      validation: (rule) => rule.min(1).length(1).required(),
     }),
   ],
 })

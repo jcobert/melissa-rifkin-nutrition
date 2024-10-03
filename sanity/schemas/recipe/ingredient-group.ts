@@ -18,7 +18,7 @@ export default defineType({
       // options: { modal: { type: 'popover' } },
       of: [{ type: 'ingredientMeasurement' }],
       // of: [{ type: 'reference', to: { type: 'ingredient' } }],
-      validation: (rule) => rule.min(1).length(1).required(),
+      validation: (rule) => rule.min(1).required(),
     }),
   ],
 })

@@ -80,12 +80,18 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
   const {
     title,
     category,
-    tags,
+    // tags,
     instructions,
     ingredientGroups,
     mainImage,
     prepTime,
     cookTime,
+    servings,
+    seoDescription,
+    cuisines,
+    nutritionInformation,
+    // additionalImages,
+    // seoTags,
   } = initial?.data || {}
 
   const schemaInstructions: RecipeSchema['recipeInstructions'] = instructions
@@ -127,9 +133,22 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     recipeIngredient: schemaIngredients,
     prepTime: schemaPrepTime,
     cookTime: schemaCookTime,
-    // recipeYield: '',
-    // recipeCuisine: [],
+    recipeYield:
+      typeof servings?.quantity !== 'undefined'
+        ? `${servings?.quantity} ${servings?.unit}`
+        : undefined,
+    recipeCuisine: cuisines?.length ? cuisines?.join(', ') : undefined,
+    description: seoDescription ?? undefined,
+    nutrition: {
+      '@type': 'NutritionInformation',
+      calories:
+        typeof nutritionInformation?.calories !== 'undefined'
+          ? nutritionInformation?.calories?.toString()
+          : undefined,
+      servingSize: nutritionInformation?.servingSize ?? undefined,
+    },
     // keywords: tags ? tags?.join(', ') : undefined,
+    // keywords: seoTags ? seoTags?.join(', ') : undefined,
   }
 
   return draftMode().isEnabled ? (

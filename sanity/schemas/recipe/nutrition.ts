@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity'
-import { IngredientCheckbox } from 'sanity-studio/components/ingredient-selector'
 
 export default defineType({
   name: 'nutrition',

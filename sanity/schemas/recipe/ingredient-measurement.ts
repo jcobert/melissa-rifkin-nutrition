@@ -1,6 +1,5 @@
 import { defineField, defineType } from 'sanity'
 import { CustomNumberInput } from 'sanity-studio/components/number-input'
-import { CustomTextInput } from 'sanity-studio/components/text-input'
 
 import { formatFraction } from '@/utils/string'
 

@@ -1,9 +1,6 @@
 import { FaBook } from 'react-icons/fa6'
-import { ImageAsset, ObjectOptions, defineField, defineType } from 'sanity'
-import {
-  CustomTextField,
-  CustomTextInput,
-} from 'sanity-studio/components/text-input'
+import { ObjectOptions, defineField, defineType } from 'sanity'
+import { CustomTextInput } from 'sanity-studio/components/text-input'
 import { Image } from 'sanity-studio/types'
 
 export default defineType({

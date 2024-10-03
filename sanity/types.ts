@@ -79,26 +79,25 @@ export interface Post extends SanityDocument {
 export interface Recipe extends SanityDocument {
   _type: 'recipe'
   title?: string
+  seoDescription?: string
   slug?: { _type: 'slug'; current: string }
   publishedAt?: string
-  mainImage?: {
-    _type: 'image'
-    asset: SanityImageAsset
-    crop?: SanityImageCrop
-    hotspot?: SanityImageHotspot
-    alt?: string
-  }
+  mainImage?: Image
+  additionalImages?: Image[]
   category?: Array<string>
   tags?: Array<string>
+  seoTags?: Array<string>
+  cuisines?: Array<string>
   prepTime?: number
   cookTime?: number
+  servings?: { quantity?: number; unit?: string }
   layout?: 'advanced' | 'basic'
   body?: BlockContent
   ingredientGroups?: Array<
     SanityKeyedReference<IngredientGroup> & IngredientGroup
   >
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
-  seoDescription?: string
+  nutritionInformation?: NutritionInformation
 }
 
 export interface Ingredient extends SanityDocument {
@@ -127,6 +126,8 @@ export type Instruction = {
   ingredients?: Array<Ingredient>
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
 }
+
+export type NutritionInformation = { calories?: number; servingSize?: string }
 
 export enum RecipeUnit {
   tsp = 'tsp',

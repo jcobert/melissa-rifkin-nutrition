@@ -13,6 +13,7 @@ import ingredient from 'sanity-studio/schemas/recipe/ingredient'
 import ingredientGroup from 'sanity-studio/schemas/recipe/ingredient-group'
 import ingredientMeasurement from 'sanity-studio/schemas/recipe/ingredient-measurement'
 import instruction from 'sanity-studio/schemas/recipe/instruction'
+import nutrition from 'sanity-studio/schemas/recipe/nutrition'
 import socialLinks from 'sanity-studio/schemas/socialLinks'
 import video from 'sanity-studio/schemas/video'
 
@@ -26,6 +27,7 @@ const schema: SchemaTypeDefinition[] = [
   ingredientGroup,
   instruction,
   ingredientMeasurement,
+  nutrition,
   general,
   bio,
   contactInfo,

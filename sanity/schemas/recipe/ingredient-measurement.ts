@@ -7,7 +7,15 @@ export default defineType({
   name: 'ingredientMeasurement',
   title: 'Ingredient Measurement',
   type: 'object',
+  fieldsets: [{ name: 'value', title: ' ', options: { columns: 2 } }],
+  options: { columns: 1 },
   fields: [
+    // defineField({
+    //   name: 'ingredientName',
+    //   title: 'Ingredient',
+    //   type: 'string',
+    // }),
+    /** @todo find a way to not have to create a separate document for ingredients. */
     defineField({
       name: 'ingredientName',
       title: 'Ingredient',
@@ -17,7 +25,9 @@ export default defineType({
     defineField({
       name: 'amount',
       title: 'Amount',
+      /** @todo Find a better way to enter fractions or just make this a string field. */
       type: 'number',
+      // fieldset: 'value',
       components: { input: CustomNumberInput },
       description: 'Enter as decimal or use the arrows to increment.',
     }),
@@ -25,6 +35,7 @@ export default defineType({
       name: 'unit',
       title: 'Unit',
       type: 'string',
+      // fieldset: 'value',
       options: {
         list: [
           { value: 'tsp', title: 'tsp' },

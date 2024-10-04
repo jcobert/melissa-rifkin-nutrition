@@ -24,7 +24,7 @@ export const customStructure = (S: StructureBuilder) =>
 
       // Recipe
       S.documentTypeListItem('recipe' as DocumentType).title('Recipes'),
-      S.documentTypeListItem('ingredient' as DocumentType).title('Ingredients'),
+      // S.documentTypeListItem('ingredient' as DocumentType).title('Ingredients'),
       S.divider(),
 
       // Blog

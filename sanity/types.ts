@@ -111,7 +111,7 @@ export type IngredientGroup = {
   ingredients?: Array<IngredientMeasurement>
 }
 
-export type IngredientMeasurement = {
+export type IngredientMeasurement = SanityKeyed<{
   ingredientName?: string
   // ingredientName?: Ingredient
   // ingredientName?: SanityReference<Ingredient>
@@ -119,12 +119,13 @@ export type IngredientMeasurement = {
   amount?: number
   unit?: keyof typeof RecipeUnit
   note?: string
-}
+  _type?: 'ingredientMeasurement'
+}>
 
 export type Instruction = {
   title?: string
   description?: string
-  ingredients?: Array<Ingredient>
+  ingredients?: Array<IngredientMeasurement>
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
 }
 

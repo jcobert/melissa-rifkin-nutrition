@@ -8,6 +8,7 @@ type Props = {
   measurement?: IngredientMeasurement
   hideIngredient?: boolean
   hideMeasurement?: boolean
+  className?: string
   measurementClassName?: string
   ingredientClassName?: string
 }
@@ -16,12 +17,13 @@ const Measurement: FC<Props> = ({
   measurement,
   hideIngredient = false,
   hideMeasurement = false,
+  className = '',
   measurementClassName = '',
   ingredientClassName = '',
 }) => {
   //
   return (
-    <div className='flex items-center gap-1 w-fit'>
+    <div className={cn('flex items-center gap-1 w-fit', className)}>
       {!!measurement?.amount && !hideMeasurement ? (
         <div
           className={cn([
@@ -32,7 +34,7 @@ const Measurement: FC<Props> = ({
           <p className='whitespace-nowrap'>
             {formatFraction(measurement?.amount)}
           </p>
-          {!!measurement?.unit && <p>{formatUnit(measurement?.unit)}</p>}
+          {!!measurement?.unit && <p>{measurement?.unit}</p>}
         </div>
       ) : null}
       {!hideIngredient && (
@@ -42,7 +44,7 @@ const Measurement: FC<Props> = ({
             ingredientClassName,
           ])}
         >
-          {measurement?.ingredientName?.name}
+          {measurement?.ingredientName}
         </p>
       )}
     </div>

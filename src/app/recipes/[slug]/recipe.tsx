@@ -11,8 +11,7 @@ import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
 import { IngredientMeasurement, type Recipe } from 'sanity-studio/types'
 
-import { getIngredientDetails } from '@/utils/recipe'
-
+// import { getIngredientDetails } from '@/utils/recipe'
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo, { logos } from '@/components/common/logo'
@@ -172,42 +171,59 @@ const Recipe: FC<Props> = ({ recipe }) => {
                   <div className='flex flex-col gap-2 border-y py-2'>
                     {inst?.title ||
                     (!inst?.title && !!inst?.ingredients?.length) ? (
-                      <h3 className='font-medium text-brand uppercase'>
-                        {inst?.title || 'Next'}
-                      </h3>
+                      inst?.title ? (
+                        <h3 className='font-medium text-brand uppercase'>
+                          {inst?.title}
+                          {/* {inst?.title || (step === 0 ? 'First' : 'Next')} */}
+                        </h3>
+                      ) : null
                     ) : null}
                     <div className='flex flex-col'>
                       {inst?.ingredients?.map((ingredient) => {
-                        const measurement = getIngredientDetails(
-                          ingredient,
-                          ingredientGroups,
-                        )
-                        if (
-                          measurement?.length > 1 &&
-                          uniqBy(measurement, (m) =>
-                            JSON.stringify(
-                              pick(m, [
-                                'ingredientName',
-                                'amount',
-                                'unit',
-                                'note',
-                              ] as (keyof IngredientMeasurement)[]),
-                            )?.toLowerCase(),
-                          )?.length > 1
-                        )
-                          return (
-                            <IngredientTooltip
-                              key={ingredient?._id}
-                              triggerProps={{ className: 'w-fit' }}
-                              ingredient={ingredient}
-                              ingredientGroups={ingredientGroups}
-                              measurement={measurement}
-                            />
-                          )
-                        return (
+                        // const measurement = getIngredientDetails(
+                        //   ingredient,
+                        //   ingredientGroups,
+                        // )
+                        // if (
+                        //   measurement?.length > 1 &&
+                        //   uniqBy(measurement, (m) =>
+                        //     JSON.stringify(
+                        //       pick(m, [
+                        //         'ingredientName',
+                        //         'amount',
+                        //         'unit',
+                        //         'note',
+                        //       ] as (keyof IngredientMeasurement)[]),
+                        //     )?.toLowerCase(),
+                        //   )?.length > 1
+                        // )
+                        //   return (
+                        //     <IngredientTooltip
+                        //       key={ingredient?._id}
+                        //       triggerProps={{ className: 'w-fit' }}
+                        //       ingredient={ingredient}
+                        //       ingredientGroups={ingredientGroups}
+                        //       measurement={measurement}
+                        //     />
+                        //   )
+                        // return (
+                        //   <Measurement
+                        //     key={ingredient?._id}
+                        //     measurement={measurement?.[0]}
+                        //     ingredientClassName='font-normal'
+                        //   />
+                        // )
+
+                        return ingredient?.note ? (
+                          <IngredientTooltip
+                            key={ingredient?._key}
+                            ingredient={ingredient}
+                            triggerProps={{ className: 'w-fit' }}
+                          />
+                        ) : (
                           <Measurement
-                            key={ingredient?._id}
-                            measurement={measurement?.[0]}
+                            key={ingredient?._key}
+                            measurement={ingredient}
                             ingredientClassName='font-normal'
                           />
                         )

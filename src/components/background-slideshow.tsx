@@ -6,7 +6,7 @@ type Props = {
   duration?: number
 }
 
-const BackgroundSlideshow: FC<Props> = ({ imagePaths, duration = 10 }) => {
+const BackgroundSlideshow: FC<Props> = ({ imagePaths, duration = 7 }) => {
   const transition = 0
 
   const orderedImages = sortBy(imagePaths, (img) => img?.order)

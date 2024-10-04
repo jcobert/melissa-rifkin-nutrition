@@ -58,8 +58,6 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
   const logo = logos?.full
 
-  console.log(recipe)
-
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
       <Back href='/recipes' text='All Recipes' />

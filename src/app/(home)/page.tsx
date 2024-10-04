@@ -59,8 +59,8 @@ const HomePage = async () => {
         <BackgroundSlideshow
           imagePaths={[
             { path: '/images/hero/5.jpg', order: 0 },
-            { path: '/images/cutting-board.jpeg', order: 1 },
-            { path: '/images/hero/4.jpg', order: 2 },
+            { path: '/images/hero/4.jpg', order: 1 },
+            { path: '/images/cutting-board.jpeg', order: 2 },
           ]}
           // duration={8}
         />
@@ -122,7 +122,7 @@ const HomePage = async () => {
               Healthy and Delicious Recipes
             </h2>
             <Image
-              src='/images/hero/5.jpg'
+              src='/images/cutting-board.jpeg'
               alt='Tray with fruits'
               width={500}
               height={500}
@@ -138,7 +138,7 @@ const HomePage = async () => {
             </Link>
           </div>
           <Image
-            src='/images/hero/5.jpg'
+            src='/images/cutting-board.jpeg'
             alt='Tray with fruits'
             width={500}
             height={500}

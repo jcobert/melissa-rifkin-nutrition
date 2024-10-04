@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 import { Divider, DividerIcon } from 'sanity-studio/components/divider'
+import FieldDescription from 'sanity-studio/components/field-description'
+import { BlockLink } from 'sanity-studio/types'
 
 /**
  * This is the schema type for block content used in the post document type
@@ -67,18 +69,63 @@ export default defineType({
                 name: 'external',
                 title: 'External',
                 description:
-                  'Select if link is to another website (usually the case).',
+                  'Link is to another website (usually the case). Adds icon next to link.',
                 type: 'boolean',
                 initialValue: true,
                 options: { layout: 'checkbox' },
               },
               {
                 name: 'sponsored',
-                title: 'Sponsored',
-                description:
-                  'Important: Select if link is to a sponsored/affiliate site or is otherwise monetized.',
+                title: 'Mark as sponsored',
+                description: (
+                  <FieldDescription
+                    description='Important: Select if link is to a sponsored/affiliate site or is otherwise monetized.'
+                    link={{
+                      text: 'Learn when to use',
+                      url: 'https://sheknowsseo.co/mark-a-link-as-sponsored/',
+                    }}
+                  />
+                ),
                 type: 'boolean',
-                initialValue: false,
+                validation: (rule) =>
+                  rule.custom((val, ctx) => {
+                    if (
+                      (ctx?.parent as BlockLink)?.external &&
+                      typeof val === 'undefined'
+                    ) {
+                      return 'Must be checked or unchecked.'
+                    }
+                    return true
+                  }),
+                // initialValue: false,
+                hidden: (schema) => !schema?.parent?.external,
+                options: { layout: 'checkbox' },
+              },
+              {
+                name: 'noFollow',
+                title: 'Mark as nofollow',
+                description: (
+                  <FieldDescription
+                    link={{
+                      text: 'Learn when to use',
+                      url: 'https://sheknowsseo.co/when-to-mark-a-link-no-follow/',
+                    }}
+                  />
+                ),
+                type: 'boolean',
+                validation: (rule) =>
+                  rule.custom((val, ctx) => {
+                    if (
+                      (ctx?.parent as BlockLink)?.external &&
+                      typeof val === 'undefined' &&
+                      !(ctx?.parent as BlockLink)?.sponsored
+                    ) {
+                      return 'Must be checked or unchecked.'
+                    }
+                    return true
+                  }),
+                // initialValue: false,
+                hidden: (schema) => !schema?.parent?.external,
                 options: { layout: 'checkbox' },
               },
               {

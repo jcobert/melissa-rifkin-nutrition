@@ -45,9 +45,9 @@ export const getBlockLinkAttributes = (link?: BlockLink): LinkAttributes => {
   }
 
   let relAttrs: LinkRelAttribute[] = []
-  if (link?.external) {
-    relAttrs = relAttrs?.concat('nofollow')
-  }
+  // if (link?.external) {
+  //   relAttrs = relAttrs?.concat('nofollow')
+  // }
   if (link?.sponsored) {
     relAttrs = relAttrs?.concat('sponsored')
   }

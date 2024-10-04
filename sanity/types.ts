@@ -56,8 +56,9 @@ export type BlockLink = {
   _key: string
   url: string
   external?: boolean
-  newTab?: boolean
+  noFollow?: boolean
   sponsored?: boolean
+  newTab?: boolean
 }
 
 export type Slug = { _type: 'file'; current: string }

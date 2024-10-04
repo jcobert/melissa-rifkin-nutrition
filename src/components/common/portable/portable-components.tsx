@@ -86,15 +86,14 @@ export const PortableLink = ({
         rel={rel}
         target={target}
         className='inline-flex items-center gap-1__ w-fit__'
-        aria-description='This is an external link.'
       >
         {children}
-        <HiOutlineExternalLink />
+        <HiOutlineExternalLink aria-label='This is an external link.' />
       </a>
     )
   }
   return (
-    <Link className='text-red-500' href={value?.url} rel={rel} target={target}>
+    <Link href={value?.url} rel={rel} target={target}>
       {children}
     </Link>
   )

@@ -30,30 +30,31 @@ export default defineType({
       title: 'Ingredients',
       type: 'array',
       of: [
-        defineField({
-          type: 'ingredientMeasurement',
-          name: 'ingredient',
-          // options: {
-          //   filter: ({ document }) => {
-          //     const { ingredientGroups } = (document as Recipe) || {}
-          //     const ingredientMeasurements = ingredientGroups?.flatMap(
-          //       (group) => group?.ingredients?.map((ing) => ing),
-          //     )
-          //     const ingredientRefs = ingredientMeasurements?.map(
-          //       (im) =>
-          //         (im?.ingredientName as Ingredient & { _ref: string })?._ref,
-          //     )
-          //     return {
-          //       filter: '_id in $ingredients',
-          //       params: {
-          //         ingredients: ingredientRefs,
-          //       },
-          //     }
-          //   },
-          //   disableNew: true,
-          // },
-          // components: { input: IngredientCheckbox },
-        }),
+        { type: 'ingredientMeasurement' },
+        // defineField({
+        //   type: 'ingredientMeasurement',
+        //   name: 'ingredient',
+        //   // options: {
+        //   //   filter: ({ document }) => {
+        //   //     const { ingredientGroups } = (document as Recipe) || {}
+        //   //     const ingredientMeasurements = ingredientGroups?.flatMap(
+        //   //       (group) => group?.ingredients?.map((ing) => ing),
+        //   //     )
+        //   //     const ingredientRefs = ingredientMeasurements?.map(
+        //   //       (im) =>
+        //   //         (im?.ingredientName as Ingredient & { _ref: string })?._ref,
+        //   //     )
+        //   //     return {
+        //   //       filter: '_id in $ingredients',
+        //   //       params: {
+        //   //         ingredients: ingredientRefs,
+        //   //       },
+        //   //     }
+        //   //   },
+        //   //   disableNew: true,
+        //   // },
+        //   // components: { input: IngredientCheckbox },
+        // }),
         // defineField({
         //   type: 'reference',
         //   name: 'ingredient',

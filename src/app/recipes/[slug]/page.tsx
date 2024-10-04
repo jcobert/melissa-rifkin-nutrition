@@ -148,7 +148,9 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
         ? `${servings?.quantity} ${servings?.unit}`
         : undefined,
     recipeCuisine: cuisines?.length ? cuisines?.join(', ') : undefined,
-    description: seoDescription ?? undefined,
+    description:
+      seoDescription ??
+      `An easy and delicious${title ? ` ${title}` : ''} recipe.`,
     nutrition: {
       '@type': 'NutritionInformation',
       calories:

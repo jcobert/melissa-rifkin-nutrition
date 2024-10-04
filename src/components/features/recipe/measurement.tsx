@@ -32,7 +32,8 @@ const Measurement: FC<Props> = ({
           ])}
         >
           <p className='whitespace-nowrap'>
-            {formatFraction(measurement?.amount)}
+            {measurement?.amount}
+            {/* {formatFraction(measurement?.amount)} */}
           </p>
           {!!measurement?.unit && <p>{measurement?.unit}</p>}
         </div>

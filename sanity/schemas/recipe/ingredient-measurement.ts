@@ -27,9 +27,10 @@ export default defineType({
       name: 'amount',
       title: 'Amount',
       /** @todo Find a better way to enter fractions or just make this a string field. */
-      type: 'number',
+      type: 'string',
+      // type: 'number',
       // fieldset: 'value',
-      components: { input: CustomNumberInput },
+      // components: { input: CustomNumberInput },
       description: 'Enter as decimal or use the arrows to increment.',
     }),
     defineField({
@@ -61,10 +62,10 @@ export default defineType({
   preview: {
     select: { title: 'ingredientName', amount: 'amount', unit: 'unit' },
     prepare: ({ title, amount, unit }) => {
-      const fraction = formatFraction(amount)
+      // const fraction = formatFraction(amount)
       return {
         title,
-        subtitle: `${fraction} ${unit ? unit : ''}`,
+        subtitle: `${amount} ${unit ? unit : ''}`,
       }
     },
   },

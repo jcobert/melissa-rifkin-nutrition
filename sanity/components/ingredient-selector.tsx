@@ -13,12 +13,7 @@ import {
   useFormValue,
 } from 'sanity'
 import { apiVersion } from 'sanity-studio/env'
-import {
-  Ingredient,
-  IngredientMeasurement,
-  Recipe,
-  SanityKeyed,
-} from 'sanity-studio/types'
+import { IngredientMeasurement, Recipe, SanityKeyed } from 'sanity-studio/types'
 
 export const IngredientSelector: FC<ArrayOfObjectsInputProps> = (props) => {
   const ingredientGroups =

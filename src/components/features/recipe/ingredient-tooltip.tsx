@@ -1,9 +1,7 @@
 'use client'
 
 import React, { FC } from 'react'
-import { Ingredient, IngredientMeasurement, Recipe } from 'sanity-studio/types'
-
-import { findIngredientGroupMatch } from '@/utils/recipe'
+import { IngredientMeasurement, Recipe } from 'sanity-studio/types'
 
 import Tooltip, { TooltipProps } from '@/components/common/layout/tooltip'
 import Measurement from '@/components/features/recipe/measurement'
@@ -16,7 +14,7 @@ type Props = {
 
 const IngredientTooltip: FC<Props> = ({
   ingredient,
-  ingredientGroups,
+  // ingredientGroups,
   // measurement,
   ...props
 }) => {

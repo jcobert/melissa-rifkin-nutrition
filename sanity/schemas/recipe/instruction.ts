@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { IngredientSelector } from 'sanity-studio/components/ingredient-selector'
-import { Ingredient, Recipe } from 'sanity-studio/types'
+import { Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'instruction',

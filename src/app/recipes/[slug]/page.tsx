@@ -9,7 +9,7 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { type Recipe } from 'sanity-studio/types'
 import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
 
-import { formatCookTime, getRecipeIngredients } from '@/utils/recipe'
+import { displayIngredient, formatCookTime } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
@@ -119,7 +119,11 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     : undefined
 
   const schemaIngredients = ingredientGroups
-    ? getRecipeIngredients(initial?.data)?.map((ing) => ing || '')
+    ? initial?.data?.ingredientGroups
+        ?.filter((group) => !!group?.ingredients?.length)
+        ?.flatMap((group) =>
+          (group?.ingredients || [])?.map((ing) => displayIngredient(ing)),
+        )
     : undefined
 
   const schemaPrepTime = formatCookTime(prepTime)

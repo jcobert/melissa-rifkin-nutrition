@@ -1,6 +1,5 @@
 import { intersectionBy, pick } from 'lodash'
 import {
-  Ingredient,
   IngredientGroup,
   IngredientMeasurement,
   Recipe,
@@ -50,4 +49,9 @@ export const findIngredientGroupMatch = (
 export const formatCookTime = (time?: number) => {
   if (typeof time === 'undefined') return undefined
   return `PT${time}M`
+}
+
+export const displayIngredient = (ingredient?: IngredientMeasurement) => {
+  if (!ingredient) return ''
+  return `${ingredient?.amount ?? ''}${ingredient?.unit ? ` ${ingredient?.unit}` : ''} ${ingredient?.ingredientName}`?.trim()
 }

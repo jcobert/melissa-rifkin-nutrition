@@ -1,7 +1,7 @@
 import { FaBook } from 'react-icons/fa6'
 import { ObjectOptions, defineField, defineType } from 'sanity'
 import { CustomTextInput } from 'sanity-studio/components/text-input'
-import { Image } from 'sanity-studio/types'
+import { Image, Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'recipe',
@@ -305,7 +305,13 @@ export default defineType({
           name: 'unit',
           title: 'Unit',
           type: 'string',
-          placeholder: 'people',
+          validation: (rule) =>
+            rule.custom((unit: string | undefined, ctx) => {
+              if (!!(ctx.parent as Recipe['servings'])?.quantity && !unit)
+                return 'Required'
+              return true
+            }),
+          // placeholder: 'people',
           initialValue: 'people',
         }),
       ],

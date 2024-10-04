@@ -10,18 +10,19 @@ export default defineType({
   fieldsets: [{ name: 'value', title: ' ', options: { columns: 2 } }],
   options: { columns: 1 },
   fields: [
-    // defineField({
-    //   name: 'ingredientName',
-    //   title: 'Ingredient',
-    //   type: 'string',
-    // }),
-    /** @todo find a way to not have to create a separate document for ingredients. */
     defineField({
       name: 'ingredientName',
       title: 'Ingredient',
-      type: 'reference',
-      to: { type: 'ingredient' },
+      type: 'string',
+      validation: (rule) => rule.required(),
     }),
+    /** @todo find a way to not have to create a separate document for ingredients. */
+    // defineField({
+    //   name: 'ingredientName',
+    //   title: 'Ingredient',
+    //   type: 'reference',
+    //   to: { type: 'ingredient' },
+    // }),
     defineField({
       name: 'amount',
       title: 'Amount',
@@ -36,17 +37,17 @@ export default defineType({
       title: 'Unit',
       type: 'string',
       // fieldset: 'value',
-      options: {
-        list: [
-          { value: 'tsp', title: 'tsp' },
-          { value: 'tbsp', title: 'tbsp' },
-          { value: 'cup', title: 'cup' },
-          { value: 'pound', title: 'lb' },
-          { value: 'ounce', title: 'oz' },
-          { value: 'pinch', title: 'pinch' },
-        ],
-        layout: 'dropdown',
-      },
+      // options: {
+      //   list: [
+      //     { value: 'tsp', title: 'tsp' },
+      //     { value: 'tbsp', title: 'tbsp' },
+      //     { value: 'cup', title: 'cup' },
+      //     { value: 'pound', title: 'lb' },
+      //     { value: 'ounce', title: 'oz' },
+      //     { value: 'pinch', title: 'pinch' },
+      //   ],
+      //   layout: 'dropdown',
+      // },
       description:
         "Leave blank if a specific unit of measurement doesn't apply.",
     }),
@@ -58,7 +59,7 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'ingredientName.name', amount: 'amount', unit: 'unit' },
+    select: { title: 'ingredientName', amount: 'amount', unit: 'unit' },
     prepare: ({ title, amount, unit }) => {
       const fraction = formatFraction(amount)
       return {

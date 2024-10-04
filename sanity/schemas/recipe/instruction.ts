@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { IngredientSelector } from 'sanity-studio/components/ingredient-selector'
 import { Ingredient, Recipe } from 'sanity-studio/types'
 
 export default defineType({
@@ -30,36 +31,61 @@ export default defineType({
       type: 'array',
       of: [
         defineField({
-          type: 'reference',
+          type: 'ingredientMeasurement',
           name: 'ingredient',
-          to: {
-            type: 'ingredient',
-          },
-          options: {
-            filter: ({ document }) => {
-              const { ingredientGroups } = (document as Recipe) || {}
-              const ingredientMeasurements = ingredientGroups?.flatMap(
-                (group) => group?.ingredients?.map((ing) => ing),
-              )
-              const ingredientRefs = ingredientMeasurements?.map(
-                (im) =>
-                  (im?.ingredientName as Ingredient & { _ref: string })?._ref,
-              )
-              return {
-                filter: '_id in $ingredients',
-                params: {
-                  ingredients: ingredientRefs,
-                },
-              }
-            },
-            disableNew: true,
-          },
+          // options: {
+          //   filter: ({ document }) => {
+          //     const { ingredientGroups } = (document as Recipe) || {}
+          //     const ingredientMeasurements = ingredientGroups?.flatMap(
+          //       (group) => group?.ingredients?.map((ing) => ing),
+          //     )
+          //     const ingredientRefs = ingredientMeasurements?.map(
+          //       (im) =>
+          //         (im?.ingredientName as Ingredient & { _ref: string })?._ref,
+          //     )
+          //     return {
+          //       filter: '_id in $ingredients',
+          //       params: {
+          //         ingredients: ingredientRefs,
+          //       },
+          //     }
+          //   },
+          //   disableNew: true,
+          // },
           // components: { input: IngredientCheckbox },
         }),
+        // defineField({
+        //   type: 'reference',
+        //   name: 'ingredient',
+        //   to: {
+        //     type: 'ingredient',
+        //   },
+        //   options: {
+        //     filter: ({ document }) => {
+        //       const { ingredientGroups } = (document as Recipe) || {}
+        //       const ingredientMeasurements = ingredientGroups?.flatMap(
+        //         (group) => group?.ingredients?.map((ing) => ing),
+        //       )
+        //       const ingredientRefs = ingredientMeasurements?.map(
+        //         (im) =>
+        //           (im?.ingredientName as Ingredient & { _ref: string })?._ref,
+        //       )
+        //       return {
+        //         filter: '_id in $ingredients',
+        //         params: {
+        //           ingredients: ingredientRefs,
+        //         },
+        //       }
+        //     },
+        //     disableNew: true,
+        //   },
+        //   // components: { input: IngredientCheckbox },
+        // }),
       ],
-      // components: { input: IngredientSelector },
+      // options: {},
+      components: { input: IngredientSelector },
       description:
-        'Each of the ingredients that are part of this particular step.',
+        'Select the ingredients that are part of this particular step.',
     }),
   ],
   preview: {

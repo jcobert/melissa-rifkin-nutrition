@@ -112,7 +112,8 @@ export type IngredientGroup = {
 }
 
 export type IngredientMeasurement = {
-  ingredientName?: Ingredient
+  ingredientName?: string
+  // ingredientName?: Ingredient
   // ingredientName?: SanityReference<Ingredient>
   // ingredientName?: SanityReference<Ingredient> & Ingredient
   amount?: number

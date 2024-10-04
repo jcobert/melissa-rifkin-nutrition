@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { QueryParams, SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
+import { RedirectType, redirect } from 'next/navigation'
 import React, { FC } from 'react'
 import { client } from 'sanity-studio/lib/client'
 import { RECIPES_QUERY, RECIPE_QUERY } from 'sanity-studio/lib/queries'
@@ -8,7 +9,7 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { type Recipe } from 'sanity-studio/types'
 import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
 
-import { formatCookTime, getRecipeIngredients } from '@/utils/recipe'
+import { displayIngredient, formatCookTime } from '@/utils/recipe'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
@@ -77,14 +78,26 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     },
   )
 
+  // Redirect to main recipes page if recipe not found.
+  if (!initial?.data) {
+    redirect('/recipes', RedirectType.replace)
+  }
+
   const {
     title,
     category,
+    // tags,
     instructions,
     ingredientGroups,
     mainImage,
     prepTime,
     cookTime,
+    servings,
+    seoDescription,
+    cuisines,
+    nutritionInformation,
+    // additionalImages,
+    // seoTags,
   } = initial?.data || {}
 
   const schemaInstructions: RecipeSchema['recipeInstructions'] = instructions
@@ -96,6 +109,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
           step: {
             '@type': 'HowToStep',
             position: stepNum,
+            name: inst?.title,
             itemListElement: [
               { '@type': 'HowToDirection', position: 1, text: stepText },
             ],
@@ -105,7 +119,11 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     : undefined
 
   const schemaIngredients = ingredientGroups
-    ? getRecipeIngredients(initial?.data)?.map((ing) => ing || '')
+    ? initial?.data?.ingredientGroups
+        ?.filter((group) => !!group?.ingredients?.length)
+        ?.flatMap((group) =>
+          (group?.ingredients || [])?.map((ing) => displayIngredient(ing)),
+        )
     : undefined
 
   const schemaPrepTime = formatCookTime(prepTime)
@@ -125,6 +143,24 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     recipeIngredient: schemaIngredients,
     prepTime: schemaPrepTime,
     cookTime: schemaCookTime,
+    recipeYield:
+      typeof servings?.quantity !== 'undefined'
+        ? `${servings?.quantity} ${servings?.unit}`
+        : undefined,
+    recipeCuisine: cuisines?.length ? cuisines?.join(', ') : undefined,
+    description:
+      seoDescription ||
+      `An easy and delicious${title ? ` ${title}` : ''} recipe.`,
+    nutrition: {
+      '@type': 'NutritionInformation',
+      calories:
+        typeof nutritionInformation?.calories !== 'undefined'
+          ? nutritionInformation?.calories?.toString()
+          : undefined,
+      servingSize: nutritionInformation?.servingSize ?? undefined,
+    },
+    // keywords: tags ? tags?.join(', ') : undefined,
+    // keywords: seoTags ? seoTags?.join(', ') : undefined,
   }
 
   return draftMode().isEnabled ? (

@@ -79,26 +79,25 @@ export interface Post extends SanityDocument {
 export interface Recipe extends SanityDocument {
   _type: 'recipe'
   title?: string
+  seoDescription?: string
   slug?: { _type: 'slug'; current: string }
   publishedAt?: string
-  mainImage?: {
-    _type: 'image'
-    asset: SanityImageAsset
-    crop?: SanityImageCrop
-    hotspot?: SanityImageHotspot
-    alt?: string
-  }
+  mainImage?: Image
+  additionalImages?: Image[]
   category?: Array<string>
   tags?: Array<string>
+  seoTags?: Array<string>
+  cuisines?: Array<string>
   prepTime?: number
   cookTime?: number
+  servings?: { quantity?: number; unit?: string }
   layout?: 'advanced' | 'basic'
   body?: BlockContent
   ingredientGroups?: Array<
     SanityKeyedReference<IngredientGroup> & IngredientGroup
   >
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
-  seoDescription?: string
+  nutritionInformation?: NutritionInformation
 }
 
 export interface Ingredient extends SanityDocument {
@@ -112,21 +111,25 @@ export type IngredientGroup = {
   ingredients?: Array<IngredientMeasurement>
 }
 
-export type IngredientMeasurement = {
-  ingredientName?: Ingredient
+export type IngredientMeasurement = SanityKeyed<{
+  ingredientName?: string
+  // ingredientName?: Ingredient
   // ingredientName?: SanityReference<Ingredient>
   // ingredientName?: SanityReference<Ingredient> & Ingredient
   amount?: number
   unit?: keyof typeof RecipeUnit
   note?: string
-}
+  _type?: 'ingredientMeasurement'
+}>
 
 export type Instruction = {
   title?: string
   description?: string
-  ingredients?: Array<Ingredient>
+  ingredients?: Array<IngredientMeasurement>
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
 }
+
+export type NutritionInformation = { calories?: number; servingSize?: string }
 
 export enum RecipeUnit {
   tsp = 'tsp',

@@ -7,35 +7,48 @@ export default defineType({
   name: 'ingredientMeasurement',
   title: 'Ingredient Measurement',
   type: 'object',
+  fieldsets: [{ name: 'value', title: ' ', options: { columns: 2 } }],
+  options: { columns: 1 },
   fields: [
     defineField({
       name: 'ingredientName',
       title: 'Ingredient',
-      type: 'reference',
-      to: { type: 'ingredient' },
+      type: 'string',
+      validation: (rule) => rule.required(),
     }),
+    /** @todo find a way to not have to create a separate document for ingredients. */
+    // defineField({
+    //   name: 'ingredientName',
+    //   title: 'Ingredient',
+    //   type: 'reference',
+    //   to: { type: 'ingredient' },
+    // }),
     defineField({
       name: 'amount',
       title: 'Amount',
-      type: 'number',
-      components: { input: CustomNumberInput },
+      /** @todo Find a better way to enter fractions or just make this a string field. */
+      type: 'string',
+      // type: 'number',
+      // fieldset: 'value',
+      // components: { input: CustomNumberInput },
       description: 'Enter as decimal or use the arrows to increment.',
     }),
     defineField({
       name: 'unit',
       title: 'Unit',
       type: 'string',
-      options: {
-        list: [
-          { value: 'tsp', title: 'tsp' },
-          { value: 'tbsp', title: 'tbsp' },
-          { value: 'cup', title: 'cup' },
-          { value: 'pound', title: 'lb' },
-          { value: 'ounce', title: 'oz' },
-          { value: 'pinch', title: 'pinch' },
-        ],
-        layout: 'dropdown',
-      },
+      // fieldset: 'value',
+      // options: {
+      //   list: [
+      //     { value: 'tsp', title: 'tsp' },
+      //     { value: 'tbsp', title: 'tbsp' },
+      //     { value: 'cup', title: 'cup' },
+      //     { value: 'pound', title: 'lb' },
+      //     { value: 'ounce', title: 'oz' },
+      //     { value: 'pinch', title: 'pinch' },
+      //   ],
+      //   layout: 'dropdown',
+      // },
       description:
         "Leave blank if a specific unit of measurement doesn't apply.",
     }),
@@ -47,12 +60,12 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: 'ingredientName.name', amount: 'amount', unit: 'unit' },
+    select: { title: 'ingredientName', amount: 'amount', unit: 'unit' },
     prepare: ({ title, amount, unit }) => {
-      const fraction = formatFraction(amount)
+      // const fraction = formatFraction(amount)
       return {
         title,
-        subtitle: `${fraction} ${unit ? unit : ''}`,
+        subtitle: `${amount} ${unit ? unit : ''}`,
       }
     },
   },

@@ -1,9 +1,7 @@
 import { FaBook } from 'react-icons/fa6'
-import { defineField, defineType } from 'sanity'
-import {
-  CustomTextField,
-  CustomTextInput,
-} from 'sanity-studio/components/text-input'
+import { ObjectOptions, defineField, defineType } from 'sanity'
+import { CustomTextInput } from 'sanity-studio/components/text-input'
+import { Image, Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'recipe',
@@ -17,17 +15,56 @@ export default defineType({
       description:
         'These fields impact your presence on Google search results.',
     },
+    {
+      name: 'basicInfo',
+      title: 'Basic Info',
+      options: { collapsible: true },
+    },
+    {
+      name: 'classification',
+      title: 'Categories and Keywords',
+      options: { collapsible: true },
+    },
+    {
+      name: 'times',
+      title: 'Times',
+      options: { collapsible: true, columns: 2 },
+    },
   ],
-  groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
+  groups: [
+    {
+      name: 'basicInfo',
+      title: 'Basic Info',
+    },
+    {
+      name: 'classification',
+      title: 'Categories and Keywords',
+    },
+    {
+      name: 'stepsAndIgredients',
+      title: 'Steps and Ingredients',
+    },
+    {
+      name: 'detailsAndNutrition',
+      title: 'Details and Nutrition',
+    },
+    // {
+    //   name: 'additionalInfo',
+    //   title: 'Additional Info',
+    // },
+  ],
+  // groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
   fields: [
     defineField({
       name: 'title',
       title: 'Recipe Name',
       type: 'string',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
       validation: (rule) => rule.required(),
-      components: {
-        field: CustomTextField,
-      },
+      // components: {
+      //   field: CustomTextField,
+      // },
     }),
     defineField({
       name: 'seoDescription',
@@ -35,12 +72,13 @@ export default defineType({
       description:
         'Provide a short description of this recipe (one or two sentences). This is important for Google search results.',
       type: 'string',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
       validation: (rule) => rule.required(),
-      group: 'seo',
-      // fieldset: 'seo',
+      // group: 'seo',
       components: {
         input: CustomTextInput,
-        field: CustomTextField,
+        // field: CustomTextField,
       },
     }),
     defineField({
@@ -58,15 +96,25 @@ export default defineType({
     }),
     defineField({
       name: 'mainImage',
-      title: 'Photo',
+      title: 'Main Photo',
       type: 'image',
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
+      description: 'The featured image at the top of the recipe.',
+      validation: (rule) => rule.required(),
       options: {
         hotspot: true,
+        // collapsible: true,
       },
       fields: [
         {
           name: 'alt',
           type: 'string',
+          validation: (rule) =>
+            rule.custom((alt: string, ctx) => {
+              if (!!ctx.parent && !alt) return 'Required'
+              return true
+            }),
           title: 'Image Description',
           description:
             'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
@@ -74,11 +122,46 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'additionalImages',
+      title: 'Additional Photos',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+            // collapsible: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              validation: (rule) =>
+                rule.custom((alt: string, ctx) => {
+                  if (!!(ctx.parent as Image)?.asset && !alt) return 'Required'
+                  return true
+                }),
+              title: 'Image Description',
+              description:
+                'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
+            },
+          ],
+        },
+      ],
+      options: { layout: 'grid' },
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
+      description: 'Any other photos you wish to display.',
+    }),
+    defineField({
       name: 'category',
-      title: 'Categories',
+      title: 'Meal Type Categories',
       description: 'Select any that apply.',
       type: 'array',
       of: [{ type: 'string' }],
+      validation: (rule) => rule.min(1).required(),
+      // fieldset: 'classification',
+      group: 'classification',
       options: {
         list: [
           { value: 'breakfast', title: 'Breakfast' },
@@ -94,13 +177,38 @@ export default defineType({
     }),
     defineField({
       name: 'tags',
-      title: 'Tags',
+      title: 'Filter Tags',
       type: 'array',
       of: [{ type: 'string' }],
-      // of: [{ type: 'reference', to: { type: 'recipeTag' } }],
+      validation: (rule) => rule.min(1).required(),
+      // fieldset: 'classification',
+      group: 'classification',
       options: { layout: 'tags' },
       description:
-        'Keywords to help someone searching for a recipe. E.g. pasta, soup, instant pot, vegan',
+        'Keywords to help someone filtering for recipes on the website. These are user-facing. Keep them short and more generic. E.g. pasta, soup, instant pot, vegan.',
+    }),
+    defineField({
+      name: 'seoTags',
+      title: 'SEO Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      // fieldset: 'classification',
+      group: 'classification',
+      // group: 'seo',
+      options: { layout: 'tags' },
+      description:
+        'Additional keywords/short phrases related to the recipe. These are hidden and only used to help Google search. E.g. garlicky shrimp, zesty indian curry',
+    }),
+    defineField({
+      name: 'cuisines',
+      title: 'Cuisine Types',
+      type: 'array',
+      of: [{ type: 'string' }],
+      // fieldset: 'classification',
+      group: 'classification',
+      // group: 'seo',
+      options: { layout: 'tags' },
+      description: 'E.g. Mexican, Greek, Japanese',
     }),
     defineField({
       name: 'publishedAt',
@@ -108,18 +216,7 @@ export default defineType({
       type: 'datetime',
       hidden: true,
     }),
-    defineField({
-      name: 'prepTime',
-      title: 'Prep Time',
-      type: 'number',
-      description: 'In minutes',
-    }),
-    defineField({
-      name: 'cookTime',
-      title: 'Cook Time',
-      type: 'number',
-      description: 'In minutes',
-    }),
+
     defineField({
       name: 'layout',
       title: 'Layout',
@@ -133,34 +230,102 @@ export default defineType({
         ],
         layout: 'radio',
       },
-      initialValue: 'basic',
+      initialValue: 'advanced',
+      hidden: true,
     }),
+
     defineField({
       name: 'body',
       title: 'Instructions',
       type: 'blockContent',
       description:
         'The full recipe content. Write/paste all steps and ingredients here.',
-      hidden: (props) => props.parent.layout !== 'basic',
+      // hidden: (ctx) => ctx.parent?.layout !== 'basic',
+      hidden: true,
     }),
+
     defineField({
       name: 'ingredientGroups',
       title: 'Ingredient Groups',
       type: 'array',
       of: [{ type: 'ingredientGroup' }],
+      group: 'stepsAndIgredients',
+      validation: (rule) => rule.min(1).required(),
       options: { modal: { type: 'dialog', width: 'auto' } },
       description:
-        'Subsets of ingredients for the recipe. For example, you might have one ingredient group for the pork chop and another for the mango chutney that goes on top.',
-      hidden: (props) => props.parent.layout !== 'advanced',
+        'Sets of ingredients for the recipe. For example, you might have one ingredient group for the salad and another for the dressing. At least one group is required.',
+      // hidden: (ctx) => ctx.parent?.layout !== 'advanced',
     }),
+
     defineField({
       name: 'instructions',
       title: 'Instructions',
       type: 'array',
       of: [{ type: 'instruction' }],
+      group: 'stepsAndIgredients',
+      validation: (rule) => rule.min(1).required(),
       options: { modal: { type: 'dialog', width: 'auto' } },
       description: 'All recipe steps. Drag to reorder. Top is the first step.',
-      hidden: (props) => props.parent.layout !== 'advanced',
+      // hidden: (ctx) => ctx.parent?.layout !== 'advanced',
+    }),
+
+    defineField({
+      name: 'prepTime',
+      title: 'Prep Time',
+      type: 'number',
+      // fieldset: 'times',
+      group: 'detailsAndNutrition',
+      description: 'In minutes',
+    }),
+
+    defineField({
+      name: 'cookTime',
+      title: 'Cook Time',
+      type: 'number',
+      // fieldset: 'times',
+      group: 'detailsAndNutrition',
+      description: 'In minutes',
+    }),
+
+    defineField({
+      name: 'servings',
+      title: 'Servings',
+      description:
+        'How much this recipe yields. E.g. 4 people, 12 cookies, etc.',
+      type: 'object',
+      group: 'detailsAndNutrition',
+      options: { columns: 2 },
+      fields: [
+        defineField({
+          name: 'quantity',
+          title: 'Qty',
+          type: 'number',
+        }),
+        defineField({
+          name: 'unit',
+          title: 'Unit',
+          type: 'string',
+          validation: (rule) =>
+            rule.custom((unit: string | undefined, ctx) => {
+              if (!!(ctx.parent as Recipe['servings'])?.quantity && !unit)
+                return 'Required'
+              return true
+            }),
+          // placeholder: 'people',
+          initialValue: 'people',
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'nutritionInformation',
+      title: 'Nutrition Information',
+      type: 'nutrition',
+      group: 'detailsAndNutrition',
+      options: {
+        // collapsible: true,
+        columns: 2,
+      } as ObjectOptions,
     }),
   ],
 

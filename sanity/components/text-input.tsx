@@ -41,7 +41,10 @@ export const CustomTextInput = (
       {renderDefault(props)}
       <Text
         className='self-end'
-        style={{ color: count > characterLimit ? 'red' : 'inherit' }}
+        style={{
+          color: count > characterLimit ? 'red' : 'inherit',
+          fontSize: '0.75rem',
+        }}
       >{`${count} / ${characterLimit} characters`}</Text>
     </div>
   )

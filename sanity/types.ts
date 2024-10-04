@@ -51,6 +51,15 @@ export type VideoEmbed = {
   alt?: string
 }
 
+export type BlockLink = {
+  _type: 'blockLink'
+  _key: string
+  url: string
+  external?: boolean
+  newTab?: boolean
+  sponsored?: boolean
+}
+
 export type Slug = { _type: 'file'; current: string }
 
 /** Post */

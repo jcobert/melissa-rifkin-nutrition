@@ -1,4 +1,4 @@
-import { defineArrayMember, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 import { Divider, DividerIcon } from 'sanity-studio/components/divider'
 
 /**
@@ -49,6 +49,64 @@ export default defineType({
             component: Divider,
             icon: DividerIcon,
           },
+        ],
+        annotations: [
+          defineField({
+            name: 'link',
+            type: 'object',
+            title: 'Link',
+            fields: [
+              {
+                name: 'url',
+                title: 'URL',
+                placeholder: 'https://example.com',
+                type: 'url',
+                validation: (rule) => rule.required(),
+              },
+              {
+                name: 'external',
+                title: 'External',
+                description:
+                  'Select if link is to another website (usually the case).',
+                type: 'boolean',
+                initialValue: true,
+                options: { layout: 'checkbox' },
+              },
+              {
+                name: 'sponsored',
+                title: 'Sponsored',
+                description:
+                  'Important: Select if link is to a sponsored/affiliate site or is otherwise monetized.',
+                type: 'boolean',
+                initialValue: false,
+                options: { layout: 'checkbox' },
+              },
+              {
+                name: 'newTab',
+                title: 'Open in new tab',
+                description: 'Whether link should open in a new tab.',
+                type: 'boolean',
+                initialValue: false,
+                options: { layout: 'checkbox' },
+              },
+            ],
+          }),
+          // {
+          //   name: 'referenceLink',
+          //   type: 'object',
+          //   title: 'Reference link',
+          //   // icon: ,
+          //   fields: [
+          //     {
+          //       name: 'reference',
+          //       type: 'reference',
+          //       to: [
+          //         { type: 'recipe' },
+          //         // other types you may want to link to
+          //       ],
+          //     },
+          //   ],
+          // },
         ],
       },
     }),

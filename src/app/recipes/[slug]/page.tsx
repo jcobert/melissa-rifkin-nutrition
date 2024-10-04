@@ -78,10 +78,10 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     },
   )
 
-  // Redirect to main recipes page if recipe not found.
-  if (!initial?.data) {
-    redirect('/recipes', RedirectType.replace)
-  }
+  // // Redirect to main recipes page if recipe not found.
+  // if (!initial?.data) {
+  //   redirect('/recipes', RedirectType.replace)
+  // }
 
   const {
     title,

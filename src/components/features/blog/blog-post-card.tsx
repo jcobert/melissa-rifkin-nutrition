@@ -29,7 +29,7 @@ const BlogPostCard: FC<Props> = ({
     <Link
       href={`/blog/${slug?.current}`}
       className={cn(
-        'group hover:bg-almost-white/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border hover:border-brand-blue/30 rounded shadow-sm',
+        'group w-full hover:bg-almost-white/hover transition flex flex-col items-center gap-2 max-w-80 bg-almost-white p-4 border hover:border-brand-blue/30 rounded shadow-sm',
         [className],
       )}
     >
@@ -50,9 +50,14 @@ const BlogPostCard: FC<Props> = ({
             className='object-cover object-center h-52 rounded'
           />
         ) : (
-          <div className='h-52 w-full flex items-center justify-center rounded bg-background'>
-            <Logo variant='small' imageProps={{ width: 150, height: 150 }} />
-          </div>
+          <Logo
+            variant='small'
+            imageProps={{
+              width: 150,
+              height: 150,
+              className: 'object-contain w-full object-center h-52 rounded',
+            }}
+          />
         )}
       </div>
       <h2 className='flex-auto text-balance text-center text-lg font-medium text-brand-blue-dark group-hover:text-brand-blue transition'>

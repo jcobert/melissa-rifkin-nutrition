@@ -84,7 +84,7 @@ export default defineType({
         {
           name: 'alt',
           type: 'string',
-          title: 'Image Description',
+          title: 'Image Description (alt text)',
           description:
             'Used for people who cannot see the image. E.g. "A woman gardening"',
         },

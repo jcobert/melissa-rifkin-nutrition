@@ -11,7 +11,8 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'Optional. A brief heading, such as "In a bowl".',
+      description:
+        'Optional. A brief heading, such as "In a bowl" or "Combine and serve".',
     }),
     defineField({
       name: 'description',

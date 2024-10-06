@@ -6,6 +6,8 @@ import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
 
+import { cn } from '@/utils/style'
+
 import Logo from '@/components/common/logo'
 import Tag from '@/components/common/tag'
 
@@ -13,16 +15,22 @@ const builder = imageUrlBuilder({ projectId, dataset })
 
 type Props = {
   recipe: Recipe
+  layout?: 'sm' | 'lg'
+  className?: string
 }
 
-const RecipeCard: FC<Props> = ({ recipe }) => {
+const RecipeCard: FC<Props> = ({ recipe, layout = 'lg', className }) => {
   const { mainImage, slug, title, publishedAt, category } = recipe || {}
   const linkToFull = `/recipes/${slug?.current}`
 
   return (
     <Link
       href={linkToFull}
-      className='flex flex-col w-full items-center group gap-2 max-w-80 bg-almost-white border hover:border-brand-blue/30 rounded shadow-sm transition hover:-translate-y-1 transform max-md:mx-auto'
+      className={cn(
+        'flex flex-col w-full items-center group gap-2 max-w-80 bg-almost-white border hover:border-brand-blue/30 rounded shadow-sm transition hover:-translate-y-1 transform max-md:mx-auto',
+        [layout === 'sm' && 'sm:max-w-64 '],
+        className,
+      )}
     >
       {mainImage ? (
         <Image
@@ -37,17 +45,33 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
           alt={mainImage?.alt || ''}
           width={400}
           height={400}
-          className='object-cover object-center h-52 w-full rounded'
+          className={cn('object-cover object-center h-52 w-full rounded', [
+            layout === 'sm' && 'sm:h-40',
+          ])}
         />
       ) : (
-        <div className='h-52 w-full flex items-center justify-center rounded bg-background'>
+        <div
+          className={cn(
+            'h-52 w-full flex items-center justify-center rounded bg-background',
+            [layout === 'sm' && 'sm:h-40'],
+          )}
+        >
           <Logo variant='small' imageProps={{ width: 150, height: 150 }} />
         </div>
       )}
 
-      <div className='px-12 pt-6 pb-12 flex flex-col gap-2'>
+      <div
+        className={cn('px-12 pt-6 pb-12 flex flex-col gap-2', [
+          layout === 'sm' && 'sm:px-8 sm:pt-4 sm:pb-8',
+        ])}
+      >
         <span className='absolute inset-0 m-2 md:m-4 border border-brand-gray-light pointer-events-none'></span>
-        <p className='flex-auto text-balance text-center text-lg font-medium text-brand-blue-dark group-hover:text-brand-blue transition'>
+        <p
+          className={cn(
+            'flex-auto text-balance text-center text-lg font-medium text-brand-blue-dark group-hover:text-brand-blue transition',
+            [layout === 'sm' && 'sm:text-base'],
+          )}
+        >
           {title}
         </p>
         {!!publishedAt && (
@@ -55,7 +79,7 @@ const RecipeCard: FC<Props> = ({ recipe }) => {
             {format(publishedAt, 'MMM dd, yyyy')}
           </p>
         )}
-        {category?.length ? (
+        {category?.length && layout === 'lg' ? (
           <div className='flex items-center justify-center gap-2 sm:gap-1'>
             {category?.map((cat) => (
               <Tag

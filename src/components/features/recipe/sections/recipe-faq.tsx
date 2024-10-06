@@ -13,7 +13,7 @@ const RecipeFaq: FC<Props> = ({ faqSet }) => {
 
   return (
     <Accordion
-      items={faqSet?.concat(faqSet)?.map((faq, i) => ({
+      items={faqSet?.map((faq) => ({
         header: faq?.question,
         content: (
           <div className='prose'>
@@ -23,7 +23,7 @@ const RecipeFaq: FC<Props> = ({ faqSet }) => {
       }))}
       collapsible
       type='multiple'
-      defaultOpen={[1]}
+      // defaultOpen={[1]}
       triggerClassName='text-left text-pretty font-medium text-xl py-4 data-[state=open]:text-brand data-[state=open]:hover:text-brand-dark'
       itemClassName='bg-almost-white data-[state=closed]:hover:bg-brand-gray-light px-4 transition'
     />

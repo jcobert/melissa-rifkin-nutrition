@@ -22,9 +22,9 @@ const RecipeSection: FC<Props> = ({
   hideDivider = false,
   // childrenProse = false,
 }) => {
-  if (!content) return null
+  if (!content && !children) return null
 
-  const { body, heading } = content
+  const { body, heading } = content || {}
 
   return (
     <>

@@ -10,7 +10,7 @@ export const BIO_QUERY = groq`*[_type == "bio" && _id == $id][0]`
 
 // RECIPE
 export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug)]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }}`
-export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }}[0]`
+export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, similarRecipes[]->, relatedPosts[]->}[0]`
 
 // TESTIMONIAL
 export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"]`

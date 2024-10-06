@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import React, { FC, useRef } from 'react'
+import React, { FC, useRef, useState } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
@@ -17,6 +17,7 @@ import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
 import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
+import RelatedPosts from '@/components/features/recipe/sections/related-posts'
 import ShareBar from '@/components/share-bar'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -33,8 +34,6 @@ const Recipe: FC<Props> = ({ recipe }) => {
     ingredientGroups,
     instructions,
     tags,
-    layout,
-    body,
   } = recipe || {}
   const printContentRef = useRef(null)
   const handlePrint = useReactToPrint({
@@ -123,97 +122,100 @@ const Recipe: FC<Props> = ({ recipe }) => {
         <RecipeSection content={recipe?.introduction} />
 
         {/* Ingredients */}
-        <RecipeSection
-          content={{ heading: 'Ingredients' }}
-          className='print:break-inside-avoid-page'
-        >
-          <div className='grid__ not-prose flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
-            {ingredientGroups?.map((group) => (
-              <div
-                key={group?._key}
-                className='px-2 sm:px-4 flex-1 py-1 border rounded bg-almost-white print:bg-transparent print:flex-auto'
-              >
-                {ingredientGroups?.length > 1 && (
-                  <h3 className='text-xl font-semibold mb-2 text-brand'>
-                    {group?.title}
-                  </h3>
-                )}
-                <ul className='flex flex-col gap-4 divide-y-1'>
-                  {group?.ingredients
-                    ?.filter((ingredient) => ingredient?.ingredientName)
-                    ?.map((ing, i) => (
-                      <li
-                        key={`${ing?.ingredientName}-${i}`}
-                        className='flex flex-col__ -mb-3 pt-1 last-of-type:mb-0 items-center gap-1 flex-wrap text-brand-gray-dark'
-                      >
-                        <Measurement measurement={ing} />
-                        <p className='text-brand-gray-medium text-sm text-balance'>
-                          {ing?.note}
-                        </p>
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          {/* </section> */}
-        </RecipeSection>
+        {recipe?.ingredientGroups?.length ? (
+          <RecipeSection
+            content={{ heading: 'Ingredients' }}
+            className='print:break-inside-avoid-page'
+          >
+            <div className='grid__ not-prose flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
+              {ingredientGroups?.map((group) => (
+                <div
+                  key={group?._key}
+                  className='px-2 sm:px-4 flex-1 py-1 border rounded bg-almost-white print:bg-transparent print:flex-auto'
+                >
+                  {ingredientGroups?.length > 1 && (
+                    <h3 className='text-xl font-semibold mb-2 text-brand'>
+                      {group?.title}
+                    </h3>
+                  )}
+                  <ul className='flex flex-col gap-4 divide-y-1'>
+                    {group?.ingredients
+                      ?.filter((ingredient) => ingredient?.ingredientName)
+                      ?.map((ing, i) => (
+                        <li
+                          key={`${ing?.ingredientName}-${i}`}
+                          className='flex flex-col__ -mb-3 pt-1 last-of-type:mb-0 items-center gap-1 flex-wrap text-brand-gray-dark'
+                        >
+                          <Measurement measurement={ing} />
+                          <p className='text-brand-gray-medium text-sm text-balance'>
+                            {ing?.note}
+                          </p>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </RecipeSection>
+        ) : null}
 
         {/* Instructions */}
-        <RecipeSection
-          content={{ heading: 'Steps' }}
-          className='print:break-inside-avoid-page'
-        >
-          {/* <section className='flex flex-col gap-5 w-full print:break-inside-avoid-page prose max-w-none mb-5'> */}
-          {/* <h2 className='mb-0'>Steps</h2> */}
-          {/* <h2 className='text-2xl font-medium'>Steps</h2> */}
-          <div className='flex flex-col gap-y-8 sm:gap-y-12 not-prose'>
-            {instructions?.map((inst, step) => (
-              <div
-                key={inst?._key}
-                className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-4 md:gap-x-10  gap-y-6 print:gap-x-10 print:break-inside-avoid-page'
-              >
-                {/* ingredient group */}
-                {inst?.ingredients?.length ? (
-                  <div className='flex flex-col gap-2 border-y py-2'>
-                    {inst?.title ||
-                    (!inst?.title && !!inst?.ingredients?.length) ? (
-                      inst?.title ? (
-                        <h3 className='font-medium text-brand uppercase'>
-                          {inst?.title}
-                          {/* {inst?.title || (step === 0 ? 'First' : 'Next')} */}
-                        </h3>
-                      ) : null
-                    ) : null}
-                    <div className='flex flex-col'>
-                      {inst?.ingredients?.map((ingredient) => {
-                        return ingredient?.note ? (
-                          <IngredientTooltip
-                            key={ingredient?._key}
-                            ingredient={ingredient}
-                            triggerProps={{ className: 'w-fit' }}
-                          />
-                        ) : (
-                          <Measurement
-                            key={ingredient?._key}
-                            measurement={ingredient}
-                            ingredientClassName='font-normal'
-                          />
-                        )
-                      })}
+        {recipe?.instructions?.length ? (
+          <RecipeSection
+            content={{ heading: 'Steps' }}
+            className='print:break-inside-avoid-page'
+          >
+            <div className='flex flex-col gap-y-8 sm:gap-y-12 not-prose'>
+              {instructions?.map((inst, step) => (
+                <div
+                  key={inst?._key}
+                  className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-4 md:gap-x-10  gap-y-6 print:gap-x-10 print:break-inside-avoid-page'
+                >
+                  {/* ingredient group */}
+                  {inst?.ingredients?.length ? (
+                    <div className='flex flex-col gap-2 border-y py-2'>
+                      {inst?.title ||
+                      (!inst?.title && !!inst?.ingredients?.length) ? (
+                        inst?.title ? (
+                          <h3 className='font-medium text-brand uppercase'>
+                            {inst?.title}
+                            {/* {inst?.title || (step === 0 ? 'First' : 'Next')} */}
+                          </h3>
+                        ) : null
+                      ) : null}
+                      <div className='flex flex-col'>
+                        {inst?.ingredients?.map((ingredient) => {
+                          return ingredient?.note ? (
+                            <IngredientTooltip
+                              key={ingredient?._key}
+                              ingredient={ingredient}
+                              triggerProps={{ className: 'w-fit' }}
+                            />
+                          ) : (
+                            <Measurement
+                              key={ingredient?._key}
+                              measurement={ingredient}
+                              ingredientClassName='font-normal'
+                            />
+                          )
+                        })}
+                      </div>
                     </div>
+                  ) : null}
+                  {/* directions */}
+                  <div className='flex gap-6 sm:pl-16 print:pl-0'>
+                    <h4 className='text-4xl font-bold text-brand'>
+                      {step + 1}
+                    </h4>
+                    <p className='text-pretty max-w-prose'>
+                      {inst?.description}
+                    </p>
                   </div>
-                ) : null}
-                {/* directions */}
-                <div className='flex gap-6 sm:pl-16 print:pl-0'>
-                  <h4 className='text-4xl font-bold text-brand'>{step + 1}</h4>
-                  <p className='text-pretty max-w-prose'>{inst?.description}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-          {/* </section> */}
-        </RecipeSection>
+              ))}
+            </div>
+          </RecipeSection>
+        ) : null}
 
         {/* How to store */}
         <RecipeSection content={recipe?.howToStore} />
@@ -221,23 +223,59 @@ const Recipe: FC<Props> = ({ recipe }) => {
         {/* Tips */}
         <RecipeSection content={recipe?.tipsAndTricks} />
 
+        {/** @TODO Look into expanding all accordion sections on print.  */}
         {/* FAQ */}
-        <RecipeSection content={{ heading: 'FAQ' }} hideDivider>
-          <div className='not-prose'>
-            <RecipeFaq faqSet={recipe?.faqSet} />
-          </div>
+        {recipe?.faqSet ? (
+          <RecipeSection content={{ heading: 'FAQ' }} hideDivider>
+            <div className='not-prose'>
+              <RecipeFaq faqSet={recipe?.faqSet} />
+            </div>
+          </RecipeSection>
+        ) : null}
+
+        <div className='flex items-center p-4 mt-8 pb-16 gap-6'>
+          <Logo
+            variant='small'
+            imageProps={{ className: 'size-16', 'aria-hidden': true }}
+          />
+          <h4 className='text-6xl text-brand font-bellota font-bold -rotate-3'>
+            Enjoy!
+          </h4>
+        </div>
+
+        <span
+          aria-hidden
+          className='h-px print:hidden w-full border-b-3 mx-auto mb-4 lg:px-16'
+        />
+
+        {/* Similar Recipes */}
+        <RecipeSection
+          content={{ heading: "Similar Recipes You'll Love" }}
+          hideDivider
+          className='print:hidden'
+        >
+          <RelatedPosts posts={recipe?.similarRecipes} className='not-prose' />
+        </RecipeSection>
+
+        {/* Related Blog Posts */}
+        <RecipeSection
+          content={{ heading: 'Related Blog Posts' }}
+          hideDivider
+          className='print:hidden'
+        >
+          <RelatedPosts posts={recipe?.relatedPosts} className='not-prose' />
         </RecipeSection>
       </div>
 
       {/* Tags */}
       {tags?.length ? (
-        <div className='p-4 mt-16 w-full border-t flex flex-col gap-4 print:hidden'>
+        <div className='p-4 mt-12 w-full border-t flex flex-col gap-4 print:hidden'>
           <h5 className='text-center text-brand-gray-dark'>Categories</h5>
           <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
             {tags?.map((tag) => (
               <Tag
                 key={tag}
-                tag={tag}
+                tag={tag?.toLowerCase()}
                 href={`/recipes?tag=${tag}`}
                 className='max-sm:flex-1 max-sm:max-w-[calc(50%-16px)]'
               />
@@ -245,6 +283,11 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </div>
         </div>
       ) : null}
+
+      <div className='text-brand-gray-dark text-sm flex flex-col gap-1 mt-4'>
+        <span>{`Originally posted: ${format(recipe?._createdAt, 'MMM d, yyyy')}`}</span>
+        <span>{`Last updated: ${format(recipe?._updatedAt, 'MMM d, yyyy')}`}</span>
+      </div>
     </PageLayout>
   )
 }

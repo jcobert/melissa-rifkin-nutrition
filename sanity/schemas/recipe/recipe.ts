@@ -6,7 +6,7 @@ import {
   defineType,
 } from 'sanity'
 import { CustomTextInput } from 'sanity-studio/components/text-input'
-import { Image, Recipe } from 'sanity-studio/types'
+import { Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'recipe',
@@ -58,6 +58,10 @@ export default defineType({
     {
       name: 'additionalContent',
       title: 'Additional Content',
+    },
+    {
+      name: 'related',
+      title: 'Related Posts',
     },
   ],
   // groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
@@ -414,8 +418,8 @@ export default defineType({
     }),
 
     defineField({
-      name: 'relatedPosts',
-      title: 'Related Recipes',
+      name: 'similarRecipes',
+      title: 'Similar Recipes',
       type: 'array',
       of: [
         defineArrayMember({
@@ -425,11 +429,30 @@ export default defineType({
               type: 'recipe',
             },
           ],
+          options: { disableNew: true },
         }),
       ],
-
       // options: { layout: 'grid' },
-      group: 'classification',
+      group: 'related',
+    }),
+
+    defineField({
+      name: 'relatedPosts',
+      title: 'Related Blog Posts',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [
+            {
+              type: 'post',
+            },
+          ],
+          options: { disableNew: true },
+        }),
+      ],
+      // options: { layout: 'grid' },
+      group: 'related',
     }),
   ],
 

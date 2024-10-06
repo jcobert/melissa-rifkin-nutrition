@@ -40,7 +40,7 @@ export const PortableImage = ({
         // Avoid jumping around with aspect-ratio CSS property
         aspectRatio: width / height,
       }}
-      className='mx-auto max-w-[85vw] lg:max-w-md rounded'
+      className='mx-auto max-w-[85vw] md:max-w-md rounded print:max-w-[40%]'
     />
   )
 }

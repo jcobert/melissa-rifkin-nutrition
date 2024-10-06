@@ -108,7 +108,24 @@ export interface Recipe extends SanityDocument {
   >
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
   nutritionInformation?: NutritionInformation
+  introduction?: BlockWithHeading
+  howToStore?: BlockWithHeading
+  tipsAndTricks?: BlockWithHeading
+  faqSet?: FaqSet
+  relatedPosts?: RelatedPost[]
 }
+
+export type FaqSet = SanityKeyed<{
+  question?: string
+  answer?: BlockContent
+}>
+
+export type BlockWithHeading = {
+  heading?: string
+  body?: BlockContent
+}
+
+export type RelatedPost = SanityKeyedReference<Recipe>
 
 export interface Ingredient extends SanityDocument {
   _type: 'ingredient'

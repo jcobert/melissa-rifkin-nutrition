@@ -134,11 +134,23 @@ export default defineType({
 
     defineField({
       name: 'introduction',
-      type: 'blockContent',
+      type: 'object',
       group: 'additionalContent',
       title: 'Introduction',
       description:
         'Add any lead-in to the recipe here. (E.g. backstory, images, etc.)',
+      fields: [
+        defineField({
+          name: 'heading',
+          type: 'string',
+          title: 'Heading',
+        }),
+        defineField({
+          name: 'body',
+          type: 'blockContent',
+          title: 'Body',
+        }),
+      ],
     }),
 
     // defineField({
@@ -316,7 +328,7 @@ export default defineType({
       name: 'servings',
       title: 'Servings',
       description:
-        'How much this recipe yields. E.g. 4 people, 12 cookies, etc.',
+        'How much this recipe yields. E.g. 4 servings, 12 cookies, 6 people, etc.',
       type: 'object',
       group: 'detailsAndNutrition',
       options: { columns: 2 },
@@ -337,7 +349,7 @@ export default defineType({
               return true
             }),
           // placeholder: 'people',
-          initialValue: 'people',
+          initialValue: 'servings',
         }),
       ],
     }),
@@ -356,15 +368,39 @@ export default defineType({
     defineField({
       name: 'howToStore',
       title: 'How to Store',
-      type: 'blockContent',
+      type: 'object',
       group: 'additionalContent',
+      fields: [
+        defineField({
+          name: 'heading',
+          type: 'string',
+          title: 'Heading',
+        }),
+        defineField({
+          name: 'body',
+          type: 'blockContent',
+          title: 'Body',
+        }),
+      ],
     }),
 
     defineField({
       name: 'tipsAndTricks',
       title: 'Tips and Tricks',
-      type: 'blockContent',
+      type: 'object',
       group: 'additionalContent',
+      fields: [
+        defineField({
+          name: 'heading',
+          type: 'string',
+          title: 'Heading',
+        }),
+        defineField({
+          name: 'body',
+          type: 'blockContent',
+          title: 'Body',
+        }),
+      ],
     }),
 
     defineField({

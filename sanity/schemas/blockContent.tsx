@@ -167,6 +167,11 @@ export default defineType({
         {
           name: 'alt',
           type: 'string',
+          validation: (rule) =>
+            rule.custom((alt: string, ctx) => {
+              if (!!ctx.parent && !alt) return 'Required'
+              return true
+            }),
           title: 'Image Description',
           description:
             'Used for people who cannot see the image and for Google search. E.g. "A woman gardening"',

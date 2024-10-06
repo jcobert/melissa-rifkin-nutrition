@@ -1,24 +1,21 @@
 'use client'
 
-import { PortableText } from '@portabletext/react'
 import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
-import { pick, uniqBy } from 'lodash'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import React, { FC, useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
-import { IngredientMeasurement, type Recipe } from 'sanity-studio/types'
+import { type Recipe } from 'sanity-studio/types'
 
-// import { getIngredientDetails } from '@/utils/recipe'
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo, { logos } from '@/components/common/logo'
-import { portableComponents } from '@/components/common/portable/portable-components'
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
+import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import ShareBar from '@/components/share-bar'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -64,10 +61,9 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
       <div
         ref={printContentRef}
-        className='my-8 md:my-16 flex flex-col items-center gap-8 w-full print:layout print:my-2'
+        className='my-8 md:my-16 flex flex-col items-center gap-8 lg:gap-10 w-full print:layout print:my-2'
       >
         <div className='hidden print:block'>
-          {/* <Logo /> */}
           <img
             alt='logo'
             src={logo?.src}
@@ -75,6 +71,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
             height={logo?.height}
           />
         </div>
+
         {/* Heading */}
         <section className='flex max-md:flex-col print:flex-row w-full items-center md:items-end print:items-end gap-y-4 gap-x-6 pb-4 md:self-start print:self-start md:px-8'>
           {mainImage ? (
@@ -100,7 +97,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           <div className='max-md:text-center prose'>
             {/* Title */}
             {title ? (
-              <h1 className='text-2xl sm:text-3xl max-w-2xl font-medium font-prata text-balance'>
+              <h1 className='text-2xl__ sm:text-4xl max-w-prose font-semibold font-prata text-balance'>
                 {title}
               </h1>
             ) : null}
@@ -121,9 +118,14 @@ const Recipe: FC<Props> = ({ recipe }) => {
         {/* Toolbar */}
         <ShareBar url={url} printHandler={handlePrint} />
 
+        {/* Introduction */}
+        <RecipeSection content={recipe?.introduction} />
+
         {/* Ingredients */}
-        <section className='flex flex-col gap-4 w-full'>
-          <h2 className='text-2xl font-medium'>Ingredients</h2>
+        <RecipeSection
+          content={{ heading: 'Ingredients' }}
+          className='print:break-inside-avoid-page'
+        >
           <div className='grid__ flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
             {ingredientGroups?.map((group) => (
               <div
@@ -153,12 +155,18 @@ const Recipe: FC<Props> = ({ recipe }) => {
               </div>
             ))}
           </div>
-        </section>
+          {/* </section> */}
+        </RecipeSection>
 
         {/* Instructions */}
-        <section className='flex flex-col gap-4 w-full print:break-inside-avoid-page'>
-          <h2 className='text-2xl font-medium'>Steps</h2>
-          <div className='flex flex-col gap-y-8 sm:gap-y-12'>
+        <RecipeSection
+          content={{ heading: 'Steps' }}
+          className='print:break-inside-avoid-page'
+        >
+          {/* <section className='flex flex-col gap-5 w-full print:break-inside-avoid-page prose max-w-none mb-5'> */}
+          {/* <h2 className='mb-0'>Steps</h2> */}
+          {/* <h2 className='text-2xl font-medium'>Steps</h2> */}
+          <div className='flex flex-col gap-y-8 sm:gap-y-12 not-prose'>
             {instructions?.map((inst, step) => (
               <div
                 key={inst?._key}
@@ -178,40 +186,6 @@ const Recipe: FC<Props> = ({ recipe }) => {
                     ) : null}
                     <div className='flex flex-col'>
                       {inst?.ingredients?.map((ingredient) => {
-                        // const measurement = getIngredientDetails(
-                        //   ingredient,
-                        //   ingredientGroups,
-                        // )
-                        // if (
-                        //   measurement?.length > 1 &&
-                        //   uniqBy(measurement, (m) =>
-                        //     JSON.stringify(
-                        //       pick(m, [
-                        //         'ingredientName',
-                        //         'amount',
-                        //         'unit',
-                        //         'note',
-                        //       ] as (keyof IngredientMeasurement)[]),
-                        //     )?.toLowerCase(),
-                        //   )?.length > 1
-                        // )
-                        //   return (
-                        //     <IngredientTooltip
-                        //       key={ingredient?._id}
-                        //       triggerProps={{ className: 'w-fit' }}
-                        //       ingredient={ingredient}
-                        //       ingredientGroups={ingredientGroups}
-                        //       measurement={measurement}
-                        //     />
-                        //   )
-                        // return (
-                        //   <Measurement
-                        //     key={ingredient?._id}
-                        //     measurement={measurement?.[0]}
-                        //     ingredientClassName='font-normal'
-                        //   />
-                        // )
-
                         return ingredient?.note ? (
                           <IngredientTooltip
                             key={ingredient?._key}
@@ -229,7 +203,6 @@ const Recipe: FC<Props> = ({ recipe }) => {
                     </div>
                   </div>
                 ) : null}
-
                 {/* directions */}
                 <div className='flex gap-6 sm:pl-16 print:pl-0'>
                   <h4 className='text-4xl font-bold text-brand'>{step + 1}</h4>
@@ -238,7 +211,19 @@ const Recipe: FC<Props> = ({ recipe }) => {
               </div>
             ))}
           </div>
-        </section>
+          {/* </section> */}
+        </RecipeSection>
+
+        {/* How to store */}
+        <RecipeSection content={recipe?.howToStore} />
+
+        {/* Tips */}
+        <RecipeSection content={recipe?.tipsAndTricks} />
+
+        {/* FAQ */}
+        <RecipeSection content={{ heading: 'FAQ' }} hideDivider>
+          <div></div>
+        </RecipeSection>
       </div>
 
       {/* Tags */}

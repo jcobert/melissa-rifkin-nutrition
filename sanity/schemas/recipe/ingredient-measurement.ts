@@ -16,7 +16,6 @@ export default defineType({
       type: 'string',
       validation: (rule) => rule.required(),
     }),
-    /** @todo find a way to not have to create a separate document for ingredients. */
     // defineField({
     //   name: 'ingredientName',
     //   title: 'Ingredient',
@@ -26,12 +25,11 @@ export default defineType({
     defineField({
       name: 'amount',
       title: 'Amount',
-      /** @todo Find a better way to enter fractions or just make this a string field. */
       type: 'string',
       // type: 'number',
       // fieldset: 'value',
       // components: { input: CustomNumberInput },
-      description: 'Enter as decimal or use the arrows to increment.',
+      description: 'E.g. 1/4',
     }),
     defineField({
       name: 'unit',

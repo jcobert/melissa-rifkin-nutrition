@@ -172,7 +172,7 @@ export default defineType({
               if (!!ctx.parent && !alt) return 'Required'
               return true
             }),
-          title: 'Image Description',
+          title: 'Image Description (alt text)',
           description:
             'Used for people who cannot see the image and for Google search. E.g. "A woman gardening"',
         },

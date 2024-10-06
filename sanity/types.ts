@@ -111,7 +111,7 @@ export interface Recipe extends SanityDocument {
   introduction?: BlockWithHeading
   howToStore?: BlockWithHeading
   tipsAndTricks?: BlockWithHeading
-  faqSet?: FaqSet
+  faqSet?: FaqSet[]
   relatedPosts?: RelatedPost[]
 }
 

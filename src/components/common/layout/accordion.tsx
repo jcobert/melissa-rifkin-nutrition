@@ -1,9 +1,10 @@
 'use client'
 
 import * as Radix from '@radix-ui/react-accordion'
-import clsx from 'clsx'
 import React, { FC, ReactNode } from 'react'
 import { MdOutlineExpandMore } from 'react-icons/md'
+
+import { cn } from '@/utils/style'
 
 type Props = {
   items?: { header?: ReactNode; content?: ReactNode }[]
@@ -37,9 +38,7 @@ const Accordion: FC<Props> = ({
   return (
     <Radix.Root
       {...radixProps}
-      className={clsx('border rounded-md divide-y', {
-        [className]: !!className,
-      })}
+      className={cn('border rounded-md divide-y', className)}
     >
       {items
         // Only render accordion sections that have content
@@ -48,19 +47,20 @@ const Accordion: FC<Props> = ({
           <Radix.Item
             key={i}
             value={`item-${i + 1}`}
-            className={clsx('p-2 rounded-md', {
-              [itemClassName]: !!itemClassName,
-            })}
+            className={cn(
+              'p-2 first-of-type:rounded-t-md last-of-type:rounded-b-md',
+              itemClassName,
+            )}
           >
             <Radix.Header>
               <Radix.Trigger
-                className={clsx(
-                  'flex w-full items-center justify-between gap-2 max-sm:py-2 group',
-                  { [triggerClassName]: !!triggerClassName },
+                className={cn(
+                  'flex w-full items-center justify-between gap-2 max-sm:py-2 group transition',
+                  triggerClassName,
                 )}
               >
                 <>
-                  <h4 className=''>{item?.header}</h4>
+                  <h4>{item?.header}</h4>
                   <MdOutlineExpandMore className='text-xl transition-transform duration-300 group-data-[state=open]:rotate-180' />
                 </>
               </Radix.Trigger>

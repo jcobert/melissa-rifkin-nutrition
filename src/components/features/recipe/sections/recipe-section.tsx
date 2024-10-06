@@ -8,15 +8,19 @@ import PortableBlockContent from '@/components/common/portable/portable-block-co
 type Props = {
   content: BlockWithHeading | undefined
   children?: ReactNode
-  hideDivider?: boolean
   className?: string
+  // childrenClassName?: string
+  hideDivider?: boolean
+  // childrenProse?: boolean
 }
 
 const RecipeSection: FC<Props> = ({
   content,
   children,
-  hideDivider,
   className,
+  // childrenClassName,
+  hideDivider = false,
+  // childrenProse = false,
 }) => {
   if (!content) return null
 
@@ -31,9 +35,7 @@ const RecipeSection: FC<Props> = ({
         )}
       >
         {heading ? (
-          <h2 className='self-start__ text-left__ mb-0 prose-none__'>
-            {heading}
-          </h2>
+          <h2 className='text-pretty mb-0 max-w-prose'>{heading}</h2>
         ) : null}
 
         {body ? (
@@ -43,7 +45,12 @@ const RecipeSection: FC<Props> = ({
         ) : null}
 
         {children ? (
-          <div className={cn('not-prose mb-5', [!!heading && 'mt-5'])}>
+          <div
+            className={cn('mb-5', [
+              // !childrenProse && 'not-prose',
+              !!heading && 'mt-5',
+            ])}
+          >
             {children}
           </div>
         ) : null}

@@ -15,6 +15,7 @@ import Logo, { logos } from '@/components/common/logo'
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
+import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import ShareBar from '@/components/share-bar'
 
@@ -126,7 +127,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           content={{ heading: 'Ingredients' }}
           className='print:break-inside-avoid-page'
         >
-          <div className='grid__ flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
+          <div className='grid__ not-prose flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
             {ingredientGroups?.map((group) => (
               <div
                 key={group?._key}
@@ -222,7 +223,9 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
         {/* FAQ */}
         <RecipeSection content={{ heading: 'FAQ' }} hideDivider>
-          <div></div>
+          <div className='not-prose'>
+            <RecipeFaq faqSet={recipe?.faqSet} />
+          </div>
         </RecipeSection>
       </div>
 

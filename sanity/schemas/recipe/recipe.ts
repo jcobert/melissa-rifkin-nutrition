@@ -375,6 +375,7 @@ export default defineType({
           name: 'heading',
           type: 'string',
           title: 'Heading',
+          initialValue: 'How to Store',
         }),
         defineField({
           name: 'body',
@@ -394,6 +395,7 @@ export default defineType({
           name: 'heading',
           type: 'string',
           title: 'Heading',
+          initialValue: 'Tips for Best Results',
         }),
         defineField({
           name: 'body',

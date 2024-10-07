@@ -342,6 +342,11 @@ const Recipe: FC<Props> = ({ recipe }) => {
           className='h-px print:hidden w-full border-b-3 mx-auto mb-4 lg:px-16'
         />
 
+        {/* User Comments */}
+        {/* <section>
+          <div></div>
+        </section> */}
+
         {/* Similar Recipes */}
         {recipe?.similarRecipes?.length ? (
           <RecipeSection

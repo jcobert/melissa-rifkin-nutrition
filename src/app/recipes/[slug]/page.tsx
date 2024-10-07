@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { QueryParams, SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
-import { RedirectType, redirect } from 'next/navigation'
 import React, { FC } from 'react'
 import { client } from 'sanity-studio/lib/client'
 import { RECIPES_QUERY, RECIPE_QUERY } from 'sanity-studio/lib/queries'
@@ -77,11 +76,6 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
       // cache: 'no-store',
     },
   )
-
-  // // Redirect to main recipes page if recipe not found.
-  // if (!initial?.data) {
-  //   redirect('/recipes', RedirectType.replace)
-  // }
 
   const {
     title,

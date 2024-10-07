@@ -10,7 +10,10 @@ export const BIO_QUERY = groq`*[_type == "bio" && _id == $id][0]`
 
 // RECIPE
 export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug)]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }}`
-export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, similarRecipes[]->, relatedPosts[]->}[0]`
+export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, similarRecipes[]->, relatedPosts[]->, "comments": *[_type == "userComment" && references(^._id) && approved == true]}[0]`
+
+// USER COMMENT
+export const USER_COMMENTS_QUERY = groq`*[_type == "userComment"]`
 
 // TESTIMONIAL
 export const TESTIMONIALS_QUERY = groq`*[_type == "testimonial"]`

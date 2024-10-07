@@ -16,9 +16,11 @@ import PortableBlockContent from '@/components/common/portable/portable-block-co
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
+import RecipeComments from '@/components/features/recipe/sections/comments-and-rating/recipe-comments'
 import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import RelatedPosts from '@/components/features/recipe/sections/related-posts'
+import UserPostComment from '@/components/features/user-generated/user-post-comment'
 import ShareBar from '@/components/share-bar'
 
 const builder = imageUrlBuilder({ projectId, dataset })
@@ -342,11 +344,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           className='h-px print:hidden w-full border-b-3 mx-auto mb-4 lg:px-16'
         />
 
-        {/* User Comments */}
-        {/* <section>
-          <div></div>
-        </section> */}
-
+        {/** @TODO Limit count - add view more or carousel. */}
         {/* Similar Recipes */}
         {recipe?.similarRecipes?.length ? (
           <RecipeSection
@@ -361,6 +359,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </RecipeSection>
         ) : null}
 
+        {/** @TODO Limit count - add view more or carousel. */}
         {/* Related Blog Posts */}
         {recipe?.relatedPosts?.length ? (
           <RecipeSection
@@ -371,6 +370,15 @@ const Recipe: FC<Props> = ({ recipe }) => {
             <RelatedPosts posts={recipe?.relatedPosts} className='not-prose' />
           </RecipeSection>
         ) : null}
+
+        {/* User Comments */}
+        <RecipeSection
+          content={{ heading: 'Comments' }}
+          className='print:hidden'
+          hideDivider
+        >
+          <RecipeComments recipe={recipe} />
+        </RecipeSection>
       </div>
 
       {/* Tags */}

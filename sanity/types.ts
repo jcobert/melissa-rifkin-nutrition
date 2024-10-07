@@ -114,6 +114,7 @@ export interface Recipe extends SanityDocument {
   faqSet?: FaqSet[]
   similarRecipes?: Recipe[]
   relatedPosts?: Post[]
+  comments?: UserComment[]
 }
 
 export type FaqSet = SanityKeyed<{

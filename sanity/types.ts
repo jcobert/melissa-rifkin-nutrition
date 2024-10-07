@@ -51,6 +51,16 @@ export type VideoEmbed = {
   alt?: string
 }
 
+export type BlockLink = {
+  _type: 'blockLink'
+  _key: string
+  url: string
+  external?: boolean
+  noFollow?: boolean
+  sponsored?: boolean
+  newTab?: boolean
+}
+
 export type Slug = { _type: 'file'; current: string }
 
 /** Post */
@@ -98,6 +108,22 @@ export interface Recipe extends SanityDocument {
   >
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
   nutritionInformation?: NutritionInformation
+  introduction?: BlockWithHeading
+  howToStore?: BlockWithHeading
+  tipsAndTricks?: BlockWithHeading
+  faqSet?: FaqSet[]
+  similarRecipes?: Recipe[]
+  relatedPosts?: Post[]
+}
+
+export type FaqSet = SanityKeyed<{
+  question?: string
+  answer?: BlockContent
+}>
+
+export type BlockWithHeading = {
+  heading?: string
+  body?: BlockContent
 }
 
 export interface Ingredient extends SanityDocument {
@@ -129,7 +155,11 @@ export type Instruction = {
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
 }
 
-export type NutritionInformation = { calories?: number; servingSize?: string }
+export type NutritionInformation = {
+  calories?: number
+  servingSize?: string
+  info?: BlockContent
+}
 
 export enum RecipeUnit {
   tsp = 'tsp',

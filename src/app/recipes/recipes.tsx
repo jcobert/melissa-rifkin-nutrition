@@ -1,6 +1,6 @@
 'use client'
 
-import { sortBy, uniq } from 'lodash'
+import { sortBy, uniq, uniqBy } from 'lodash'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { TbListSearch } from 'react-icons/tb'
@@ -38,9 +38,10 @@ type Props = {
 const Recipes: FC<Props> = ({ recipes, params }) => {
   const { category: categoryParam, tag: tagParam } = params || {}
 
-  const allTags = uniq(
+  const allTags = uniqBy(
     recipes?.flatMap((rec) => (rec?.tags || [])?.map((t) => t)),
-  )
+    (tag) => tag?.toLowerCase()?.trim(),
+  )?.sort()
   const tagFilterOptions: SelectOption[] = useMemo(
     () =>
       allTags?.map((tag) => ({
@@ -97,14 +98,24 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
     if (!tagFilter && !searchFilter && !categoryFilter) {
       newArr = recipes
     } else if (tagFilter && !searchFilter && !categoryFilter) {
-      newArr = recipes?.filter((rec) => rec?.tags?.includes(tagFilter))
+      newArr = recipes?.filter((rec) =>
+        rec?.tags
+          ?.map((t) => t?.toLowerCase())
+          ?.includes(tagFilter?.toLowerCase()),
+      )
     } else if (categoryFilter && !searchFilter && !tagFilter) {
-      newArr = recipes?.filter((rec) => rec?.category?.includes(categoryFilter))
+      newArr = recipes?.filter((rec) =>
+        rec?.category?.map((c) => c?.toLowerCase())?.includes(categoryFilter),
+      )
     } else if (categoryFilter && tagFilter && !searchFilter) {
       newArr = recipes?.filter(
         (rec) =>
-          rec?.category?.includes(categoryFilter) &&
-          rec?.tags?.includes(tagFilter),
+          rec?.category
+            ?.map((c) => c?.toLowerCase())
+            ?.includes(categoryFilter?.toLowerCase()) &&
+          rec?.tags
+            ?.map((t) => t?.toLowerCase())
+            ?.includes(tagFilter?.toLowerCase()),
       )
     } else if (searchFilter) {
       newArr = recipes?.filter((rec) => {
@@ -207,7 +218,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       <SelectInput
         options={categoryFilterOptions}
         isClearable
-        isSearchable={false}
+        // isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48'
         labelClassName={cn([!!categoryFilter && '!text-brand-blue'])}
@@ -232,7 +243,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       <SelectInput
         options={tagFilterOptions}
         isClearable
-        isSearchable={false}
+        // isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48 lg:max-w-64__'
         labelClassName={cn([!!tagFilter && '!text-brand-blue'])}

@@ -109,6 +109,7 @@ const BlogPost: FC<Props> = ({ post }) => {
         <div className='flex flex-col items-center gap-2'>
           <a
             href={externalUrl}
+            rel='nofollow'
             className='btn-outline flex items-center gap-2 w-fit'
           >
             <span>Keep reading</span>

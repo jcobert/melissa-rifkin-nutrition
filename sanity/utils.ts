@@ -1,4 +1,6 @@
+import { AnchorHTMLAttributes } from 'react'
 import { Path, SanityDocument } from 'sanity'
+import { BlockLink } from 'sanity-studio/types'
 
 type FindParentsParentOptions = {
   parentPath: Path
@@ -28,4 +30,33 @@ export const findParentsParent = ({
     }, document)
 
   return obj
+}
+
+type LinkRelAttribute = 'nofollow' | 'sponsored' | 'noreferrer' | 'noopener'
+
+type LinkAttributes = Pick<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  'rel' | 'target'
+>
+
+export const getBlockLinkAttributes = (link?: BlockLink): LinkAttributes => {
+  if (!link) {
+    return { rel: undefined, target: undefined }
+  }
+
+  let relAttrs: LinkRelAttribute[] = []
+  // if (link?.external) {
+  //   relAttrs = relAttrs?.concat('nofollow')
+  // }
+  if (link?.sponsored) {
+    relAttrs = relAttrs?.concat('sponsored')
+  }
+  if (link?.newTab) {
+    relAttrs = relAttrs?.concat(['noreferrer', 'noopener'])
+  }
+
+  return {
+    rel: relAttrs?.join(' '),
+    target: link?.newTab ? '_blank' : undefined,
+  }
 }

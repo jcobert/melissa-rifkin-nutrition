@@ -20,10 +20,11 @@ const Measurement: FC<Props> = ({
   className = '',
   measurementClassName = '',
   ingredientClassName = '',
+  ...rest
 }) => {
   //
   return (
-    <div className={cn('flex items-center gap-1 w-fit', className)}>
+    <div className={cn('flex items-center gap-1 w-fit', className)} {...rest}>
       {!!measurement?.amount && !hideMeasurement ? (
         <div
           className={cn([

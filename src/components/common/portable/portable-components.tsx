@@ -6,8 +6,12 @@ import {
 import { getImageDimensions } from '@sanity/asset-utils'
 import imageUrlBuilder from '@sanity/image-url'
 import Image from 'next/image'
+import Link from 'next/link'
+import { HiOutlineExternalLink } from 'react-icons/hi'
 import { ImQuotesLeft } from 'react-icons/im'
 import { dataset, projectId } from 'sanity-studio/env'
+import { BlockLink } from 'sanity-studio/types'
+import { getBlockLinkAttributes } from 'sanity-studio/utils'
 
 import PortableVideo from '@/components/common/portable/components/portable-video'
 
@@ -36,7 +40,7 @@ export const PortableImage = ({
         // Avoid jumping around with aspect-ratio CSS property
         aspectRatio: width / height,
       }}
-      className='mx-auto max-w-[85vw] lg:max-w-md rounded'
+      className='mx-auto max-w-[85vw] md:max-w-md rounded print:max-w-[40%]'
     />
   )
 }
@@ -67,6 +71,50 @@ export const PortableDivider = ({
   )
 }
 
+export const PortableLink = ({
+  children,
+  value,
+}: PortableTextMarkComponentProps<BlockLink>) => {
+  const { rel, target } = getBlockLinkAttributes(value)
+
+  if (!value?.url) return <span>{children}</span>
+
+  if (value?.external) {
+    return (
+      <a
+        href={value?.url}
+        rel={rel}
+        target={target}
+        className='inline-flex items-center gap-1__ w-fit__'
+      >
+        {children}
+        <HiOutlineExternalLink aria-label='This is an external link.' />
+      </a>
+    )
+  }
+  return (
+    <Link href={value?.url} rel={rel} target={target}>
+      {children}
+    </Link>
+  )
+}
+
+// export const PortableReferenceLink = ({
+//   children,
+//   value,
+//   ...props
+// }: PortableTextMarkComponentProps<BlockLink>) => {
+//   console.log(value, props)
+// return props.
+//   // return value?.url ? (
+//   //   <Link href={value?.url} className='w-full border-brand-gray-medium/50'>
+//   //     {children}
+//   //   </Link>
+//   // ) : (
+//   //   <span>{children}</span>
+//   // )
+// }
+
 export const portableComponents: PortableTextComponents = {
   types: {
     image: PortableImage,
@@ -77,5 +125,7 @@ export const portableComponents: PortableTextComponents = {
   },
   marks: {
     divider: PortableDivider,
+    link: PortableLink,
+    // referenceLink: PortableReferenceLink,
   },
 }

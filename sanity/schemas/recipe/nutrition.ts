@@ -14,7 +14,13 @@ export default defineType({
       name: 'servingSize',
       title: 'Serving Size',
       type: 'string',
-      description: 'E.g. 1/4 cup, 150 g',
+      description: 'E.g. 250g, 1 biscuit',
+    }),
+    defineField({
+      name: 'info',
+      title: 'Additional Info',
+      type: 'blockContent',
+      description: 'Any other nutritional info you wish to share.',
     }),
   ],
 })

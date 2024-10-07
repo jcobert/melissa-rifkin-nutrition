@@ -1,7 +1,12 @@
 import { FaBook } from 'react-icons/fa6'
-import { ObjectOptions, defineField, defineType } from 'sanity'
+import {
+  ObjectOptions,
+  defineArrayMember,
+  defineField,
+  defineType,
+} from 'sanity'
 import { CustomTextInput } from 'sanity-studio/components/text-input'
-import { Image, Recipe } from 'sanity-studio/types'
+import { Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'recipe',
@@ -22,7 +27,8 @@ export default defineType({
     },
     {
       name: 'classification',
-      title: 'Categories and Keywords',
+      title: 'Classification',
+      // title: 'Categories and Keywords',
       options: { collapsible: true },
     },
     {
@@ -38,7 +44,8 @@ export default defineType({
     },
     {
       name: 'classification',
-      title: 'Categories and Keywords',
+      title: 'Classification',
+      // title: 'Categories and Keywords',
     },
     {
       name: 'stepsAndIgredients',
@@ -48,10 +55,14 @@ export default defineType({
       name: 'detailsAndNutrition',
       title: 'Details and Nutrition',
     },
-    // {
-    //   name: 'additionalInfo',
-    //   title: 'Additional Info',
-    // },
+    {
+      name: 'additionalContent',
+      title: 'Additional Content',
+    },
+    {
+      name: 'related',
+      title: 'Related Posts',
+    },
   ],
   // groups: [{ name: 'seo', title: 'SEO (Google Optimization)' }],
   fields: [
@@ -66,6 +77,7 @@ export default defineType({
       //   field: CustomTextField,
       // },
     }),
+
     defineField({
       name: 'seoDescription',
       title: 'Recipe Description',
@@ -81,6 +93,7 @@ export default defineType({
         // field: CustomTextField,
       },
     }),
+
     defineField({
       name: 'slug',
       title: 'URL-friendly Name (required)',
@@ -94,6 +107,7 @@ export default defineType({
       description:
         'Just click "Generate" after entering something in the Recipe Name field above, to automatically fill this in.',
     }),
+
     defineField({
       name: 'mainImage',
       title: 'Main Photo',
@@ -115,44 +129,67 @@ export default defineType({
               if (!!ctx.parent && !alt) return 'Required'
               return true
             }),
-          title: 'Image Description',
+          title: 'Image Description (alt text)',
           description:
             'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
         },
       ],
     }),
+
     defineField({
-      name: 'additionalImages',
-      title: 'Additional Photos',
-      type: 'array',
-      of: [
-        {
-          type: 'image',
-          options: {
-            hotspot: true,
-            // collapsible: true,
-          },
-          fields: [
-            {
-              name: 'alt',
-              type: 'string',
-              validation: (rule) =>
-                rule.custom((alt: string, ctx) => {
-                  if (!!(ctx.parent as Image)?.asset && !alt) return 'Required'
-                  return true
-                }),
-              title: 'Image Description',
-              description:
-                'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
-            },
-          ],
-        },
+      name: 'introduction',
+      type: 'object',
+      group: 'additionalContent',
+      title: 'Introduction',
+      description:
+        'Add any lead-in to the recipe here. (E.g. backstory, images, etc.)',
+      fields: [
+        defineField({
+          name: 'heading',
+          type: 'string',
+          title: 'Heading',
+        }),
+        defineField({
+          name: 'body',
+          type: 'blockContent',
+          title: 'Body',
+        }),
       ],
-      options: { layout: 'grid' },
-      // fieldset: 'basicInfo',
-      group: 'basicInfo',
-      description: 'Any other photos you wish to display.',
     }),
+
+    // defineField({
+    //   name: 'additionalImages',
+    //   title: 'Additional Photos',
+    //   type: 'array',
+    //   of: [
+    //     {
+    //       type: 'image',
+    //       options: {
+    //         hotspot: true,
+    //         // collapsible: true,
+    //       },
+    //       fields: [
+    //         {
+    //           name: 'alt',
+    //           type: 'string',
+    //           validation: (rule) =>
+    //             rule.custom((alt: string, ctx) => {
+    //               if (!!(ctx.parent as Image)?.asset && !alt) return 'Required'
+    //               return true
+    //             }),
+    //           title: 'Image Description (alt text)',
+    //           description:
+    //             'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
+    //         },
+    //       ],
+    //     },
+    //   ],
+    //   options: { layout: 'grid' },
+    //   // fieldset: 'basicInfo',
+    //   group: 'basicInfo',
+    //   description: 'Any other photos you wish to display.',
+    // }),
+
     defineField({
       name: 'category',
       title: 'Meal Type Categories',
@@ -175,6 +212,7 @@ export default defineType({
         // direction: 'horizontal',
       },
     }),
+
     defineField({
       name: 'tags',
       title: 'Filter Tags',
@@ -187,18 +225,20 @@ export default defineType({
       description:
         'Keywords to help someone filtering for recipes on the website. These are user-facing. Keep them short and more generic. E.g. pasta, soup, instant pot, vegan.',
     }),
-    defineField({
-      name: 'seoTags',
-      title: 'SEO Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-      // fieldset: 'classification',
-      group: 'classification',
-      // group: 'seo',
-      options: { layout: 'tags' },
-      description:
-        'Additional keywords/short phrases related to the recipe. These are hidden and only used to help Google search. E.g. garlicky shrimp, zesty indian curry',
-    }),
+
+    // defineField({
+    //   name: 'seoTags',
+    //   title: 'SEO Tags',
+    //   type: 'array',
+    //   of: [{ type: 'string' }],
+    //   // fieldset: 'classification',
+    //   group: 'classification',
+    //   // group: 'seo',
+    //   options: { layout: 'tags' },
+    //   description:
+    //     'Additional keywords/short phrases related to the recipe. These are hidden and only used to help Google search. E.g. garlicky shrimp, zesty indian curry',
+    // }),
+
     defineField({
       name: 'cuisines',
       title: 'Cuisine Types',
@@ -210,6 +250,7 @@ export default defineType({
       options: { layout: 'tags' },
       description: 'E.g. Mexican, Greek, Japanese',
     }),
+
     defineField({
       name: 'publishedAt',
       title: 'Published at',
@@ -291,7 +332,7 @@ export default defineType({
       name: 'servings',
       title: 'Servings',
       description:
-        'How much this recipe yields. E.g. 4 people, 12 cookies, etc.',
+        'How much this recipe yields. E.g. 4 servings, 12 cookies, etc.',
       type: 'object',
       group: 'detailsAndNutrition',
       options: { columns: 2 },
@@ -311,8 +352,7 @@ export default defineType({
                 return 'Required'
               return true
             }),
-          // placeholder: 'people',
-          initialValue: 'people',
+          initialValue: 'servings',
         }),
       ],
     }),
@@ -324,8 +364,94 @@ export default defineType({
       group: 'detailsAndNutrition',
       options: {
         // collapsible: true,
-        columns: 2,
+        // columns: 2,
       } as ObjectOptions,
+    }),
+
+    defineField({
+      name: 'howToStore',
+      title: 'How to Store',
+      type: 'object',
+      group: 'additionalContent',
+      fields: [
+        defineField({
+          name: 'heading',
+          type: 'string',
+          title: 'Heading',
+          initialValue: 'How to Store',
+        }),
+        defineField({
+          name: 'body',
+          type: 'blockContent',
+          title: 'Body',
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'tipsAndTricks',
+      title: 'Tips and Tricks',
+      type: 'object',
+      group: 'additionalContent',
+      fields: [
+        defineField({
+          name: 'heading',
+          type: 'string',
+          title: 'Heading',
+          initialValue: 'Tips for Best Results',
+        }),
+        defineField({
+          name: 'body',
+          type: 'blockContent',
+          title: 'Body',
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'faqSet',
+      title: 'FAQ',
+      type: 'array',
+      of: [defineArrayMember({ type: 'faq' })],
+      group: 'additionalContent',
+    }),
+
+    defineField({
+      name: 'similarRecipes',
+      title: 'Similar Recipes',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [
+            {
+              type: 'recipe',
+            },
+          ],
+          options: { disableNew: true },
+        }),
+      ],
+      // options: { layout: 'grid' },
+      group: 'related',
+    }),
+
+    defineField({
+      name: 'relatedPosts',
+      title: 'Related Blog Posts',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [
+            {
+              type: 'post',
+            },
+          ],
+          options: { disableNew: true },
+        }),
+      ],
+      // options: { layout: 'grid' },
+      group: 'related',
     }),
   ],
 

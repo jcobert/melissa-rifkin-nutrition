@@ -1,6 +1,6 @@
 'use client'
 
-import { sortBy, uniq } from 'lodash'
+import { sortBy, uniq, uniqBy } from 'lodash'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { TbListSearch } from 'react-icons/tb'
@@ -28,12 +28,17 @@ type Props = {
 const BlogPosts: FC<Props> = ({ posts, params }) => {
   const { category: tagParam } = params || {}
 
-  const allTags =
-    uniq(posts?.flatMap((post) => (post?.tags || [])?.map((t) => t))) || []
+  const allTags = sortBy(
+    uniqBy(
+      posts?.flatMap((post) => (post?.tags || [])?.map((t) => t)),
+      (t) => t?.toLowerCase(),
+    ) || [],
+    (tag) => tag?.toLowerCase(),
+  )
 
   const tagFilterOptions: SelectOption[] = useMemo(
     () =>
-      allTags?.sort()?.map((tag) => ({
+      allTags?.map((tag) => ({
         value: tag,
         label: tag,
       })),
@@ -67,7 +72,11 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
     let newPosts = posts
     // if (!tagFilter && !searchFilter) return posts
     if (tagFilter && !searchFilter) {
-      newPosts = posts?.filter((p) => p?.tags?.includes(tagFilter))
+      newPosts = posts?.filter((p) =>
+        p?.tags
+          ?.map((t) => t?.toLowerCase())
+          ?.includes(tagFilter?.toLowerCase()),
+      )
     } else if (searchFilter) {
       newPosts = posts?.filter((p) => {
         const criteria = [p?.title, p?.tags?.join(), p?.author?.name]
@@ -160,7 +169,7 @@ const BlogPosts: FC<Props> = ({ posts, params }) => {
       <SelectInput
         options={tagFilterOptions}
         isClearable
-        isSearchable={false}
+        // isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48'
         labelClassName={cn([!!tagFilter && '!text-brand-blue'])}

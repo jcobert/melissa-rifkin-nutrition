@@ -72,23 +72,28 @@ export default {
             },
             h2: {
               fontSize: theme('fontSize.3xl'),
-              fontWeight: theme('fontWeight.bold'),
+              fontWeight: theme('fontWeight.semibold'),
+              // marginBottom: 0,
             },
             h3: {
               fontSize: theme('fontSize.2xl'),
-              fontWeight: theme('fontWeight.bold'),
+              fontWeight: theme('fontWeight.semibold'),
+              // marginBottom: 0,
             },
             h4: {
               fontSize: theme('fontSize.xl'),
-              fontWeight: theme('fontWeight.bold'),
+              fontWeight: theme('fontWeight.medium'),
+              // marginBottom: 0,
             },
             h5: {
               fontSize: theme('fontSize.lg'),
-              fontWeight: theme('fontWeight.bold'),
+              fontWeight: theme('fontWeight.medium'),
+              // marginBottom: 0,
             },
             h6: {
               fontSize: theme('fontSize.base'),
-              fontWeight: theme('fontWeight.bold'),
+              fontWeight: theme('fontWeight.medium'),
+              // marginBottom: 0,
             },
           },
         },

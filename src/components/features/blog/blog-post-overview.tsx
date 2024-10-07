@@ -46,9 +46,19 @@ const BlogPostOverview: FC<Props> = ({ post, className, hideDate = false }) => {
             className='object-cover object-center h-72 sm:h-36 w-full rounded'
           />
         ) : (
-          <div className='h-52 w-full flex items-center justify-center rounded bg-background'>
-            <Logo variant='small' imageProps={{ width: 150, height: 150 }} />
-          </div>
+          <Logo
+            variant='small'
+            imageProps={{
+              width: 150,
+              height: 150,
+              className:
+                'object-contain object-center h-72 sm:h-36 w-full rounded',
+            }}
+          />
+
+          // <div className='h-52 w-full flex items-center justify-center rounded bg-background'>
+          //   <Logo variant='small' imageProps={{ width: 150, height: 150 }} />
+          // </div>
         )}
       </div>
 

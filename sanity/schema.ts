@@ -7,6 +7,7 @@ import { type SchemaTypeDefinition } from 'sanity'
 import aboutPage from 'sanity-studio/schemas/about/aboutPage'
 import bio from 'sanity-studio/schemas/about/bio'
 import contactInfo from 'sanity-studio/schemas/contactInfo'
+import faq from 'sanity-studio/schemas/faq'
 import featureFlags from 'sanity-studio/schemas/featureFlags'
 import general from 'sanity-studio/schemas/general'
 import ingredient from 'sanity-studio/schemas/recipe/ingredient'
@@ -35,6 +36,7 @@ const schema: SchemaTypeDefinition[] = [
   aboutPage,
   video,
   featureFlags,
+  faq,
 ]
 
 export default schema

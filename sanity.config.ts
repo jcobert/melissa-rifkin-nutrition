@@ -9,6 +9,7 @@ import { PluginOptions, defineConfig, isDev } from 'sanity'
 import { customStructure } from 'sanity-structure'
 import { slugOnPublish } from 'sanity-studio/actions/slug-on-publish'
 import { Icon } from 'sanity-studio/components/studio-navbar'
+import { DocumentType } from 'sanity-studio/types'
 import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
 
@@ -47,7 +48,9 @@ export default defineConfig({
   // tools: [{ name: 'exit', title: 'Exit Studio', component: () => null }],
   document: {
     actions: (prev, context) => {
-      switch (context.schemaType) {
+      switch (context.schemaType as DocumentType) {
+        case 'general':
+        case 'aboutPage':
         case 'bio':
           return prev?.filter((action) => action?.name !== 'DeleteAction')
         case 'post':

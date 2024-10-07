@@ -25,17 +25,23 @@ export const customStructure = (S: StructureBuilder) =>
       // Recipe
       S.documentTypeListItem('recipe' as DocumentType).title('Recipes'),
       // S.documentTypeListItem('ingredient' as DocumentType).title('Ingredients'),
-      S.divider(),
+      // S.divider(),
 
       // Blog
       S.documentTypeListItem('post' as DocumentType).title('Blog Posts'),
       // S.documentTypeListItem('author' as DocumentType).title('Authors'),
+      // S.divider(),
+
+      // User Comments
+      S.documentTypeListItem('userComment' as DocumentType).title(
+        'User Comments',
+      ),
       S.divider(),
 
       // Misc
-      S.documentTypeListItem('bio' as DocumentType).title('Bios'),
+      S.documentTypeListItem('bio' as DocumentType).title('Company Bios'),
       S.documentTypeListItem('testimonial' as DocumentType).title(
-        'Testimonials',
+        'Client Testimonials',
       ),
       S.divider(),
 
@@ -62,6 +68,7 @@ export const customStructure = (S: StructureBuilder) =>
               'aboutPage',
               'bio',
               'featureFlags',
+              'userComment',
             ] as DocumentType[]
           ).includes(item.getId() as DocumentType),
       ),

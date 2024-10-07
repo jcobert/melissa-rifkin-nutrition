@@ -194,6 +194,18 @@ export interface Author extends SanityDocument {
   bio?: Array<SanityKeyed<SanityBlock>>
 }
 
+/** User Comment */
+export interface UserComment extends SanityDocument {
+  _type: 'userComment'
+  name?: string
+  email?: string
+  comment?: string
+  approved?: boolean
+  postType?: 'blog' | 'recipe'
+  sourceRecipe?: Recipe
+  sourceBlogPost?: Post
+}
+
 /** Category */
 // export interface Category extends SanityDocument {
 //   _type: 'category'
@@ -281,5 +293,6 @@ export type Documents =
   | Bio
   | AboutPage
   | FeatureFlags
+  | UserComment
 
 export type DocumentType = Documents['_type']

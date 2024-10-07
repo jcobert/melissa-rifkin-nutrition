@@ -155,7 +155,11 @@ export type Instruction = {
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
 }
 
-export type NutritionInformation = { calories?: number; servingSize?: string }
+export type NutritionInformation = {
+  calories?: number
+  servingSize?: string
+  info?: BlockContent
+}
 
 export enum RecipeUnit {
   tsp = 'tsp',

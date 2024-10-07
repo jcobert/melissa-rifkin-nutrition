@@ -12,6 +12,7 @@ import { type Recipe } from 'sanity-studio/types'
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo, { logos } from '@/components/common/logo'
+import PortableBlockContent from '@/components/common/portable/portable-block-content'
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
@@ -135,11 +136,11 @@ const Recipe: FC<Props> = ({ recipe }) => {
                     key={group?._key}
                     className='px-2 sm:px-4 flex-1 py-1 border rounded bg-almost-white print:bg-transparent print:flex-auto'
                   >
-                    {ingredientGroups?.length > 1 && (
+                    {ingredientGroups?.length > 1 && group?.title ? (
                       <h3 className='text-xl font-semibold mb-2 text-brand'>
                         {group?.title}
                       </h3>
-                    )}
+                    ) : null}
                     <ul className='flex flex-col gap-4 divide-y-1'>
                       {group?.ingredients
                         ?.filter((ingredient) => ingredient?.ingredientName)
@@ -166,27 +167,49 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </RecipeSection>
         ) : null}
 
-        {!!recipe?.prepTime || !!recipe?.cookTime ? (
-          <RecipeSection className='sm:-mt-8'>
-            {/* Time Info */}
-            <div>
-              <span className='sr-only'>{`Prep Time: ${recipe?.prepTime} min`}</span>
-              <div className='flex items-center gap-2' aria-hidden>
-                <span>Prep Time:</span>
-                <span className='text-lg leading-8'>{`${recipe?.prepTime} min`}</span>
-              </div>
+        {/* Time and Servings */}
+        {recipe?.prepTime || recipe?.cookTime || !!recipe?.servings ? (
+          <RecipeSection className='sm:-mt-8 -mt-4'>
+            <div className='border rounded bg-gray-50 py-2 px-4 sm:w-fit'>
+              {recipe?.prepTime ? (
+                <>
+                  <span className='sr-only'>{`Prep Time: ${recipe?.prepTime} min`}</span>
+                  <div className='flex items-center gap-2' aria-hidden>
+                    <span>Prep Time:</span>
+                    <span className='text-lg_ leading-8__'>{`${recipe?.prepTime} min`}</span>
+                  </div>
+                </>
+              ) : null}
 
-              <span className='sr-only'>{`Cook Time: ${recipe?.cookTime} min`}</span>
-              <div className='flex items-center gap-2' aria-hidden>
-                <span>Cook Time:</span>
-                <span className='text-lg leading-8'>{`${recipe?.cookTime} min`}</span>
-              </div>
+              {recipe?.cookTime ? (
+                <>
+                  <span className='sr-only'>{`Cook Time: ${recipe?.cookTime} min`}</span>
+                  <div className='flex items-center gap-2' aria-hidden>
+                    <span>Cook Time:</span>
+                    <span className='text-lg_ leading-8__'>{`${recipe?.cookTime} min`}</span>
+                  </div>
+                </>
+              ) : null}
 
-              <span className='sr-only'>{`Total Time: ${(recipe?.cookTime || 0) + (recipe?.prepTime || 0)} min`}</span>
-              <div className='flex items-center gap-2' aria-hidden>
-                <span>Total Time:</span>
-                <span className='text-lg leading-8'>{`${(recipe?.cookTime || 0) + (recipe?.prepTime || 0)} min`}</span>
-              </div>
+              {recipe?.prepTime || recipe?.cookTime ? (
+                <>
+                  <span className='sr-only'>{`Total Time: ${(recipe?.cookTime || 0) + (recipe?.prepTime || 0)} min`}</span>
+                  <div className='flex items-center gap-2' aria-hidden>
+                    <span>Total Time:</span>
+                    <span className='text-lg_ leading-8__'>{`${(recipe?.cookTime || 0) + (recipe?.prepTime || 0)} min`}</span>
+                  </div>
+                </>
+              ) : null}
+
+              {recipe?.servings ? (
+                <>
+                  <span className='sr-only'>{`Yields: ${recipe?.servings?.quantity} ${recipe?.servings?.unit}`}</span>
+                  <div className='flex items-center gap-2' aria-hidden>
+                    <span>Yields:</span>
+                    <span className='text-lg_ leading-8__'>{`${recipe?.servings?.quantity} ${recipe?.servings?.unit}`}</span>
+                  </div>
+                </>
+              ) : null}
             </div>
           </RecipeSection>
         ) : null}
@@ -249,11 +272,50 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </RecipeSection>
         ) : null}
 
+        {/* Tips */}
+        <RecipeSection content={recipe?.tipsAndTricks} />
+
         {/* How to store */}
         <RecipeSection content={recipe?.howToStore} />
 
-        {/* Tips */}
-        <RecipeSection content={recipe?.tipsAndTricks} />
+        {/* Nutrition Info */}
+        {recipe?.nutritionInformation ? (
+          <RecipeSection content={{ heading: 'Nutrition' }}>
+            <div className='flex sm:items-center max-sm:flex-col gap-x-6 gap-y-2 border rounded bg-gray-50 py-2 px-4 sm:w-fit'>
+              {recipe?.nutritionInformation?.calories ? (
+                <>
+                  {/* <span className='sr-only'>{`Calories: ${recipe?.nutritionInformation?.calories}`}</span> */}
+                  {/* <div className='flex items-center gap-2' aria-hidden> */}
+                  {/* <span>Calories:</span> */}
+                  <span className='text-lg__ leading-8__'>{`Calories: ${recipe?.nutritionInformation?.calories}`}</span>
+                  {/* </div> */}
+                </>
+              ) : null}
+
+              <span className='text-gray-300 max-sm:hidden' aria-hidden>
+                |
+              </span>
+
+              {recipe?.nutritionInformation?.servingSize ? (
+                <>
+                  {/* <span className='sr-only'>{`Serving size: ${recipe?.nutritionInformation?.servingSize}`}</span> */}
+                  {/* <div className='flex items-center gap-2' aria-hidden> */}
+                  {/* <span>Serving Size:</span> */}
+                  <span className='text-lg__ leading-8__'>{`Serving Size: ${recipe?.nutritionInformation?.servingSize}`}</span>
+                  {/* </div> */}
+                </>
+              ) : null}
+            </div>
+
+            {recipe?.nutritionInformation?.info ? (
+              <div className='max-w-prose mx-auto'>
+                <PortableBlockContent
+                  value={recipe?.nutritionInformation?.info}
+                />
+              </div>
+            ) : null}
+          </RecipeSection>
+        ) : null}
 
         {/** @TODO Look into expanding all accordion sections on print.  */}
         {/* FAQ */}

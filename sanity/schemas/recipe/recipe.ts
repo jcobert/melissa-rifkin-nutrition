@@ -332,7 +332,7 @@ export default defineType({
       name: 'servings',
       title: 'Servings',
       description:
-        'How much this recipe yields. E.g. 4 servings, 12 cookies, 6 people, etc.',
+        'How much this recipe yields. E.g. 4 servings, 12 cookies, etc.',
       type: 'object',
       group: 'detailsAndNutrition',
       options: { columns: 2 },
@@ -352,7 +352,6 @@ export default defineType({
                 return 'Required'
               return true
             }),
-          // placeholder: 'people',
           initialValue: 'servings',
         }),
       ],
@@ -365,7 +364,7 @@ export default defineType({
       group: 'detailsAndNutrition',
       options: {
         // collapsible: true,
-        columns: 2,
+        // columns: 2,
       } as ObjectOptions,
     }),
 

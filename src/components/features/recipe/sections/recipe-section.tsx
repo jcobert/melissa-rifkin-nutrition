@@ -6,7 +6,7 @@ import { cn } from '@/utils/style'
 import PortableBlockContent from '@/components/common/portable/portable-block-content'
 
 type Props = {
-  content: BlockWithHeading | undefined
+  content?: BlockWithHeading
   children?: ReactNode
   className?: string
   // childrenClassName?: string

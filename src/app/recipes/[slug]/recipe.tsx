@@ -126,35 +126,67 @@ const Recipe: FC<Props> = ({ recipe }) => {
           <RecipeSection
             content={{ heading: 'Ingredients' }}
             className='print:break-inside-avoid-page'
+            hideDivider={!!recipe?.prepTime || !!recipe?.cookTime}
           >
-            <div className='grid__ not-prose flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
-              {ingredientGroups?.map((group) => (
-                <div
-                  key={group?._key}
-                  className='px-2 sm:px-4 flex-1 py-1 border rounded bg-almost-white print:bg-transparent print:flex-auto'
-                >
-                  {ingredientGroups?.length > 1 && (
-                    <h3 className='text-xl font-semibold mb-2 text-brand'>
-                      {group?.title}
-                    </h3>
-                  )}
-                  <ul className='flex flex-col gap-4 divide-y-1'>
-                    {group?.ingredients
-                      ?.filter((ingredient) => ingredient?.ingredientName)
-                      ?.map((ing, i) => (
-                        <li
-                          key={`${ing?.ingredientName}-${i}`}
-                          className='flex flex-col__ -mb-3 pt-1 last-of-type:mb-0 items-center gap-1 flex-wrap text-brand-gray-dark'
-                        >
-                          <Measurement measurement={ing} />
-                          <p className='text-brand-gray-medium text-sm text-balance'>
-                            {ing?.note}
-                          </p>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              ))}
+            <>
+              <div className='grid__ not-prose flex max-md:flex-col gap-x-4 gap-y-6 max-md:grid-cols-1 print:grid-cols-2__ md:grid-flow-col md:min-w-96 print:flex'>
+                {ingredientGroups?.map((group) => (
+                  <div
+                    key={group?._key}
+                    className='px-2 sm:px-4 flex-1 py-1 border rounded bg-almost-white print:bg-transparent print:flex-auto'
+                  >
+                    {ingredientGroups?.length > 1 && (
+                      <h3 className='text-xl font-semibold mb-2 text-brand'>
+                        {group?.title}
+                      </h3>
+                    )}
+                    <ul className='flex flex-col gap-4 divide-y-1'>
+                      {group?.ingredients
+                        ?.filter((ingredient) => ingredient?.ingredientName)
+                        ?.map((ing, i) => (
+                          <li
+                            key={`${ing?.ingredientName}-${i}`}
+                            className='flex flex-col__ -mb-3 pt-1 last-of-type:mb-0 items-center gap-1 flex-wrap text-brand-gray-dark'
+                            aria-label={`${ing?.amount ?? ''} ${ing?.unit ?? ''} ${ing?.ingredientName ?? ''}${ing?.note ? `, ${ing?.note}` : ''}`}
+                          >
+                            <Measurement measurement={ing} aria-hidden />
+                            <p
+                              className='text-brand-gray-medium text-sm text-balance'
+                              aria-hidden
+                            >
+                              {ing?.note}
+                            </p>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </>
+          </RecipeSection>
+        ) : null}
+
+        {!!recipe?.prepTime || !!recipe?.cookTime ? (
+          <RecipeSection className='sm:-mt-8'>
+            {/* Time Info */}
+            <div>
+              <span className='sr-only'>{`Prep Time: ${recipe?.prepTime} min`}</span>
+              <div className='flex items-center gap-2' aria-hidden>
+                <span>Prep Time:</span>
+                <span className='text-lg leading-8'>{`${recipe?.prepTime} min`}</span>
+              </div>
+
+              <span className='sr-only'>{`Cook Time: ${recipe?.cookTime} min`}</span>
+              <div className='flex items-center gap-2' aria-hidden>
+                <span>Cook Time:</span>
+                <span className='text-lg leading-8'>{`${recipe?.cookTime} min`}</span>
+              </div>
+
+              <span className='sr-only'>{`Total Time: ${(recipe?.cookTime || 0) + (recipe?.prepTime || 0)} min`}</span>
+              <div className='flex items-center gap-2' aria-hidden>
+                <span>Total Time:</span>
+                <span className='text-lg leading-8'>{`${(recipe?.cookTime || 0) + (recipe?.prepTime || 0)} min`}</span>
+              </div>
             </div>
           </RecipeSection>
         ) : null}
@@ -249,22 +281,29 @@ const Recipe: FC<Props> = ({ recipe }) => {
         />
 
         {/* Similar Recipes */}
-        <RecipeSection
-          content={{ heading: "Similar Recipes You'll Love" }}
-          hideDivider
-          className='print:hidden'
-        >
-          <RelatedPosts posts={recipe?.similarRecipes} className='not-prose' />
-        </RecipeSection>
+        {recipe?.similarRecipes?.length ? (
+          <RecipeSection
+            content={{ heading: "Similar Recipes You'll Love" }}
+            hideDivider
+            className='print:hidden'
+          >
+            <RelatedPosts
+              posts={recipe?.similarRecipes}
+              className='not-prose'
+            />
+          </RecipeSection>
+        ) : null}
 
         {/* Related Blog Posts */}
-        <RecipeSection
-          content={{ heading: 'Related Blog Posts' }}
-          hideDivider
-          className='print:hidden'
-        >
-          <RelatedPosts posts={recipe?.relatedPosts} className='not-prose' />
-        </RecipeSection>
+        {recipe?.relatedPosts?.length ? (
+          <RecipeSection
+            content={{ heading: 'Related Blog Posts' }}
+            hideDivider
+            className='print:hidden'
+          >
+            <RelatedPosts posts={recipe?.relatedPosts} className='not-prose' />
+          </RecipeSection>
+        ) : null}
       </div>
 
       {/* Tags */}
@@ -284,7 +323,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
         </div>
       ) : null}
 
-      <div className='text-brand-gray-dark text-sm flex flex-col gap-1 mt-4'>
+      <div className='text-brand-gray-dark text-sm flex flex-col gap-1 mt-4 print:hidden'>
         <span>{`Originally posted: ${format(recipe?._createdAt, 'MMM d, yyyy')}`}</span>
         <span>{`Last updated: ${format(recipe?._updatedAt, 'MMM d, yyyy')}`}</span>
       </div>

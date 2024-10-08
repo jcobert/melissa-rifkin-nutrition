@@ -1,16 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { IoInformationCircleOutline } from 'react-icons/io5'
 import { z } from 'zod'
 
 import Button from '@/components/common/buttons/Button'
 import TextAreaInput from '@/components/common/inputs/text-area-input'
 import TextInput from '@/components/common/inputs/text-input'
-
-type Props = {
-  onSubmit: SubmitHandler<FormData>
-  onCancel?: () => void
-}
 
 const schema = z.object({
   name: z.string().min(1, 'Name required'),
@@ -21,13 +17,19 @@ const schema = z.object({
     .max(500, 'Must be 500 characters or less'),
 })
 
-type FormData = z.infer<typeof schema>
+export type CommentFormData = z.infer<typeof schema>
 
-const CommentForm: FC<Props> = ({ onSubmit, onCancel }) => {
-  const { control, handleSubmit } = useForm<FormData>({
+type Props = {
+  onSubmit: SubmitHandler<CommentFormData>
+  onCancel?: () => void
+  initialData?: CommentFormData
+}
+
+const CommentForm: FC<Props> = ({ onSubmit, onCancel, initialData }) => {
+  const { control, handleSubmit } = useForm<CommentFormData>({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
-    defaultValues: {
+    defaultValues: initialData ?? {
       comment: '',
       email: '',
       name: '',
@@ -40,7 +42,21 @@ const CommentForm: FC<Props> = ({ onSubmit, onCancel }) => {
       onSubmit={handleSubmit(onSubmit)}
       className='flex flex-col gap-6 max-w-prose mx-auto'
     >
-      <h5>Leave a comment</h5>
+      {/* Heading */}
+      <div className='flex flex-col gap-1'>
+        <h5>Tell us what you think!</h5>
+        <div className='flex items-start gap-2'>
+          <IoInformationCircleOutline
+            aria-hidden
+            className='text-xl font-medium'
+          />
+          <p className='text-sm text-brand-gray-dark my-0 text-pretty'>
+            Your comment will be public. Email is only used for internal
+            purposes and won't be shared.
+          </p>
+        </div>
+      </div>
+
       <div className='flex flex-col gap-2'>
         <div className='flex sm:items-start gap-x-8 gap-y-2 max-sm:flex-col'>
           <Controller

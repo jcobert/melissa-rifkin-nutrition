@@ -2,6 +2,7 @@
 
 import { sortBy } from 'lodash'
 import { FC, useState } from 'react'
+import { FaRegCommentDots } from 'react-icons/fa6'
 import { Recipe } from 'sanity-studio/types'
 
 import { cn } from '@/utils/style'
@@ -28,24 +29,25 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
 
   return (
     <div className='flex flex-col gap-8 sm:gap-12__'>
-      {/* New Comment */}
+      {/* New Comment Form */}
       <Collapsible
         isOpen={formActive}
         setIsOpen={setFormActive}
         trigger={
           <Button
-            // unstyled
             onClick={() => {
               setFormActive((prev) => !prev)
             }}
+            unstyled
           >
-            {formActive ? 'Cancel' : 'Leave a comment'}
+            <FaRegCommentDots />
+            <span>Leave a comment</span>
           </Button>
         }
         triggerClassName={cn('sm:w-fit sm:self-end', [
           // formActive && 'btn-text',
-          // !formActive && 'btn-outline',
-          formActive && 'hidden',
+          !formActive && 'btn-outline__ btn',
+          formActive && 'hidden__ btn-text',
         ])}
         // className='gap-4'
       >
@@ -61,7 +63,7 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
         </div>
       </Collapsible>
 
-      {/* Comments */}
+      {/* Comments List */}
       {comments?.length ? (
         <div className='flex flex-col divide-y-1 rounded rounded-t-none__ border px-2 not-prose bg-almost-white'>
           {recipe?.comments?.map((comment) => (

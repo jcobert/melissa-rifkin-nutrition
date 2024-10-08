@@ -1,7 +1,13 @@
+'use client'
+
 import { sortBy } from 'lodash'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Recipe } from 'sanity-studio/types'
 
+import { cn } from '@/utils/style'
+
+import Button from '@/components/common/buttons/Button'
+import Collapsible from '@/components/common/layout/collapsible'
 import NoResults from '@/components/common/no-results'
 import CommentForm from '@/components/features/user-generated/comment-form'
 import UserPostComment from '@/components/features/user-generated/user-post-comment'
@@ -11,21 +17,53 @@ type Props = {
 }
 
 const RecipeComments: FC<Props> = ({ recipe }) => {
-  if (!recipe) return null
+  const [formActive, setFormActive] = useState(false)
 
   const comments = sortBy(
     recipe?.comments,
     (comment) => comment?._createdAt,
   )?.reverse()
 
+  if (!recipe) return null
+
   return (
-    <div className='flex flex-col gap-8 sm:gap-12'>
+    <div className='flex flex-col gap-8 sm:gap-12__'>
       {/* New Comment */}
-      <CommentForm />
+      <Collapsible
+        isOpen={formActive}
+        setIsOpen={setFormActive}
+        trigger={
+          <Button
+            // unstyled
+            onClick={() => {
+              setFormActive((prev) => !prev)
+            }}
+          >
+            {formActive ? 'Cancel' : 'Leave a comment'}
+          </Button>
+        }
+        triggerClassName={cn('sm:w-fit sm:self-end', [
+          // formActive && 'btn-text',
+          // !formActive && 'btn-outline',
+          formActive && 'hidden',
+        ])}
+        // className='gap-4'
+      >
+        <div className='border rounded rounded-b-none__ p-4 pb-6 lg:py-8 bg-almost-white__ w-full'>
+          <CommentForm
+            onSubmit={(data) => {
+              console.log(data)
+            }}
+            onCancel={() => {
+              setFormActive(false)
+            }}
+          />
+        </div>
+      </Collapsible>
 
       {/* Comments */}
       {comments?.length ? (
-        <div className='flex flex-col divide-y-1 rounded border px-2 not-prose bg-almost-white'>
+        <div className='flex flex-col divide-y-1 rounded rounded-t-none__ border px-2 not-prose bg-almost-white'>
           {recipe?.comments?.map((comment) => (
             <UserPostComment key={comment?._id} comment={comment} />
           ))}

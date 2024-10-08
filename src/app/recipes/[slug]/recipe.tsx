@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
@@ -20,7 +20,6 @@ import RecipeComments from '@/components/features/recipe/sections/comments-and-r
 import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import RelatedPosts from '@/components/features/recipe/sections/related-posts'
-import UserPostComment from '@/components/features/user-generated/user-post-comment'
 import ShareBar from '@/components/share-bar'
 
 const builder = imageUrlBuilder({ projectId, dataset })

@@ -71,11 +71,22 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
           ))}
         </div>
       ) : (
-        <div className='mx-auto'>
+        <div className={cn('mx-auto', [formActive && 'hidden'])}>
           <NoResults
             title='No Comments'
             subtitle=''
-            description='Be the first to comment!'
+            description={
+              <Button
+                className='btn-text'
+                unstyled
+                onClick={() => {
+                  setFormActive((prev) => !prev)
+                }}
+              >
+                Be the first to comment!
+              </Button>
+            }
+            // description='Be the first to comment!'
           />
         </div>
       )}

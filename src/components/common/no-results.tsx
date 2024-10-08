@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 
 type Props = {
   title?: string
   subtitle?: string
-  description?: string
+  description?: ReactNode
 }
 
 const NoResults: FC<Props> = ({

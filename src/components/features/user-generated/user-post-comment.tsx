@@ -16,9 +16,7 @@ type Props = {
 const UserPostComment: FC<Props> = ({ comment }) => {
   const { name, _createdAt: date, comment: text = '' } = comment || {}
 
-  const { currentText, isLong, expanded, toggleExpand } = useTruncateText({
-    text,
-  })
+  const { visibleText, isLong, expanded, toggleExpand } = useTruncateText(text)
 
   if (!comment || !comment?.approved) return null
 
@@ -33,9 +31,10 @@ const UserPostComment: FC<Props> = ({ comment }) => {
         ) : null}
       </div>
       <div className=''>
-        {text ? <p className='max-w-prose leading-6'>{currentText}</p> : null}
+        {text ? <p className='max-w-prose leading-6'>{visibleText}</p> : null}
         {isLong ? (
           <Button
+            aria-label='See full comment.'
             unstyled
             className='whitespace-nowrap btn-text p-0 text-base flex items-center'
             onClick={() => {

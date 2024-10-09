@@ -1,24 +1,24 @@
 import { truncate } from 'lodash'
 import { useState } from 'react'
 
-type UseTruncateTextProps = {
-  text?: string
+type UseTruncateTextOptions = {
   limit?: number
 }
 
-export const useTruncateText = ({
-  text = '',
-  limit = 85,
-}: UseTruncateTextProps) => {
+export const useTruncateText = (
+  text: string = '',
+  options?: UseTruncateTextOptions,
+) => {
+  const { limit = 85 } = options || {}
   const [expanded, setExpanded] = useState(false)
 
   const isLong = text.length > limit
-  const initialText = truncate(text, { length: limit })
-  const currentText = expanded ? text : initialText
+  const truncatedText = truncate(text, { length: limit })
+  const visibleText = expanded ? text : truncatedText
 
   return {
     isLong,
-    currentText,
+    visibleText,
     expanded,
     setExpanded,
     toggleExpand: () => setExpanded((prev) => !prev),

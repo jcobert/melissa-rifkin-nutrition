@@ -17,6 +17,8 @@ import NoResults from '@/components/common/no-results'
 import CommentForm from '@/components/features/user-generated/comment-form'
 import UserPostComment from '@/components/features/user-generated/user-post-comment'
 
+import { useTruncateArray } from '@/hooks/use-truncate-array'
+
 type Props = {
   recipe: Recipe
 }
@@ -28,6 +30,13 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
     recipe?.comments,
     (comment) => comment?._createdAt,
   )?.reverse()
+
+  const {
+    visibleArray: visibleComments,
+    expanded,
+    isLong,
+    toggleExpand,
+  } = useTruncateArray(comments)
 
   if (!recipe) return null
 
@@ -105,10 +114,24 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
 
       {/* Comments List */}
       {comments?.length ? (
-        <div className='flex flex-col divide-y-1 rounded border px-2 not-prose bg-almost-white'>
-          {comments?.map((comment) => (
-            <UserPostComment key={comment?._id} comment={comment} />
-          ))}
+        <div className='flex flex-col gap-6'>
+          <div className='flex flex-col divide-y-1 rounded border px-2 not-prose bg-almost-white'>
+            {visibleComments?.map((comment) => (
+              <UserPostComment key={comment?._id} comment={comment} />
+            ))}
+          </div>
+          {isLong ? (
+            <Button
+              aria-label='View more comments.'
+              unstyled
+              className='whitespace-nowrap btn-outline flex items-center w-fit self-center py-2 sm:p-1'
+              onClick={() => {
+                toggleExpand()
+              }}
+            >
+              <span>{expanded ? 'View less' : 'View more'}</span>
+            </Button>
+          ) : null}
         </div>
       ) : (
         <div className={cn('mx-auto', [formActive && 'hidden'])}>

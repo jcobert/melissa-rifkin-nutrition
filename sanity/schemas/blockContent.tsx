@@ -98,7 +98,7 @@ export default defineType({
                     return true
                   }),
                 // initialValue: false,
-                hidden: (schema) => !schema?.parent?.external,
+                // hidden: (schema) => !schema?.parent?.external,
                 options: { layout: 'checkbox' },
               },
               {
@@ -125,7 +125,7 @@ export default defineType({
                     return true
                   }),
                 // initialValue: false,
-                hidden: (schema) => !schema?.parent?.external,
+                // hidden: (schema) => !schema?.parent?.external,
                 options: { layout: 'checkbox' },
               },
               {

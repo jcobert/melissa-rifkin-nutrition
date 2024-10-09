@@ -2,7 +2,11 @@
 
 import { sortBy } from 'lodash'
 import { FC, useState } from 'react'
-import { FaRegCommentDots } from 'react-icons/fa6'
+import {
+  FaRegCircleCheck,
+  FaRegCircleXmark,
+  FaRegCommentDots,
+} from 'react-icons/fa6'
 import { Recipe } from 'sanity-studio/types'
 
 import { cn } from '@/utils/style'
@@ -14,7 +18,7 @@ import CommentForm from '@/components/features/user-generated/comment-form'
 import UserPostComment from '@/components/features/user-generated/user-post-comment'
 
 type Props = {
-  recipe?: Recipe
+  recipe: Recipe
 }
 
 const RecipeComments: FC<Props> = ({ recipe }) => {
@@ -28,7 +32,7 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
   if (!recipe) return null
 
   return (
-    <div className='flex flex-col gap-8 sm:gap-12__'>
+    <div className='flex flex-col gap-8'>
       {/* New Comment Form */}
       <Collapsible
         isOpen={formActive}
@@ -45,19 +49,55 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
           </Button>
         }
         triggerClassName={cn('sm:w-fit sm:self-end', [
-          // formActive && 'btn-text',
-          !formActive && 'btn-outline__ btn',
-          formActive && 'hidden__ btn-text',
+          !formActive && 'btn',
+          formActive && ' btn-text',
         ])}
-        // className='gap-4'
       >
-        <div className='border rounded rounded-b-none__ p-4 pb-6 lg:py-8 bg-almost-white__ w-full'>
+        <div className='border rounded p-4 pb-6 lg:py-8 w-full'>
           <CommentForm
-            onSubmit={(data) => {
-              console.log(data)
-            }}
+            postType='recipe'
+            postId={recipe?._id}
             onCancel={() => {
               setFormActive(false)
+            }}
+            displayOnSubmit={(_data, res) => {
+              const Icon = res?.ok ? FaRegCircleCheck : FaRegCircleXmark
+              const title = res?.ok
+                ? 'Thanks!'
+                : 'There was a problem posting your comment'
+              const description = res?.ok
+                ? 'Your comment is pending review and will appear shortly.'
+                : 'Please try again.'
+
+              if (res?.ok) {
+                setTimeout(() => {
+                  setFormActive(false)
+                }, 4000)
+              }
+
+              return (
+                <div
+                  className={cn(
+                    'flex gap-4 not-prose border rounded bg-white p-4',
+                    [
+                      res?.ok && 'border-emerald-600 bg-emerald-50',
+                      !res?.ok && 'border-rose-600 bg-rose-50',
+                    ],
+                  )}
+                >
+                  <Icon
+                    aria-hidden
+                    className={cn('flex-none text-2xl font-medium', [
+                      res?.ok && 'text-emerald-600',
+                      !res?.ok && 'text-rose-600',
+                    ])}
+                  />
+                  <div role='alert' className='flex flex-col gap-1'>
+                    <p className='leading-5 font-medium text-pretty'>{title}</p>
+                    <p className='text-pretty'>{description}</p>
+                  </div>
+                </div>
+              )
             }}
           />
         </div>
@@ -65,8 +105,8 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
 
       {/* Comments List */}
       {comments?.length ? (
-        <div className='flex flex-col divide-y-1 rounded rounded-t-none__ border px-2 not-prose bg-almost-white'>
-          {recipe?.comments?.map((comment) => (
+        <div className='flex flex-col divide-y-1 rounded border px-2 not-prose bg-almost-white'>
+          {comments?.map((comment) => (
             <UserPostComment key={comment?._id} comment={comment} />
           ))}
         </div>
@@ -86,7 +126,6 @@ const RecipeComments: FC<Props> = ({ recipe }) => {
                 Be the first to comment!
               </Button>
             }
-            // description='Be the first to comment!'
           />
         </div>
       )}

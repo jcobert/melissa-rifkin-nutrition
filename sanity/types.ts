@@ -195,16 +195,26 @@ export interface Author extends SanityDocument {
   bio?: Array<SanityKeyed<SanityBlock>>
 }
 
-/** User Comment */
-export interface UserComment extends SanityDocument {
+export type UserCommentBase = {
   _type: 'userComment'
   name?: string
   email?: string
   comment?: string
   approved?: boolean
   postType?: 'blog' | 'recipe'
-  sourceRecipe?: Recipe
-  sourceBlogPost?: Post
+  sourceBlogPost?: SanityReference<Post>
+  sourceRecipe?: SanityReference<Recipe>
+}
+
+/** User Comment */
+export type UserComment = SanityDocument & UserCommentBase
+
+export type UserCommentPayload = Omit<
+  UserCommentBase,
+  'sourceBlogPost' | 'sourceRecipe'
+> & {
+  sourceBlogPost?: SanityReference<Post>
+  sourceRecipe?: SanityReference<Recipe>
 }
 
 /** Category */

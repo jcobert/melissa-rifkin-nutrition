@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
@@ -16,6 +16,7 @@ import PortableBlockContent from '@/components/common/portable/portable-block-co
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
+import RecipeComments from '@/components/features/recipe/sections/comments-and-rating/recipe-comments'
 import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import RelatedPosts from '@/components/features/recipe/sections/related-posts'
@@ -342,6 +343,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           className='h-px print:hidden w-full border-b-3 mx-auto mb-4 lg:px-16'
         />
 
+        {/** @TODO Limit count - add view more or carousel. */}
         {/* Similar Recipes */}
         {recipe?.similarRecipes?.length ? (
           <RecipeSection
@@ -356,6 +358,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </RecipeSection>
         ) : null}
 
+        {/** @TODO Limit count - add view more or carousel. */}
         {/* Related Blog Posts */}
         {recipe?.relatedPosts?.length ? (
           <RecipeSection
@@ -366,6 +369,15 @@ const Recipe: FC<Props> = ({ recipe }) => {
             <RelatedPosts posts={recipe?.relatedPosts} className='not-prose' />
           </RecipeSection>
         ) : null}
+
+        {/* User Comments */}
+        <RecipeSection
+          content={{ heading: 'Comments' }}
+          className='print:hidden'
+          hideDivider
+        >
+          <RecipeComments recipe={recipe} />
+        </RecipeSection>
       </div>
 
       {/* Tags */}

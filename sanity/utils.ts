@@ -1,6 +1,6 @@
 import { AnchorHTMLAttributes } from 'react'
 import { Path, SanityDocument } from 'sanity'
-import { BlockLink } from 'sanity-studio/types'
+import { BlockLink, SanityReference } from 'sanity-studio/types'
 
 type FindParentsParentOptions = {
   parentPath: Path
@@ -59,4 +59,11 @@ export const getBlockLinkAttributes = (link?: BlockLink): LinkAttributes => {
     rel: relAttrs?.join(' '),
     target: link?.newTab ? '_blank' : undefined,
   }
+}
+
+export const idToSanityReference = (
+  id?: string,
+): SanityReference<unknown> | undefined => {
+  if (!id) return undefined
+  return { _type: 'reference', _ref: id }
 }

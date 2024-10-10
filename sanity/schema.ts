@@ -16,6 +16,7 @@ import ingredientMeasurement from 'sanity-studio/schemas/recipe/ingredient-measu
 import instruction from 'sanity-studio/schemas/recipe/instruction'
 import nutrition from 'sanity-studio/schemas/recipe/nutrition'
 import socialLinks from 'sanity-studio/schemas/socialLinks'
+import userComment from 'sanity-studio/schemas/user-comment'
 import video from 'sanity-studio/schemas/video'
 
 const schema: SchemaTypeDefinition[] = [
@@ -37,6 +38,7 @@ const schema: SchemaTypeDefinition[] = [
   video,
   featureFlags,
   faq,
+  userComment,
 ]
 
 export default schema

@@ -35,12 +35,24 @@
 }
 
 @layer components {
-  .btn {
+  /* .btn {
     @apply px-8 py-3 flex text-almost-white bg-brand hover:bg-brand-dark items-center justify-center gap-2 max-sm:text-lg sm:py-2 cursor-pointer rounded-md min-w-[8rem] max-sm:w-full transition;
   }
 
   .btn-outline {
     @apply btn bg-background hover:bg-brand border border-brand text-brand hover:text-almost-white;
+  } */
+
+  .btn {
+    @apply flex min-w-[6rem] cursor-pointer items-center justify-center gap-2 rounded-md border border-brand bg-brand px-8 py-3 text-almost-white shadow hover:shadow-sm transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:border-brand/25 disabled:bg-brand/disabled max-sm:w-full max-sm:text-lg sm:px-6 sm:py-2;
+  }
+
+  .btn-outline {
+    @apply btn border border-brand bg-almost-white text-brand hover:border-brand-dark hover:bg-brand-light/5 hover:text-brand-dark disabled:border-brand/25 disabled:bg-almost-white/disabled disabled:text-brand/disabled;
+  }
+
+  .btn-text {
+    @apply flex cursor-pointer items-center justify-center gap-2 rounded border border-transparent p-1 text-brand transition hover:text-brand-dark disabled:cursor-not-allowed disabled:text-brand/disabled max-sm:text-lg;
   }
 }
 

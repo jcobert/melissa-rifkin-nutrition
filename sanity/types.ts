@@ -114,6 +114,7 @@ export interface Recipe extends SanityDocument {
   faqSet?: FaqSet[]
   similarRecipes?: Recipe[]
   relatedPosts?: Post[]
+  comments?: UserComment[]
 }
 
 export type FaqSet = SanityKeyed<{
@@ -192,6 +193,28 @@ export interface Author extends SanityDocument {
     alt?: string
   }
   bio?: Array<SanityKeyed<SanityBlock>>
+}
+
+export type UserCommentBase = {
+  _type: 'userComment'
+  name?: string
+  email?: string
+  comment?: string
+  approved?: boolean
+  postType?: 'blog' | 'recipe'
+  sourceBlogPost?: SanityReference<Post>
+  sourceRecipe?: SanityReference<Recipe>
+}
+
+/** User Comment */
+export type UserComment = SanityDocument & UserCommentBase
+
+export type UserCommentPayload = Omit<
+  UserCommentBase,
+  'sourceBlogPost' | 'sourceRecipe'
+> & {
+  sourceBlogPost?: SanityReference<Post>
+  sourceRecipe?: SanityReference<Recipe>
 }
 
 /** Category */
@@ -281,5 +304,6 @@ export type Documents =
   | Bio
   | AboutPage
   | FeatureFlags
+  | UserComment
 
 export type DocumentType = Documents['_type']

@@ -57,18 +57,21 @@ export default defineType({
       type: 'string',
       title: 'Name',
       description: "User's name.",
+      readOnly: true,
     }),
     defineField({
       name: 'email',
       type: 'string',
       title: 'Email',
       description: "User's email.",
+      readOnly: true,
     }),
     defineField({
       name: 'comment',
       type: 'text',
       title: 'Comment',
       description: "User's comment.",
+      readOnly: true,
     }),
     defineField({
       name: 'approved',
@@ -97,6 +100,8 @@ export default defineType({
         ],
         layout: 'radio',
       },
+      hidden: true,
+      readOnly: true,
     }),
     defineField({
       name: 'sourceRecipe',
@@ -106,6 +111,7 @@ export default defineType({
       description: 'The recipe this comment was left on.',
       options: { disableNew: true },
       hidden: (ctx) => ctx?.parent?.postType !== 'recipe',
+      readOnly: true,
     }),
     defineField({
       name: 'sourceBlogPost',
@@ -115,6 +121,7 @@ export default defineType({
       description: 'The blog post this comment was left on.',
       options: { disableNew: true },
       hidden: (ctx) => ctx?.parent?.postType !== 'blog',
+      readOnly: true,
     }),
   ],
 })

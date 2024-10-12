@@ -138,24 +138,32 @@ export default defineType({
 
     defineField({
       name: 'introduction',
-      type: 'object',
+      type: 'blockContent',
       group: 'additionalContent',
       title: 'Introduction',
       description:
         'Add any lead-in to the recipe here. (E.g. backstory, images, etc.)',
-      fields: [
-        defineField({
-          name: 'heading',
-          type: 'string',
-          title: 'Heading',
-        }),
-        defineField({
-          name: 'body',
-          type: 'blockContent',
-          title: 'Body',
-        }),
-      ],
     }),
+    // defineField({
+    //   name: 'introduction',
+    //   type: 'object',
+    //   group: 'additionalContent',
+    //   title: 'Introduction',
+    //   description:
+    //     'Add any lead-in to the recipe here. (E.g. backstory, images, etc.)',
+    //   fields: [
+    //     defineField({
+    //       name: 'heading',
+    //       type: 'string',
+    //       title: 'Heading',
+    //     }),
+    //     defineField({
+    //       name: 'body',
+    //       type: 'blockContent',
+    //       title: 'Body',
+    //     }),
+    //   ],
+    // }),
 
     // defineField({
     //   name: 'additionalImages',
@@ -258,32 +266,32 @@ export default defineType({
       hidden: true,
     }),
 
-    defineField({
-      name: 'layout',
-      title: 'Layout',
-      type: 'string',
-      description:
-        '"Basic" will display the recipe as one block of text. "Advanced" uses a layout that groups ingredients per step (a little bit more work to set up here, but a more pleasant experience for the reader).',
-      options: {
-        list: [
-          { value: 'basic', title: 'Basic' },
-          { value: 'advanced', title: 'Advanced' },
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'advanced',
-      hidden: true,
-    }),
+    // defineField({
+    //   name: 'layout',
+    //   title: 'Layout',
+    //   type: 'string',
+    //   description:
+    //     '"Basic" will display the recipe as one block of text. "Advanced" uses a layout that groups ingredients per step (a little bit more work to set up here, but a more pleasant experience for the reader).',
+    //   options: {
+    //     list: [
+    //       { value: 'basic', title: 'Basic' },
+    //       { value: 'advanced', title: 'Advanced' },
+    //     ],
+    //     layout: 'radio',
+    //   },
+    //   initialValue: 'advanced',
+    //   hidden: true,
+    // }),
 
-    defineField({
-      name: 'body',
-      title: 'Instructions',
-      type: 'blockContent',
-      description:
-        'The full recipe content. Write/paste all steps and ingredients here.',
-      // hidden: (ctx) => ctx.parent?.layout !== 'basic',
-      hidden: true,
-    }),
+    // defineField({
+    //   name: 'body',
+    //   title: 'Instructions',
+    //   type: 'blockContent',
+    //   description:
+    //     'The full recipe content. Write/paste all steps and ingredients here.',
+    //   // hidden: (ctx) => ctx.parent?.layout !== 'basic',
+    //   hidden: true,
+    // }),
 
     defineField({
       name: 'ingredientGroups',
@@ -369,52 +377,61 @@ export default defineType({
     }),
 
     defineField({
-      name: 'howToStore',
-      title: 'How to Store',
-      type: 'object',
+      name: 'postContent',
+      title: 'Blog Post Content',
+      type: 'blockContent',
       group: 'additionalContent',
-      fields: [
-        defineField({
-          name: 'heading',
-          type: 'string',
-          title: 'Heading',
-          initialValue: 'How to Store',
-        }),
-        defineField({
-          name: 'body',
-          type: 'blockContent',
-          title: 'Body',
-        }),
-      ],
+      description:
+        'Add any text and media content here. Discuss the recipe, share tips and tricks, etc.',
     }),
 
-    defineField({
-      name: 'tipsAndTricks',
-      title: 'Tips and Tricks',
-      type: 'object',
-      group: 'additionalContent',
-      fields: [
-        defineField({
-          name: 'heading',
-          type: 'string',
-          title: 'Heading',
-          initialValue: 'Tips for Best Results',
-        }),
-        defineField({
-          name: 'body',
-          type: 'blockContent',
-          title: 'Body',
-        }),
-      ],
-    }),
+    // defineField({
+    //   name: 'howToStore',
+    //   title: 'How to Store',
+    //   type: 'object',
+    //   group: 'additionalContent',
+    //   fields: [
+    //     defineField({
+    //       name: 'heading',
+    //       type: 'string',
+    //       title: 'Heading',
+    //       initialValue: 'How to Store',
+    //     }),
+    //     defineField({
+    //       name: 'body',
+    //       type: 'blockContent',
+    //       title: 'Body',
+    //     }),
+    //   ],
+    // }),
 
-    defineField({
-      name: 'faqSet',
-      title: 'FAQ',
-      type: 'array',
-      of: [defineArrayMember({ type: 'faq' })],
-      group: 'additionalContent',
-    }),
+    // defineField({
+    //   name: 'tipsAndTricks',
+    //   title: 'Tips and Tricks',
+    //   type: 'object',
+    //   group: 'additionalContent',
+    //   fields: [
+    //     defineField({
+    //       name: 'heading',
+    //       type: 'string',
+    //       title: 'Heading',
+    //       initialValue: 'Tips for Best Results',
+    //     }),
+    //     defineField({
+    //       name: 'body',
+    //       type: 'blockContent',
+    //       title: 'Body',
+    //     }),
+    //   ],
+    // }),
+
+    // defineField({
+    //   name: 'faqSet',
+    //   title: 'FAQ',
+    //   type: 'array',
+    //   of: [defineArrayMember({ type: 'faq' })],
+    //   group: 'additionalContent',
+    // }),
 
     defineField({
       name: 'similarRecipes',

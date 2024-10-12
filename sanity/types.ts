@@ -108,10 +108,11 @@ export interface Recipe extends SanityDocument {
   >
   instructions?: Array<SanityKeyedReference<Instruction> & Instruction>
   nutritionInformation?: NutritionInformation
-  introduction?: BlockWithHeading
-  howToStore?: BlockWithHeading
-  tipsAndTricks?: BlockWithHeading
-  faqSet?: FaqSet[]
+  introduction?: BlockContent
+  postContent?: BlockContent
+  // howToStore?: BlockWithHeading
+  // tipsAndTricks?: BlockWithHeading
+  // faqSet?: FaqSet[]
   similarRecipes?: Recipe[]
   relatedPosts?: Post[]
   comments?: UserComment[]

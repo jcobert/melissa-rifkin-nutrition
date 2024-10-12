@@ -121,7 +121,9 @@ const Recipe: FC<Props> = ({ recipe }) => {
         <ShareBar url={url} printHandler={handlePrint} />
 
         {/* Introduction */}
-        <RecipeSection content={recipe?.introduction} />
+        {recipe?.introduction ? (
+          <RecipeSection content={{ body: recipe?.introduction }} />
+        ) : null}
 
         {/* Ingredients */}
         {recipe?.ingredientGroups?.length ? (
@@ -273,11 +275,19 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </RecipeSection>
         ) : null}
 
+        {/* Post Content */}
+        {recipe?.postContent ? (
+          <RecipeSection
+            content={{ body: recipe?.postContent }}
+            className='-mt-16'
+          />
+        ) : null}
+
         {/* Tips */}
-        <RecipeSection content={recipe?.tipsAndTricks} />
+        {/* <RecipeSection content={recipe?.tipsAndTricks} /> */}
 
         {/* How to store */}
-        <RecipeSection content={recipe?.howToStore} />
+        {/* <RecipeSection content={recipe?.howToStore} /> */}
 
         {/* Nutrition Info */}
         {recipe?.nutritionInformation ? (
@@ -320,13 +330,13 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
         {/** @TODO Look into expanding all accordion sections on print.  */}
         {/* FAQ */}
-        {recipe?.faqSet ? (
+        {/* {recipe?.faqSet ? (
           <RecipeSection content={{ heading: 'FAQ' }} hideDivider>
             <div className='not-prose'>
               <RecipeFaq faqSet={recipe?.faqSet} />
             </div>
           </RecipeSection>
-        ) : null}
+        ) : null} */}
 
         <div className='flex items-center p-4 mt-8 pb-16 gap-6'>
           <Logo

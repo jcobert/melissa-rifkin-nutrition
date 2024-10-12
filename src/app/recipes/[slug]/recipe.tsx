@@ -348,6 +348,12 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </h4>
         </div>
 
+        <ShareBar
+          url={url}
+          iconClassName='sm:!text-5xl'
+          className='md:justify-center sm:gap-16 md:gap-16'
+        />
+
         <span
           aria-hidden
           className='h-px print:hidden w-full border-b-3 mx-auto mb-4 lg:px-16'

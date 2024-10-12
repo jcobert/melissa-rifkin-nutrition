@@ -6,6 +6,8 @@ import {
   TwitterShareButton,
 } from 'react-share'
 
+import { cn } from '@/utils/style'
+
 import PrintButton, {
   PrintHandler,
 } from '@/components/common/buttons/print-button'
@@ -13,26 +15,36 @@ import PrintButton, {
 type Props = {
   url: string
   printHandler?: PrintHandler
+  className?: string
   iconClassName?: string
 }
 
 const ShareBar: FC<Props> = ({
   url,
-  iconClassName = 'text-3xl sm:text-2xl text-brand-gray-dark hover:text-brand-dark transition',
   printHandler,
+  className,
+  iconClassName,
 }) => {
+  const iconStyle =
+    'text-3xl sm:text-2xl text-brand-gray-dark hover:text-brand-dark transition'
+
   return (
-    <div className='w-full flex gap-8 sm:gap-6 md:gap-4 items-center justify-evenly sm:justify-center md:justify-end print:hidden'>
+    <div
+      className={cn(
+        'w-full flex gap-8 sm:gap-6 md:gap-4 items-center justify-evenly sm:justify-center md:justify-end print:hidden',
+        className,
+      )}
+    >
       <FacebookShareButton url={url}>
-        <FaFacebook className={iconClassName} />
+        <FaFacebook className={cn(iconStyle, iconClassName)} />
       </FacebookShareButton>
 
       <TwitterShareButton url={url}>
-        <FaXTwitter className={iconClassName} />
+        <FaXTwitter className={cn(iconStyle, iconClassName)} />
       </TwitterShareButton>
 
       <EmailShareButton url={url}>
-        <FaEnvelope className={iconClassName} />
+        <FaEnvelope className={cn(iconStyle, iconClassName)} />
       </EmailShareButton>
 
       {printHandler ? (

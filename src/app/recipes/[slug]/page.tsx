@@ -1,3 +1,4 @@
+import { toPlainText } from '@portabletext/react'
 import { Metadata } from 'next'
 import { QueryParams, SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
@@ -152,6 +153,9 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
           ? nutritionInformation?.calories?.toString()
           : undefined,
       servingSize: nutritionInformation?.servingSize ?? undefined,
+      description: nutritionInformation?.info
+        ? toPlainText(nutritionInformation?.info)
+        : undefined,
     },
     // keywords: tags ? tags?.join(', ') : undefined,
     // keywords: seoTags ? seoTags?.join(', ') : undefined,

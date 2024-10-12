@@ -17,7 +17,6 @@ import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
 import RecipeComments from '@/components/features/recipe/sections/comments-and-rating/recipe-comments'
-import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import RelatedPosts from '@/components/features/recipe/sections/related-posts'
 import ShareBar from '@/components/share-bar'
@@ -118,10 +117,16 @@ const Recipe: FC<Props> = ({ recipe }) => {
         />
 
         {/* Toolbar */}
-        <ShareBar url={url} printHandler={handlePrint} />
+        <ShareBar
+          url={url}
+          printHandler={handlePrint}
+          mainImage={recipe?.mainImage}
+        />
 
         {/* Introduction */}
-        <RecipeSection content={recipe?.introduction} />
+        {recipe?.introduction ? (
+          <RecipeSection content={{ body: recipe?.introduction }} />
+        ) : null}
 
         {/* Ingredients */}
         {recipe?.ingredientGroups?.length ? (
@@ -273,11 +278,19 @@ const Recipe: FC<Props> = ({ recipe }) => {
           </RecipeSection>
         ) : null}
 
+        {/* Post Content */}
+        {recipe?.postContent ? (
+          <RecipeSection
+            content={{ body: recipe?.postContent }}
+            className='-mt-16'
+          />
+        ) : null}
+
         {/* Tips */}
-        <RecipeSection content={recipe?.tipsAndTricks} />
+        {/* <RecipeSection content={recipe?.tipsAndTricks} /> */}
 
         {/* How to store */}
-        <RecipeSection content={recipe?.howToStore} />
+        {/* <RecipeSection content={recipe?.howToStore} /> */}
 
         {/* Nutrition Info */}
         {recipe?.nutritionInformation ? (
@@ -320,13 +333,13 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
         {/** @TODO Look into expanding all accordion sections on print.  */}
         {/* FAQ */}
-        {recipe?.faqSet ? (
+        {/* {recipe?.faqSet ? (
           <RecipeSection content={{ heading: 'FAQ' }} hideDivider>
             <div className='not-prose'>
               <RecipeFaq faqSet={recipe?.faqSet} />
             </div>
           </RecipeSection>
-        ) : null}
+        ) : null} */}
 
         <div className='flex items-center p-4 mt-8 pb-16 gap-6'>
           <Logo
@@ -337,6 +350,13 @@ const Recipe: FC<Props> = ({ recipe }) => {
             Enjoy!
           </h4>
         </div>
+
+        <ShareBar
+          url={url}
+          mainImage={recipe?.mainImage}
+          iconClassName='sm:!text-5xl'
+          className='md:justify-center sm:gap-16 md:gap-16'
+        />
 
         <span
           aria-hidden

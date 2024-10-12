@@ -39,7 +39,7 @@ const RecipeSection: FC<Props> = ({
         ) : null}
 
         {body ? (
-          <div className='max-w-prose mx-auto'>
+          <div className='max-w-prose__ mx-auto prose-p:max-w-prose prose-p:mx-auto'>
             <PortableBlockContent value={body} />
           </div>
         ) : null}

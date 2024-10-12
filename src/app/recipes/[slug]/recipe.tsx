@@ -17,7 +17,6 @@ import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
 import RecipeComments from '@/components/features/recipe/sections/comments-and-rating/recipe-comments'
-import RecipeFaq from '@/components/features/recipe/sections/recipe-faq'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import RelatedPosts from '@/components/features/recipe/sections/related-posts'
 import ShareBar from '@/components/share-bar'
@@ -118,7 +117,11 @@ const Recipe: FC<Props> = ({ recipe }) => {
         />
 
         {/* Toolbar */}
-        <ShareBar url={url} printHandler={handlePrint} />
+        <ShareBar
+          url={url}
+          printHandler={handlePrint}
+          mainImage={recipe?.mainImage}
+        />
 
         {/* Introduction */}
         {recipe?.introduction ? (
@@ -350,6 +353,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
         <ShareBar
           url={url}
+          mainImage={recipe?.mainImage}
           iconClassName='sm:!text-5xl'
           className='md:justify-center sm:gap-16 md:gap-16'
         />

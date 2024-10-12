@@ -1,10 +1,15 @@
 import { FC } from 'react'
-import { FaEnvelope, FaFacebook, FaXTwitter } from 'react-icons/fa6'
+import {
+  FaEnvelope,
+  FaFacebook, // FaPinterest,
+  FaXTwitter,
+} from 'react-icons/fa6'
 import {
   EmailShareButton,
-  FacebookShareButton,
+  FacebookShareButton, // PinterestShareButton,
   TwitterShareButton,
 } from 'react-share'
+import { Image } from 'sanity-studio/types'
 
 import { cn } from '@/utils/style'
 
@@ -17,6 +22,7 @@ type Props = {
   printHandler?: PrintHandler
   className?: string
   iconClassName?: string
+  mainImage?: Image
 }
 
 const ShareBar: FC<Props> = ({
@@ -24,6 +30,7 @@ const ShareBar: FC<Props> = ({
   printHandler,
   className,
   iconClassName,
+  mainImage,
 }) => {
   const iconStyle =
     'text-3xl sm:text-2xl text-brand-gray-dark hover:text-brand-dark transition'
@@ -42,6 +49,12 @@ const ShareBar: FC<Props> = ({
       <TwitterShareButton url={url}>
         <FaXTwitter className={cn(iconStyle, iconClassName)} />
       </TwitterShareButton>
+
+      {/* {mainImage ? (
+        <PinterestShareButton media={mainImage?.asset?.url} url={url}>
+          <FaPinterest className={cn(iconStyle, iconClassName)} />
+        </PinterestShareButton>
+      ) : null} */}
 
       <EmailShareButton url={url}>
         <FaEnvelope className={cn(iconStyle, iconClassName)} />

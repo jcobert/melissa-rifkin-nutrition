@@ -9,6 +9,8 @@ import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
 import { type Recipe } from 'sanity-studio/types'
 
+import { getTags } from '@/utils/string'
+
 import PageLayout from '@/components/common/layout/page-layout'
 import Back from '@/components/common/links/back'
 import Logo, { logos } from '@/components/common/logo'
@@ -34,7 +36,7 @@ const Recipe: FC<Props> = ({ recipe }) => {
     mainImage,
     ingredientGroups,
     instructions,
-    tags,
+    filterTags,
   } = recipe || {}
   const printContentRef = useRef(null)
   const handlePrint = useReactToPrint({
@@ -55,6 +57,8 @@ const Recipe: FC<Props> = ({ recipe }) => {
     : ''
 
   const logo = logos?.full
+
+  const tags = getTags(filterTags)
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>

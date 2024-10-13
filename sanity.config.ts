@@ -6,6 +6,7 @@ import { apiVersion, dataset, projectId } from './sanity/env'
 import schema from './sanity/schema'
 import { visionTool } from '@sanity/vision'
 import { PluginOptions, defineConfig, isDev } from 'sanity'
+import { tags } from 'sanity-plugin-tags'
 import { customStructure } from 'sanity-structure'
 import { slugOnPublish } from 'sanity-studio/actions/slug-on-publish'
 import { Icon } from 'sanity-studio/components/studio-navbar'
@@ -13,28 +14,31 @@ import { DocumentType } from 'sanity-studio/types'
 import { presentationTool } from 'sanity/presentation'
 import { structureTool } from 'sanity/structure'
 
-const plugins: PluginOptions[] = isDev
-  ? [
-      structureTool({ structure: customStructure }),
-      visionTool({ defaultApiVersion: apiVersion }),
-      presentationTool({
-        previewUrl: {
-          draftMode: {
-            enable: '/api/draft',
+const plugins: PluginOptions[] = [
+  ...(isDev
+    ? [
+        structureTool({ structure: customStructure }),
+        visionTool({ defaultApiVersion: apiVersion }),
+        presentationTool({
+          previewUrl: {
+            draftMode: {
+              enable: '/api/draft',
+            },
           },
-        },
-      }),
-    ]
-  : [
-      structureTool({ structure: customStructure }),
-      presentationTool({
-        previewUrl: {
-          draftMode: {
-            enable: '/api/draft',
+        }),
+      ]
+    : [
+        structureTool({ structure: customStructure }),
+        presentationTool({
+          previewUrl: {
+            draftMode: {
+              enable: '/api/draft',
+            },
           },
-        },
-      }),
-    ]
+        }),
+      ]),
+  tags({}),
+]
 
 export default defineConfig({
   basePath: '/studio',

@@ -221,15 +221,19 @@ export default defineType({
       },
     }),
 
+    /** @TODO try to parse csv and separate into individual options on entry. */
     defineField({
-      name: 'tags',
+      name: 'filterTags',
       title: 'Filter Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
+      // type: 'array',
+      // of: [{ type: 'string' }],
+      // options: { layout: 'tags' },
+      type: 'tags',
+      options: {
+        includeFromRelated: 'filterTags',
+      },
       validation: (rule) => rule.min(1).required(),
-      // fieldset: 'classification',
       group: 'classification',
-      options: { layout: 'tags' },
       description:
         'Keywords to help someone filtering for recipes on the website. These are user-facing. Keep them short and more generic. E.g. pasta, soup, instant pot, vegan.',
     }),

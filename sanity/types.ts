@@ -61,6 +61,8 @@ export type BlockLink = {
   newTab?: boolean
 }
 
+export type Tag = { label: string; value: string }
+
 export type Slug = { _type: 'file'; current: string }
 
 /** Post */
@@ -95,7 +97,7 @@ export interface Recipe extends SanityDocument {
   mainImage?: Image
   additionalImages?: Image[]
   category?: Array<string>
-  tags?: Array<string>
+  filterTags?: Tag[]
   seoTags?: Array<string>
   cuisines?: Array<string>
   prepTime?: number

@@ -1,5 +1,5 @@
 import { fraction } from 'mathjs'
-import { RecipeUnit } from 'sanity-studio/types'
+import { RecipeUnit, Tag } from 'sanity-studio/types'
 
 export const formatFraction = (number?: number) => {
   if (!number) return ''
@@ -34,4 +34,11 @@ export const formatCurrency = (amount?: string) => {
     currencyDisplay: 'narrowSymbol',
   }).format(parseFloat(amount))
   return currency
+}
+
+export const getTags = (tags?: Tag[]) => {
+  if (!tags?.length) return []
+  return tags?.flatMap((tag) =>
+    tag?.label?.split(',')?.map((part) => part?.trim()),
+  )
 }

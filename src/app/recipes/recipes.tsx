@@ -1,6 +1,6 @@
 'use client'
 
-import { sortBy, uniq, uniqBy } from 'lodash'
+import { sortBy, uniqBy } from 'lodash'
 import React, { FC, useEffect, useMemo, useState } from 'react'
 import { HiOutlineSearch } from 'react-icons/hi'
 import { TbListSearch } from 'react-icons/tb'
@@ -8,6 +8,7 @@ import { FilterOptionOption } from 'react-select/dist/declarations/src/filters'
 import { Recipe } from 'sanity-studio/types'
 
 import { getRecipeIngredients } from '@/utils/recipe'
+import { getTags } from '@/utils/string'
 import { cn } from '@/utils/style'
 
 import SelectInput, {
@@ -39,7 +40,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
   const { category: categoryParam, tag: tagParam } = params || {}
 
   const allTags = uniqBy(
-    recipes?.flatMap((rec) => (rec?.tags || [])?.map((t) => t)),
+    recipes?.flatMap((rec) => getTags(rec?.filterTags)),
     (tag) => tag?.toLowerCase()?.trim(),
   )?.sort()
   const tagFilterOptions: SelectOption[] = useMemo(
@@ -60,27 +61,30 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
 
   const recipeSearchOptions: SelectOption<Recipe>[] = useMemo(
     () =>
-      recipes?.map((recipe) => ({
-        value: recipe,
-        label: (
-          <div className='flex flex-col whitespace-pre-wrap gap-1 text-sm'>
-            <span>{recipe?.title}</span>
-            <div className='flex items-center text-xs text-brand-gray-dark capitalize gap-1'>
-              {recipe?.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className='bg-brand-gray-light rounded-full border border-gray-300 px-1'
-                >
-                  {tag}
-                </span>
-              ))}
+      recipes?.map((recipe) => {
+        const tags = getTags(recipe?.filterTags)
+        return {
+          value: recipe,
+          label: (
+            <div className='flex flex-col whitespace-pre-wrap gap-1 text-sm'>
+              <span>{recipe?.title}</span>
+              <div className='flex items-center text-xs text-brand-gray-dark capitalize gap-1 truncate'>
+                {tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className='bg-brand-gray-light rounded-full border border-gray-300 px-1'
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className='text-xs text-brand-gray-medium truncate'>
+                {getRecipeIngredients(recipe)?.join(', ')}
+              </div>
             </div>
-            <div className='text-xs text-brand-gray-medium truncate'>
-              {getRecipeIngredients(recipe)?.join(', ')}
-            </div>
-          </div>
-        ),
-      })),
+          ),
+        }
+      }),
     [JSON.stringify(recipes)],
   )
 
@@ -99,7 +103,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       newArr = recipes
     } else if (tagFilter && !searchFilter && !categoryFilter) {
       newArr = recipes?.filter((rec) =>
-        rec?.tags
+        getTags(rec?.filterTags)
           ?.map((t) => t?.toLowerCase())
           ?.includes(tagFilter?.toLowerCase()),
       )
@@ -113,14 +117,15 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
           rec?.category
             ?.map((c) => c?.toLowerCase())
             ?.includes(categoryFilter?.toLowerCase()) &&
-          rec?.tags
+          getTags(rec?.filterTags)
             ?.map((t) => t?.toLowerCase())
             ?.includes(tagFilter?.toLowerCase()),
       )
     } else if (searchFilter) {
       newArr = recipes?.filter((rec) => {
         const ingredients = getRecipeIngredients(rec)
-        const criteria = [rec?.title, rec?.tags?.join(), ingredients?.join()]
+        const tags = getTags(rec?.filterTags)
+        const criteria = [rec?.title, tags?.join(), ingredients?.join()]
           ?.join()
           ?.toLowerCase()
           ?.trim()
@@ -203,11 +208,8 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
           const recipe = (option as FilterOptionOption<SelectOption<Recipe>>)
             ?.data?.value
           const ingredients = getRecipeIngredients(recipe)
-          const criteria = [
-            recipe?.title,
-            recipe?.tags?.join(),
-            ingredients?.join(),
-          ]
+          const tags = getTags(recipe?.filterTags)
+          const criteria = [recipe?.title, tags?.join(), ingredients?.join()]
             ?.join()
             ?.toLowerCase()
             ?.trim()
@@ -218,7 +220,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       <SelectInput
         options={categoryFilterOptions}
         isClearable
-        // isSearchable={false}
+        isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48'
         labelClassName={cn([!!categoryFilter && '!text-brand-blue'])}
@@ -243,7 +245,7 @@ const Recipes: FC<Props> = ({ recipes, params }) => {
       <SelectInput
         options={tagFilterOptions}
         isClearable
-        // isSearchable={false}
+        isSearchable={false}
         menuShouldScrollIntoView
         className='w-full sm:max-w-48 lg:max-w-64__'
         labelClassName={cn([!!tagFilter && '!text-brand-blue'])}

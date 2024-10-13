@@ -6,6 +6,7 @@ import React, { FC } from 'react'
 import { dataset, projectId } from 'sanity-studio/env'
 import { Recipe } from 'sanity-studio/types'
 
+import { getTags } from '@/utils/string'
 import { cn } from '@/utils/style'
 
 import Logo from '@/components/common/logo'
@@ -19,8 +20,11 @@ type Props = {
 }
 
 const RecipeOverview: FC<Props> = ({ recipe, className }) => {
-  const { mainImage, slug, title, publishedAt, tags, category } = recipe || {}
+  const { mainImage, slug, title, publishedAt, filterTags, category } =
+    recipe || {}
   const linkToFull = `/recipes/${slug?.current}`
+
+  const tags = getTags(filterTags)
 
   return (
     <Link
@@ -77,7 +81,7 @@ const RecipeOverview: FC<Props> = ({ recipe, className }) => {
         ) : null}
 
         {tags?.length ? (
-          <div className='flex items-center gap-4 sm:gap-2 max-sm:hidden'>
+          <div className='flex items-center gap-4 sm:gap-2 max-sm:hidden flex-wrap'>
             {tags?.map((tag) => (
               <Tag
                 key={tag}

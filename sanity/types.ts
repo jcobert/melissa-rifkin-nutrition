@@ -99,7 +99,7 @@ export interface Recipe extends SanityDocument {
   category?: Array<string>
   filterTags?: Tag[]
   seoTags?: Array<string>
-  cuisines?: Array<string>
+  cuisines?: Tag[]
   prepTime?: number
   cookTime?: number
   servings?: { quantity?: number; unit?: string }

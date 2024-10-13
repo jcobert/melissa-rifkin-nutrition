@@ -10,6 +10,7 @@ import { type Recipe } from 'sanity-studio/types'
 import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
 
 import { displayIngredient, formatCookTime } from '@/utils/recipe'
+import { getTags } from '@/utils/string'
 
 import RecipeFull from '@/app/recipes/[slug]/recipe'
 import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
@@ -142,7 +143,9 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
       typeof servings?.quantity !== 'undefined'
         ? `${servings?.quantity} ${servings?.unit}`
         : undefined,
-    recipeCuisine: cuisines?.length ? cuisines?.join(', ') : undefined,
+    recipeCuisine: cuisines?.length
+      ? getTags(cuisines, { titleCase: true })?.join(', ')
+      : undefined,
     description:
       seoDescription ||
       `An easy and delicious${title ? ` ${title}` : ''} recipe.`,

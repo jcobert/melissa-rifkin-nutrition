@@ -254,12 +254,14 @@ export default defineType({
     defineField({
       name: 'cuisines',
       title: 'Cuisine Types',
-      type: 'array',
-      of: [{ type: 'string' }],
-      // fieldset: 'classification',
+      // type: 'array',
+      // of: [{ type: 'string' }],
+      // options: { layout: 'tags' },
+      type: 'tags',
+      options: {
+        includeFromRelated: 'cuisines',
+      },
       group: 'classification',
-      // group: 'seo',
-      options: { layout: 'tags' },
       description: 'E.g. Mexican, Greek, Japanese',
     }),
 

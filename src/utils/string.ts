@@ -1,3 +1,4 @@
+import { startCase } from 'lodash'
 import { fraction } from 'mathjs'
 import { RecipeUnit, Tag } from 'sanity-studio/types'
 
@@ -36,9 +37,14 @@ export const formatCurrency = (amount?: string) => {
   return currency
 }
 
-export const getTags = (tags?: Tag[]) => {
+export const getTags = (
+  tags?: Tag[],
+  options: { titleCase?: boolean } = { titleCase: false },
+) => {
   if (!tags?.length) return []
   return tags?.flatMap((tag) =>
-    tag?.label?.split(',')?.map((part) => part?.trim()),
+    tag?.label?.split(',')?.map((part) => {
+      return options?.titleCase ? startCase(part?.trim()) : part?.trim()
+    }),
   )
 }

@@ -160,9 +160,21 @@ export type Instruction = {
 }
 
 export type NutritionInformation = {
-  calories?: number
-  servingSize?: string
   info?: BlockContent
+  servingSize?: string
+  calories?: number
+  carbohydrates?: number
+  /** mg */
+  sodium?: number
+  sugar?: number
+  protein?: number
+  fat?: number
+  saturatedFat?: number
+  unsaturatedFat?: number
+  transFat?: number
+  /** mg */
+  cholesterol?: number
+  fiber?: number
 }
 
 export enum RecipeUnit {

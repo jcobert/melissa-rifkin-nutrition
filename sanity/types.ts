@@ -177,6 +177,21 @@ export type NutritionInformation = {
   fiber?: number
 }
 
+export enum NutritionMetric {
+  servingSize = 'Serving Size',
+  calories = 'Calories',
+  carbohydrates = 'Carbohydrates',
+  sodium = 'Sodium',
+  sugar = 'Sugar',
+  protein = 'Protein',
+  fat = 'Fat',
+  saturatedFat = 'Saturated Fat',
+  unsaturatedFat = 'Unsaturated Fat',
+  transFat = 'Trans Fat',
+  cholesterol = 'Cholesterol',
+  fiber = 'Fiber',
+}
+
 export enum RecipeUnit {
   tsp = 'tsp',
   tbsp = 'tbsp',

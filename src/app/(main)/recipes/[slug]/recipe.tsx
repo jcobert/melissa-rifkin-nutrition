@@ -2,12 +2,17 @@
 
 import imageUrlBuilder from '@sanity/image-url'
 import { format } from 'date-fns'
+import { omit, sortBy } from 'lodash'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import React, { FC, useRef } from 'react'
 import { useReactToPrint } from 'react-to-print'
 import { dataset, projectId } from 'sanity-studio/env'
-import { type Recipe } from 'sanity-studio/types'
+import {
+  NutritionInformation,
+  NutritionMetric,
+  type Recipe,
+} from 'sanity-studio/types'
 
 import { getTags } from '@/utils/string'
 
@@ -18,6 +23,7 @@ import PortableBlockContent from '@/components/common/portable/portable-block-co
 import Tag from '@/components/common/tag'
 import IngredientTooltip from '@/components/features/recipe/ingredient-tooltip'
 import Measurement from '@/components/features/recipe/measurement'
+import NutritionInfo from '@/components/features/recipe/nutrition-info'
 import RecipeComments from '@/components/features/recipe/sections/comments-and-rating/recipe-comments'
 import RecipeSection from '@/components/features/recipe/sections/recipe-section'
 import RelatedPosts from '@/components/features/recipe/sections/related-posts'
@@ -59,6 +65,11 @@ const Recipe: FC<Props> = ({ recipe }) => {
   const logo = logos?.full
 
   const tags = getTags(filterTags)
+
+  const nutritionMetrics = omit(recipe?.nutritionInformation, [
+    'info',
+    '_type',
+  ] satisfies (keyof (NutritionInformation & { _type: string }))[])
 
   return (
     <PageLayout className='flex flex-col items-center text-almost-black'>
@@ -299,31 +310,25 @@ const Recipe: FC<Props> = ({ recipe }) => {
         {/* Nutrition Info */}
         {recipe?.nutritionInformation ? (
           <RecipeSection content={{ heading: 'Nutrition' }}>
-            <div className='flex sm:items-center max-sm:flex-col gap-x-6 gap-y-2 border rounded bg-gray-50 py-2 px-4 sm:w-fit'>
-              {recipe?.nutritionInformation?.calories ? (
-                <>
-                  {/* <span className='sr-only'>{`Calories: ${recipe?.nutritionInformation?.calories}`}</span> */}
-                  {/* <div className='flex items-center gap-2' aria-hidden> */}
-                  {/* <span>Calories:</span> */}
-                  <span className='text-lg__ leading-8__'>{`Calories: ${recipe?.nutritionInformation?.calories}`}</span>
-                  {/* </div> */}
-                </>
-              ) : null}
-
-              <span className='text-gray-300 max-sm:hidden' aria-hidden>
-                |
-              </span>
-
-              {recipe?.nutritionInformation?.servingSize ? (
-                <>
-                  {/* <span className='sr-only'>{`Serving size: ${recipe?.nutritionInformation?.servingSize}`}</span> */}
-                  {/* <div className='flex items-center gap-2' aria-hidden> */}
-                  {/* <span>Serving Size:</span> */}
-                  <span className='text-lg__ leading-8__'>{`Serving Size: ${recipe?.nutritionInformation?.servingSize}`}</span>
-                  {/* </div> */}
-                </>
-              ) : null}
-            </div>
+            {Object.keys(nutritionMetrics)?.length ? (
+              <dl className='flex flex-wrap sm:items-center max-sm:flex-col gap-x-6 gap-y-2 border rounded bg-gray-50 py-2 px-4 sm:w-fit'>
+                {sortBy(Object.keys(nutritionMetrics), (metric) =>
+                  Object.keys(NutritionMetric)?.findIndex((m) => m === metric),
+                )?.map((metric, i) => (
+                  <div key={metric} className='flex items-center gap-x-6'>
+                    <NutritionInfo
+                      nutritionInfo={recipe?.nutritionInformation || {}}
+                      metric={metric as keyof typeof NutritionMetric}
+                    />
+                    {i < Object.keys(nutritionMetrics).length - 1 ? (
+                      <span className='text-gray-300 max-sm:hidden' aria-hidden>
+                        |
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
+              </dl>
+            ) : null}
 
             {recipe?.nutritionInformation?.info ? (
               <div className='max-w-prose mx-auto'>

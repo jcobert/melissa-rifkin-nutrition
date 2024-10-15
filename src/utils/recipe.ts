@@ -53,5 +53,5 @@ export const formatCookTime = (time?: number) => {
 
 export const displayIngredient = (ingredient?: IngredientMeasurement) => {
   if (!ingredient) return ''
-  return `${ingredient?.amount ?? ''}${ingredient?.unit ? ` ${ingredient?.unit}` : ''} ${ingredient?.ingredientName}`?.trim()
+  return `${ingredient?.amount ?? ''}${ingredient?.unit ? ` ${ingredient?.unit}` : ''} ${ingredient?.ingredientName}${ingredient?.note ? `, ${ingredient?.note}` : ''}`?.trim()
 }

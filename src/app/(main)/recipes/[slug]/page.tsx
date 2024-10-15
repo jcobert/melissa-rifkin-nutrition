@@ -9,6 +9,7 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { type Recipe } from 'sanity-studio/types'
 import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
 
+import { exists } from '@/utils/general'
 import { displayIngredient, formatCookTime } from '@/utils/recipe'
 import { getTags } from '@/utils/string'
 
@@ -151,13 +152,42 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
       `An easy and delicious${title ? ` ${title}` : ''} recipe.`,
     nutrition: {
       '@type': 'NutritionInformation',
-      calories:
-        typeof nutritionInformation?.calories !== 'undefined'
-          ? nutritionInformation?.calories?.toString()
-          : undefined,
-      servingSize: nutritionInformation?.servingSize ?? undefined,
       description: nutritionInformation?.info
         ? toPlainText(nutritionInformation?.info)
+        : undefined,
+      servingSize: nutritionInformation?.servingSize ?? undefined,
+      calories: exists(nutritionInformation?.calories)
+        ? `${nutritionInformation?.calories} calories`
+        : undefined,
+      carbohydrateContent: exists(nutritionInformation?.carbohydrates)
+        ? `${nutritionInformation?.carbohydrates} g`
+        : undefined,
+      sodiumContent: exists(nutritionInformation?.sodium)
+        ? `${nutritionInformation?.sodium} mg`
+        : undefined,
+      sugarContent: exists(nutritionInformation?.sugar)
+        ? `${nutritionInformation?.sugar} g`
+        : undefined,
+      proteinContent: exists(nutritionInformation?.protein)
+        ? `${nutritionInformation?.protein} g`
+        : undefined,
+      fatContent: exists(nutritionInformation?.fat)
+        ? `${nutritionInformation?.fat} g`
+        : undefined,
+      saturatedFatContent: exists(nutritionInformation?.saturatedFat)
+        ? `${nutritionInformation?.saturatedFat} g`
+        : undefined,
+      unsaturatedFatContent: exists(nutritionInformation?.unsaturatedFat)
+        ? `${nutritionInformation?.unsaturatedFat} g`
+        : undefined,
+      transFatContent: exists(nutritionInformation?.transFat)
+        ? `${nutritionInformation?.transFat} g`
+        : undefined,
+      cholesterolContent: exists(nutritionInformation?.cholesterol)
+        ? `${nutritionInformation?.cholesterol} mg`
+        : undefined,
+      fiberContent: exists(nutritionInformation?.fiber)
+        ? `${nutritionInformation?.fiber} g`
         : undefined,
     },
     // keywords: tags ? tags?.join(', ') : undefined,

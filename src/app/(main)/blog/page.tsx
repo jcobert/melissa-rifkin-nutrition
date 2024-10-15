@@ -8,8 +8,8 @@ import { Post } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
 
-import BlogPosts from '@/app/blog/blog-posts'
-import BlogPostsPreview from '@/app/blog/blog-posts-preview'
+import BlogPosts from '@/app/(main)/blog/blog-posts'
+import BlogPostsPreview from '@/app/(main)/blog/blog-posts-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 

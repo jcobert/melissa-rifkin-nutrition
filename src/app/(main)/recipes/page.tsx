@@ -8,8 +8,8 @@ import { Recipe } from 'sanity-studio/types'
 
 import PageLayout from '@/components/common/layout/page-layout'
 
-import Recipes from '@/app/recipes/recipes'
-import RecipesPreview from '@/app/recipes/recipes-preview'
+import Recipes from '@/app/(main)/recipes/recipes'
+import RecipesPreview from '@/app/(main)/recipes/recipes-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 

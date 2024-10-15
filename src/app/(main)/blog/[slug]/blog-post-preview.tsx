@@ -6,7 +6,7 @@ import React, { FC } from 'react'
 import { POST_QUERY } from 'sanity-studio/lib/queries'
 import { Post } from 'sanity-studio/types'
 
-import BlogPost from '@/app/blog/[slug]/blog-post'
+import BlogPost from '@/app/(main)/blog/[slug]/blog-post'
 
 type Props = {
   initial: QueryResponseInitial<SanityDocument<Post>>

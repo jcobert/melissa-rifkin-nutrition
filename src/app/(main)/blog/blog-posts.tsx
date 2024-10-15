@@ -18,7 +18,7 @@ import NoResults from '@/components/common/no-results'
 import BlogPostCard from '@/components/features/blog/blog-post-card'
 import BlogPostOverview from '@/components/features/blog/blog-post-overview'
 
-import { BlogPageProps } from '@/app/blog/page'
+import { BlogPageProps } from '@/app/(main)/blog/page'
 
 type Props = {
   posts: Post[]

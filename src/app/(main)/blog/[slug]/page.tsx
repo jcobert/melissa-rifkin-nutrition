@@ -9,8 +9,8 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { BlockContent, Post } from 'sanity-studio/types'
 import { BlogPosting, WithContext } from 'schema-dts'
 
-import BlogPost from '@/app/blog/[slug]/blog-post'
-import BlogPostPreview from '@/app/blog/[slug]/blog-post-preview'
+import BlogPost from '@/app/(main)/blog/[slug]/blog-post'
+import BlogPostPreview from '@/app/(main)/blog/[slug]/blog-post-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl, siteConfig } from '@/configuration/site'
 

@@ -6,7 +6,7 @@ import React, { FC } from 'react'
 import { RECIPES_QUERY } from 'sanity-studio/lib/queries'
 import { Recipe } from 'sanity-studio/types'
 
-import Recipes from '@/app/recipes/recipes'
+import Recipes from '@/app/(main)/recipes/recipes'
 
 type Props = {
   initial: QueryResponseInitial<SanityDocument<Recipe>[]>

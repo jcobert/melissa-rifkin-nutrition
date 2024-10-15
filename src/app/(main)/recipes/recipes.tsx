@@ -20,7 +20,7 @@ import NoResults from '@/components/common/no-results'
 import RecipeCard from '@/components/features/recipe/recipe-card'
 import RecipeOverview from '@/components/features/recipe/recipe-overview'
 
-import { RecipesPageProps } from '@/app/recipes/page'
+import { RecipesPageProps } from '@/app/(main)/recipes/page'
 
 export enum RecipeCategories {
   breakfast = 'Breakfast',

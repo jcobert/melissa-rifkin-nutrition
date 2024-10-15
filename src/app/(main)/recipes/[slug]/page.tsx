@@ -12,8 +12,8 @@ import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
 import { displayIngredient, formatCookTime } from '@/utils/recipe'
 import { getTags } from '@/utils/string'
 
-import RecipeFull from '@/app/recipes/[slug]/recipe'
-import RecipePreview from '@/app/recipes/[slug]/recipe-preview'
+import RecipeFull from '@/app/(main)/recipes/[slug]/recipe'
+import RecipePreview from '@/app/(main)/recipes/[slug]/recipe-preview'
 import { generatePageMeta } from '@/configuration/seo'
 import { canonicalUrl } from '@/configuration/site'
 

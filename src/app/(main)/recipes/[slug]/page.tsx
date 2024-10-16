@@ -8,7 +8,7 @@ import { client } from 'sanity-studio/lib/client'
 import { RECIPES_QUERY, RECIPE_QUERY } from 'sanity-studio/lib/queries'
 import { loadQuery } from 'sanity-studio/lib/store'
 import { type Recipe } from 'sanity-studio/types'
-import { Recipe as RecipeSchema, WithContext } from 'schema-dts'
+import { ImageObject, Recipe as RecipeSchema, WithContext } from 'schema-dts'
 
 import { exists } from '@/utils/general'
 import { displayIngredient, formatCookTime } from '@/utils/recipe'
@@ -96,7 +96,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     cuisines,
     nutritionInformation,
     _createdAt,
-    // additionalImages,
+    additionalImages,
     // seoTags,
   } = initial?.data || {}
 
@@ -110,7 +110,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
           text: stepText,
           position: stepNum,
           url: canonicalUrl(`/recipes/${slug?.current}#step${stepNum}`),
-          // image:
+          image: inst?.stepImage?.asset?.url || undefined,
         }
         // return {
         //   '@type': 'HowTo',
@@ -140,17 +140,39 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
 
   const keywords = filterTags ? getTags(filterTags) : undefined
 
+  const schemaAdditionalImages =
+    (additionalImages || [])?.map(
+      (img) =>
+        ({
+          '@type': 'ImageObject',
+          url: img?.asset?.url,
+          name: img?.alt || title,
+        }) as ImageObject,
+    ) || []
+
+  const schemaImages = [
+    {
+      '@type': 'ImageObject',
+      // contentUrl: mainImage?.asset?.url,
+      url: mainImage?.asset?.url,
+      name: mainImage?.alt || title,
+    } as ImageObject,
+    ...schemaAdditionalImages,
+  ]
+
   const jsonLd: WithContext<RecipeSchema> = {
     '@context': 'https://schema.org',
     '@type': 'Recipe',
     name: title,
     author: { '@type': 'Person', name: siteConfig?.primaryContentAuthor },
     datePublished: format(_createdAt, 'yyy-MM-dd'),
-    image: {
-      '@type': 'ImageObject',
-      contentUrl: mainImage?.asset?.url,
-      name: mainImage?.alt || title,
-    },
+    image: schemaImages,
+    // image: {
+    //   '@type': 'ImageObject',
+    //   // contentUrl: mainImage?.asset?.url,
+    //   url: mainImage?.asset?.url,
+    //   name: mainImage?.alt || title,
+    // },
     recipeCategory: category || undefined,
     recipeInstructions: schemaInstructions,
     recipeIngredient: schemaIngredients,

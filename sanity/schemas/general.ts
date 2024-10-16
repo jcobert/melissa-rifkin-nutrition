@@ -6,7 +6,10 @@ export default defineType({
   title: 'General',
   type: 'document',
   icon: BsGearFill,
-  groups: [{ name: 'companyInfo', title: 'Company Info' }],
+  groups: [
+    { name: 'companyInfo', title: 'Company Info' },
+    { name: 'legal', title: 'Legal' },
+  ],
   fieldsets: [
     {
       name: 'contact',
@@ -36,6 +39,26 @@ export default defineType({
       type: 'socialLinks',
       group: 'companyInfo',
       options: { collapsible: true },
+    }),
+
+    // Terms and Disclaimers
+    defineField({
+      name: 'privacyPolicy',
+      title: 'Privacy Policy',
+      type: 'blockContent',
+      group: 'legal',
+    }),
+    defineField({
+      name: 'termsAndConditions',
+      title: 'Terms and Conditions',
+      type: 'blockContent',
+      group: 'legal',
+    }),
+    defineField({
+      name: 'accessibility',
+      title: 'Accessibility Statement',
+      type: 'blockContent',
+      group: 'legal',
     }),
   ],
 })

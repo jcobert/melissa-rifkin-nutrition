@@ -270,6 +270,9 @@ export type General = SanityDocument & {
   _type: 'general'
   title?: string
   socialLinks?: SocialLinks
+  privacyPolicy?: BlockContent
+  termsAndConditions?: BlockContent
+  accessibility?: BlockContent
 } & ContactInfo
 
 export enum SocialNetworks {

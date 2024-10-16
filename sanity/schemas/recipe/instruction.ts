@@ -12,7 +12,8 @@ export default defineType({
       title: 'Title',
       type: 'string',
       description:
-        'Optional. A brief heading, such as "In a bowl" or "Combine and serve".',
+        'A very brief title for the step, such as "Pour", "Bake", or "In a bowl". Using the action word (often the first word) of the step is common.',
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'description',
@@ -88,6 +89,30 @@ export default defineType({
       components: { input: IngredientSelector },
       description:
         'Select the ingredients that are part of this particular step.',
+    }),
+    defineField({
+      name: 'stepImage',
+      title: 'Photo',
+      type: 'image',
+      description: 'An optional image to accompany the instruction step.',
+      options: {
+        hotspot: true,
+        // collapsible: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          validation: (rule) =>
+            rule.custom((alt: string, ctx) => {
+              if (!!ctx.parent && !alt) return 'Required'
+              return true
+            }),
+          title: 'Image Description (alt text)',
+          description:
+            'Used for people who cannot see the image. E.g. "Ground beef in a mixing bowl."',
+        },
+      ],
     }),
   ],
   preview: {

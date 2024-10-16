@@ -1,4 +1,5 @@
 import { toPlainText } from '@portabletext/react'
+import { format } from 'date-fns'
 import { Metadata } from 'next'
 import { QueryParams, SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
@@ -16,7 +17,7 @@ import { getTags } from '@/utils/string'
 import RecipeFull from '@/app/(main)/recipes/[slug]/recipe'
 import RecipePreview from '@/app/(main)/recipes/[slug]/recipe-preview'
 import { generatePageMeta } from '@/configuration/seo'
-import { canonicalUrl } from '@/configuration/site'
+import { canonicalUrl, siteConfig } from '@/configuration/site'
 
 // export const dynamic = 'force-dynamic'
 // export const fetchCache = 'default-no-store'
@@ -81,9 +82,10 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
   )
 
   const {
+    slug,
     title,
     category,
-    // tags,
+    filterTags,
     instructions,
     ingredientGroups,
     mainImage,
@@ -93,6 +95,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     seoDescription,
     cuisines,
     nutritionInformation,
+    _createdAt,
     // additionalImages,
     // seoTags,
   } = initial?.data || {}
@@ -102,16 +105,24 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
         const stepNum = i + 1
         const stepText = inst?.description
         return {
-          '@type': 'HowTo',
-          step: {
-            '@type': 'HowToStep',
-            position: stepNum,
-            name: inst?.title,
-            itemListElement: [
-              { '@type': 'HowToDirection', position: 1, text: stepText },
-            ],
-          },
+          '@type': 'HowToStep',
+          name: inst?.title,
+          text: stepText,
+          position: stepNum,
+          url: canonicalUrl(`/recipes/${slug?.current}#step${stepNum}`),
+          // image:
         }
+        // return {
+        //   '@type': 'HowTo',
+        //   step: {
+        //     '@type': 'HowToStep',
+        //     position: stepNum,
+        //     name: inst?.title,
+        //     itemListElement: [
+        //       { '@type': 'HowToDirection', position: 1, text: stepText },
+        //     ],
+        //   },
+        // }
       })
     : undefined
 
@@ -125,11 +136,16 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
 
   const schemaPrepTime = formatCookTime(prepTime)
   const schemaCookTime = formatCookTime(cookTime)
+  const schemaTotalTime = formatCookTime((prepTime || 0) + (cookTime || 0))
+
+  const keywords = filterTags ? getTags(filterTags) : undefined
 
   const jsonLd: WithContext<RecipeSchema> = {
     '@context': 'https://schema.org',
     '@type': 'Recipe',
     name: title,
+    author: { '@type': 'Person', name: siteConfig?.primaryContentAuthor },
+    datePublished: format(_createdAt, 'yyy-MM-dd'),
     image: {
       '@type': 'ImageObject',
       contentUrl: mainImage?.asset?.url,
@@ -140,6 +156,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     recipeIngredient: schemaIngredients,
     prepTime: schemaPrepTime,
     cookTime: schemaCookTime,
+    totalTime: schemaTotalTime,
     recipeYield:
       typeof servings?.quantity !== 'undefined'
         ? `${servings?.quantity} ${servings?.unit}`
@@ -190,8 +207,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
         ? `${nutritionInformation?.fiber} g`
         : undefined,
     },
-    // keywords: tags ? tags?.join(', ') : undefined,
-    // keywords: seoTags ? seoTags?.join(', ') : undefined,
+    keywords,
   }
 
   return draftMode().isEnabled ? (

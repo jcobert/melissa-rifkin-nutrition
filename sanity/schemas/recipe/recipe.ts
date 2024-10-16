@@ -135,6 +135,13 @@ export default defineType({
         },
       ],
     }),
+    // defineField({
+    //   name: 'author',
+    //   title: 'Author',
+    //   type: 'reference',
+    //   to: { type: 'bio' },
+    //   group: 'basicInfo',
+    // }),
 
     defineField({
       name: 'introduction',

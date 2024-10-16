@@ -6,12 +6,6 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'info',
-      title: 'Additional Info',
-      type: 'blockContent',
-      description: 'Any other nutritional info you wish to share.',
-    }),
-    defineField({
       name: 'servingSize',
       title: 'Serving Size',
       type: 'string',
@@ -81,6 +75,12 @@ export default defineType({
       title: 'Fiber',
       type: 'number',
       description: 'In grams (g).',
+    }),
+    defineField({
+      name: 'info',
+      title: 'Additional Info',
+      type: 'blockContent',
+      description: 'Any other nutritional info you wish to share.',
     }),
   ],
 })

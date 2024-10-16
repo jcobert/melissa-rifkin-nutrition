@@ -5,7 +5,12 @@
 import { apiVersion, dataset, projectId } from './sanity/env'
 import schema from './sanity/schema'
 import { visionTool } from '@sanity/vision'
-import { PluginOptions, defineConfig, isDev } from 'sanity'
+import {
+  DocumentActionComponent,
+  PluginOptions,
+  defineConfig,
+  isDev,
+} from 'sanity'
 import { tags } from 'sanity-plugin-tags'
 import { customStructure } from 'sanity-structure'
 import { slugOnPublish } from 'sanity-studio/actions/slug-on-publish'
@@ -55,14 +60,34 @@ export default defineConfig({
       switch (context.schemaType as DocumentType) {
         case 'general':
         case 'aboutPage':
+          return prev?.filter(
+            (action) =>
+              !(
+                [
+                  'delete',
+                  'unpublish',
+                  'duplicate',
+                ] as DocumentActionComponent['action'][]
+              )?.includes(action?.action),
+          )
         case 'bio':
-          return prev?.filter((action) => action?.name !== 'DeleteAction')
+          return prev?.filter(
+            (action) =>
+              !(['delete'] as DocumentActionComponent['action'][])?.includes(
+                action?.action,
+              ),
+          )
         case 'post':
         case 'recipe':
-          return prev?.map((originalAction) =>
-            originalAction?.action === 'publish'
-              ? slugOnPublish(originalAction)
-              : originalAction,
+          return prev?.map((action) =>
+            action?.action === 'publish' ? slugOnPublish(action) : action,
+          )
+        case 'userComment':
+          return prev?.filter(
+            (action) =>
+              !(['duplicate'] as DocumentActionComponent['action'][])?.includes(
+                action?.action,
+              ),
           )
         default:
           return prev

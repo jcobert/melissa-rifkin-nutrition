@@ -2,8 +2,11 @@ export const siteConfig = {
   title: 'Melissa Rifkin Nutrition',
   description: 'Melissa Rifkin Nutrition',
   businessName: 'Melissa Rifkin Nutrition, LLC',
+  primaryContentAuthor: 'Melissa Rifkin',
   /** Without trailing slash. */
-  url: process.env.SITE_BASE_URL || 'https://melissarifkinnutrition.com',
+  url:
+    process.env.NEXT_PUBLIC_SITE_BASE_URL ||
+    'https://melissarifkinnutrition.com',
 } as const
 
 /** Appends the provided pathname to the site's base URL. */

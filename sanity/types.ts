@@ -156,6 +156,7 @@ export type Instruction = {
   title?: string
   description?: string
   ingredients?: Array<IngredientMeasurement>
+  stepImage?: Image
   // ingredients?: Array<SanityKeyedReference<Ingredient> & Ingredient>
 }
 

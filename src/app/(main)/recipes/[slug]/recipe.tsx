@@ -243,51 +243,60 @@ const Recipe: FC<Props> = ({ recipe }) => {
           >
             <div className='flex flex-col gap-y-8 sm:gap-y-12 not-prose'>
               {instructions?.map((inst, step) => (
-                <div
-                  key={inst?._key}
-                  className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-4 md:gap-x-10  gap-y-6 print:gap-x-10 print:break-inside-avoid-page'
-                >
-                  {/* ingredient group */}
-                  {inst?.ingredients?.length ? (
-                    <div className='flex flex-col gap-2 border-y py-2'>
-                      {inst?.title ||
-                      (!inst?.title && !!inst?.ingredients?.length) ? (
-                        inst?.title ? (
-                          <h3 className='font-medium text-brand uppercase'>
-                            {inst?.title}
-                            {/* {inst?.title || (step === 0 ? 'First' : 'Next')} */}
-                          </h3>
-                        ) : null
-                      ) : null}
-                      <div className='flex flex-col'>
-                        {inst?.ingredients?.map((ingredient) => {
-                          return ingredient?.note ? (
-                            <IngredientTooltip
-                              key={ingredient?._key}
-                              ingredient={ingredient}
-                              triggerProps={{ className: 'w-fit' }}
-                            />
-                          ) : (
-                            <Measurement
-                              key={ingredient?._key}
-                              measurement={ingredient}
-                              ingredientClassName='font-normal'
-                            />
-                          )
-                        })}
+                <>
+                  {/* Empty div added for step anchor links. */}
+                  <div
+                    id={`step${step + 1}`}
+                    aria-hidden
+                    // Margins and padding added to offset the gap from parent div.
+                    className='invisible -mt-16 sm:-mt-24 pb-8 sm:pb-12'
+                  />
+                  <div
+                    key={inst?._key}
+                    className='px-2 sm:px-4 flex max-sm:flex-col sm:items-center gap-x-4 md:gap-x-10  gap-y-6 print:gap-x-10 print:break-inside-avoid-page'
+                  >
+                    {/* ingredient group */}
+                    {inst?.ingredients?.length ? (
+                      <div className='flex flex-col gap-2 border-y py-2'>
+                        {inst?.title ||
+                        (!inst?.title && !!inst?.ingredients?.length) ? (
+                          inst?.title ? (
+                            <h3 className='font-medium text-brand uppercase'>
+                              {inst?.title}
+                              {/* {inst?.title || (step === 0 ? 'First' : 'Next')} */}
+                            </h3>
+                          ) : null
+                        ) : null}
+                        <div className='flex flex-col'>
+                          {inst?.ingredients?.map((ingredient) => {
+                            return ingredient?.note ? (
+                              <IngredientTooltip
+                                key={ingredient?._key}
+                                ingredient={ingredient}
+                                triggerProps={{ className: 'w-fit' }}
+                              />
+                            ) : (
+                              <Measurement
+                                key={ingredient?._key}
+                                measurement={ingredient}
+                                ingredientClassName='font-normal'
+                              />
+                            )
+                          })}
+                        </div>
                       </div>
+                    ) : null}
+                    {/* directions */}
+                    <div className='flex gap-6 sm:pl-16 print:pl-0'>
+                      <h4 className='text-4xl font-bold text-brand'>
+                        {step + 1}
+                      </h4>
+                      <p className='text-pretty max-w-prose'>
+                        {inst?.description}
+                      </p>
                     </div>
-                  ) : null}
-                  {/* directions */}
-                  <div className='flex gap-6 sm:pl-16 print:pl-0'>
-                    <h4 className='text-4xl font-bold text-brand'>
-                      {step + 1}
-                    </h4>
-                    <p className='text-pretty max-w-prose'>
-                      {inst?.description}
-                    </p>
                   </div>
-                </div>
+                </>
               ))}
             </div>
           </RecipeSection>

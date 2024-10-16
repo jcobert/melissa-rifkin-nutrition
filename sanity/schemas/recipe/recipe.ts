@@ -6,7 +6,7 @@ import {
   defineType,
 } from 'sanity'
 import { CustomTextInput } from 'sanity-studio/components/text-input'
-import { Recipe } from 'sanity-studio/types'
+import { Image, Recipe } from 'sanity-studio/types'
 
 export default defineType({
   name: 'recipe',
@@ -172,38 +172,39 @@ export default defineType({
     //   ],
     // }),
 
-    // defineField({
-    //   name: 'additionalImages',
-    //   title: 'Additional Photos',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       type: 'image',
-    //       options: {
-    //         hotspot: true,
-    //         // collapsible: true,
-    //       },
-    //       fields: [
-    //         {
-    //           name: 'alt',
-    //           type: 'string',
-    //           validation: (rule) =>
-    //             rule.custom((alt: string, ctx) => {
-    //               if (!!(ctx.parent as Image)?.asset && !alt) return 'Required'
-    //               return true
-    //             }),
-    //           title: 'Image Description (alt text)',
-    //           description:
-    //             'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
-    //         },
-    //       ],
-    //     },
-    //   ],
-    //   options: { layout: 'grid' },
-    //   // fieldset: 'basicInfo',
-    //   group: 'basicInfo',
-    //   description: 'Any other photos you wish to display.',
-    // }),
+    defineField({
+      name: 'additionalImages',
+      title: 'Additional Photos',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+            // collapsible: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              validation: (rule) =>
+                rule.custom((alt: string, ctx) => {
+                  if (!!(ctx?.parent as Image)?.asset && !alt) return 'Required'
+                  return true
+                }),
+              title: 'Image Description (alt text)',
+              description:
+                'Used for people who cannot see the image. E.g. "A piece of salmon on a plate."',
+            },
+          ],
+        },
+      ],
+      options: { layout: 'grid' },
+      // fieldset: 'basicInfo',
+      group: 'basicInfo',
+      description:
+        'Any other photos associated with this recipe. These are not displayed. Will only be used to enhance Google search results.',
+    }),
 
     defineField({
       name: 'category',

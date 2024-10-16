@@ -9,8 +9,13 @@ export const BIOS_QUERY = groq`*[_type == "bio"]`
 export const BIO_QUERY = groq`*[_type == "bio" && _id == $id][0]`
 
 // RECIPE
+const RECIPE_PART = groq`{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, additionalImages{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }[], introduction[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, postContent[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, nutritionInformation{ ..., info[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, similarRecipes[]->, relatedPosts[]->, "comments": *[_type == "userComment" && references(^._id) && approved == true]}`
 export const RECIPES_QUERY = groq`*[_type == "recipe" && defined(slug)]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }}`
-export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, similarRecipes[]->, relatedPosts[]->, "comments": *[_type == "userComment" && references(^._id) && approved == true]}[0]`
+export const RECIPES_QUERY_FULL =
+  groq`*[_type == "recipe" && defined(slug)]`.concat(RECIPE_PART)
+export const RECIPE_QUERY =
+  groq`*[_type == "recipe" && slug.current == $slug]`.concat(RECIPE_PART, '[0]')
+// export const RECIPE_QUERY = groq`*[_type == "recipe" && slug.current == $slug]{ ..., mainImage{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }, additionalImages{ ..., asset->, content[]{ ..., _type == "image" => { ..., asset-> } } }[], introduction[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, postContent[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } }, nutritionInformation{ ..., info[]{ ..., _type == "videoEmbed" => { ..., file{ ..., asset-> } } } }, similarRecipes[]->, relatedPosts[]->, "comments": *[_type == "userComment" && references(^._id) && approved == true]}[0]`
 
 // USER COMMENT
 export const USER_COMMENTS_QUERY = groq`*[_type == "userComment"]`

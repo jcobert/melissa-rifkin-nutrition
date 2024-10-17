@@ -179,10 +179,9 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     prepTime: schemaPrepTime,
     cookTime: schemaCookTime,
     totalTime: schemaTotalTime,
-    recipeYield:
-      typeof servings?.quantity !== 'undefined'
-        ? `${servings?.quantity} ${servings?.unit}`
-        : undefined,
+    recipeYield: exists(servings?.quantity)
+      ? `${servings?.quantity} ${servings?.unit}`
+      : undefined,
     recipeCuisine: cuisines?.length
       ? getTags(cuisines, { titleCase: true })?.join(', ')
       : undefined,
@@ -231,6 +230,8 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
     },
     keywords,
   }
+
+  /** @TODO add a second schema for blog post? */
 
   return draftMode().isEnabled ? (
     <RecipePreview initial={initial} params={params} />

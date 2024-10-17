@@ -1,14 +1,15 @@
 import { QueryResponseInitial } from '@sanity/react-loader'
 import { SanityDocument } from 'next-sanity'
 import { General } from 'sanity-studio/types'
-import { Organization, WebPage, WebSite, WithContext } from 'schema-dts'
+import { Organization, WebSite, WithContext } from 'schema-dts'
 
-import { buildPageTitle } from '@/configuration/seo'
 import { siteConfig } from '@/configuration/site'
 
-export const getHomePageSchema = (
-  generalInfo: QueryResponseInitial<SanityDocument<General>>,
-) => {
+type Params = {
+  generalInfo: QueryResponseInitial<SanityDocument<General>>
+}
+
+export const websiteSchemaMarkup = ({ generalInfo }: Params) => {
   const info = generalInfo?.data
   const socialLinks = Object.values(info?.socialLinks || {})
     ?.map((link) => link)
@@ -36,13 +37,5 @@ export const getHomePageSchema = (
     publisher: organization,
   }
 
-  const webPage: WithContext<WebPage> = {
-    '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: buildPageTitle('Home'),
-    url: siteConfig?.url,
-    isPartOf: website,
-  }
-
-  return webPage
+  return website
 }

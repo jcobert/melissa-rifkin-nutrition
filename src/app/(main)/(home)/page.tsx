@@ -11,7 +11,7 @@ import { loadQuery } from 'sanity-studio/lib/store'
 import { General, Post, Testimonial } from 'sanity-studio/types'
 
 import HomePage from '@/components/features/home/home-page'
-import { getHomePageSchema } from '@/components/features/home/utils/schema-json'
+import { homePageSchemaMarkup } from '@/components/features/home/utils/schema-markup'
 
 import {
   buildOgImage,
@@ -49,7 +49,7 @@ const Page = async () => {
     },
   )
 
-  const jsonLd = getHomePageSchema(generalInfo)
+  const jsonLd = homePageSchemaMarkup({ generalInfo })
 
   return (
     <>

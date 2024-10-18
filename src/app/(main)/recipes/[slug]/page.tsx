@@ -145,6 +145,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
       (img) =>
         ({
           '@type': 'ImageObject',
+          contentUrl: img?.asset?.url,
           url: img?.asset?.url,
           name: img?.alt || title,
         }) as ImageObject,
@@ -153,7 +154,7 @@ const RecipePage: FC<{ params: QueryParams }> = async ({ params }) => {
   const schemaImages = [
     {
       '@type': 'ImageObject',
-      // contentUrl: mainImage?.asset?.url,
+      contentUrl: mainImage?.asset?.url,
       url: mainImage?.asset?.url,
       name: mainImage?.alt || title,
     } as ImageObject,

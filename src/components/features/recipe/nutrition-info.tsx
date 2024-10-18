@@ -15,10 +15,10 @@ const NutritionInfo: FC<Props> = ({ nutritionInfo, metric }) => {
   if (!nutritionInfo || !metric || !name) return null
 
   return (
-    <div className='flex items-center not-prose gap-1'>
+    <dl className='flex items-center not-prose gap-1'>
       <dt className='font-medium'>{`${name}: `}</dt>
       <dd>{value}</dd>
-    </div>
+    </dl>
   )
 }
 

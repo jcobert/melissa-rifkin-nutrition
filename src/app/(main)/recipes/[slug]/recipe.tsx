@@ -364,9 +364,9 @@ const Recipe: FC<Props> = ({ recipe }) => {
             variant='small'
             imageProps={{ className: 'size-16', 'aria-hidden': true }}
           />
-          <h4 className='text-6xl text-brand font-bellota font-bold -rotate-3'>
+          <span className='text-6xl text-brand font-bellota font-bold -rotate-3'>
             Enjoy!
-          </h4>
+          </span>
         </div>
 
         <ShareBar
@@ -420,8 +420,8 @@ const Recipe: FC<Props> = ({ recipe }) => {
 
       {/* Tags */}
       {tags?.length ? (
-        <div className='p-4 mt-12 w-full border-t flex flex-col gap-4 print:hidden'>
-          <h5 className='text-center text-brand-gray-dark'>Categories</h5>
+        <section className='p-4 mt-12 w-full border-t flex flex-col gap-4 print:hidden'>
+          <span className='text-center text-brand-gray-dark'>Categories</span>
           <div className='flex items-center gap-4 flex-wrap justify-center max-sm:justify-between'>
             {tags?.map((tag) => (
               <Tag
@@ -432,13 +432,19 @@ const Recipe: FC<Props> = ({ recipe }) => {
               />
             ))}
           </div>
-        </div>
+        </section>
       ) : null}
 
-      <div className='text-brand-gray-dark text-sm flex flex-col gap-1 mt-4 print:hidden'>
-        <span>{`Originally posted: ${format(recipe?._createdAt, 'MMM d, yyyy')}`}</span>
-        <span>{`Last updated: ${format(recipe?._updatedAt, 'MMM d, yyyy')}`}</span>
-      </div>
+      <section className='text-brand-gray-dark text-sm flex flex-col gap-x-1 gap-y-4 mt-4 print:hidden'>
+        <dl className='flex items-center gap-1 flex-wrap'>
+          <dt>Originally posted: </dt>
+          <dd>{format(recipe?._createdAt, 'MMM d, yyyy')}</dd>
+        </dl>
+        <dl className='flex items-center gap-1 flex-wrap'>
+          <dt>Last updated: </dt>
+          <dd>{format(recipe?._updatedAt, 'MMM d, yyyy')}</dd>
+        </dl>
+      </section>
     </PageLayout>
   )
 }

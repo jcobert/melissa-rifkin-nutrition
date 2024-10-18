@@ -1,4 +1,5 @@
 import { toPlainText } from '@portabletext/react'
+import { format } from 'date-fns'
 import { Metadata } from 'next'
 import { QueryParams, SanityDocument } from 'next-sanity'
 import { draftMode } from 'next/headers'
@@ -71,7 +72,8 @@ const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
     // cache: 'no-store',
   })
 
-  const { title, body, tags, mainImage } = initial?.data || {}
+  const { title, body, seoDescription, author, tags, mainImage, _createdAt } =
+    initial?.data || {}
 
   const articleBody = body ? toPlainText(body as BlockContent) : ''
 
@@ -79,11 +81,15 @@ const BlogPostPage: FC<{ params: QueryParams }> = async ({ params }) => {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     name: title,
+    author: { '@type': 'Person', name: author?.name },
+    datePublished: format(_createdAt, 'yyy-MM-dd'),
+    description: seoDescription,
     articleBody,
     keywords: tags ? tags?.join(', ') : undefined,
     image: {
       '@type': 'ImageObject',
       contentUrl: mainImage?.asset?.url,
+      url: mainImage?.asset?.url,
       name: mainImage?.alt,
     },
   }
